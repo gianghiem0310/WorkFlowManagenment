@@ -7,11 +7,49 @@
 
 import UIKit
 
-class CongViecController: UIViewController {
+class CongViecController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+    var mang = [1,2,3,4,5,6,7,8,9]
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return mang.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let identifier = "congViecCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? CongViecCell else{
+            return UITableViewCell()
+        }
+        return cell
+    }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit"){action,indexPath in
 
+        }
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+            self.mang.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        return [editAction,deleteAction]
+    }
+    func thongBao(message: String){
+        let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    // Override to support conditional editing of the table view.
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+
+    @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.dataSource = self
+        tableView.delegate = self
         // Do any additional setup after loading the view.
     }
     

@@ -1,24 +1,22 @@
 //
-//  GroupCell.swift
+//  CongViecCaNhanCell.swift
 //  GroupManager
 //
-//  Created by Gia Nghiem on 4/20/24.
+//  Created by Gia Nghiem on 4/22/24.
 //
 
 import UIKit
 
-class NhomCell: UITableViewCell {
+class CongViecCaNhanCell: UITableViewCell {
 
-    @IBOutlet weak var anhNhom: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        anhNhom.layer.cornerRadius = 15
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         // Configure the view for the selected state
     }
 

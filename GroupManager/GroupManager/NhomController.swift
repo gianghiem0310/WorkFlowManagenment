@@ -25,7 +25,15 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let editAction = UITableViewRowAction(style: .normal, title: "Edit"){action,indexPath in
-
+            let storyboard = Enum.STORYBOARD
+            if let des = storyboard.instantiateViewController(identifier: "taoNhom") as? TaoNhomController{
+                des.title = "Sửa dự án"
+                let navigation = UINavigationController(rootViewController: des)
+                 navigation.modalPresentationStyle = .fullScreen
+                 self.present(navigation, animated: true, completion: nil)
+            }
+          
+            
         }
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
             self.mang.remove(at: indexPath.row)

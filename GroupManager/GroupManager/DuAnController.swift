@@ -9,10 +9,18 @@ import UIKit
 
 class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
+   
     @IBAction func tool(_ sender: UIBarButtonItem) {
         let actionSheet = UIAlertController(title: "Select Option", message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Tạo dự án", style: .default, handler:{
             action in
+            
+            let storyboard = Enum.STORYBOARD
+            if let des = storyboard.instantiateViewController(identifier: "taoDuAn") as? TaoDuAnController{
+                let navigation = UINavigationController(rootViewController: des)
+                 navigation.modalPresentationStyle = .fullScreen
+                 self.present(navigation, animated: true, completion: nil)
+            }
             
         }))
         actionSheet.addAction(UIAlertAction(title: "Thêm thành viên", style: .default, handler:{
@@ -79,6 +87,32 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         }
        
        
+    }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit"){action,indexPath in
+            if self.choose{
+                
+                 let storyboard = Enum.STORYBOARD
+                 if let des = storyboard.instantiateViewController(identifier: "taoDuAn") as? TaoDuAnController{
+                     let navigation = UINavigationController(rootViewController: des)
+                      navigation.modalPresentationStyle = .fullScreen
+                    des.title = "Sửa dự án"
+                      self.present(navigation, animated: true, completion: nil)
+                 }
+            }
+         
+          
+            
+        }
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+            if self.choose {
+                self.mangProject.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+          
+        }
+        return [editAction,deleteAction]
     }
     
 
