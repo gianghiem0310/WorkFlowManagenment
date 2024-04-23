@@ -9,14 +9,16 @@ import UIKit
 
 class NhomCell: UITableViewCell {
 
+    @IBOutlet weak var anhNhom: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        anhNhom.layer.cornerRadius = 15
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
 
