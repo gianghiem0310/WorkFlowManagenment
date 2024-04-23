@@ -6,6 +6,10 @@
 //
 
 import Foundation
+import UIKit
 class Enum{
     static let ISLOGIN = "isLogin"
+    
+    
+    static let STORYBOARD = UIStoryboard(name: "Main", bundle: nil)
 }
