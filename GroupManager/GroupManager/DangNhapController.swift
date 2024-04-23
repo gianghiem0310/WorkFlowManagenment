@@ -73,6 +73,14 @@ class DangNhapController: UIViewController {
         mauBtnLogin.layer.cornerRadius = 10
         mauBtnLogin.layer.masksToBounds = true
         
+//        let gradi = CAGradientLayer()
+//        gradi.colors = [UIColor.systemOrange.cgColor,
+//                        UIColor.systemYellow.cgColor]
+//        gradi.frame = mauBtnLogin.bounds
+//        mauBtnLogin.layer.insertSublayer(gradi, at: 0)
+//        mauBtnLogin.layer.cornerRadius = 10
+//        mauBtnLogin.layer.masksToBounds = true
+        
     }
  
 
