@@ -610,6 +610,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="anhNhom" destination="gEr-Ev-Hny" id="oXI-Tv-72E"/>
+                                            <outlet property="tenNhom" destination="dMA-mY-mGZ" id="yew-h3-kZF"/>
                                             <segue destination="Hpt-wy-8E5" kind="presentation" modalPresentationStyle="fullScreen" id="nFL-0e-BXZ"/>
                                         </connections>
                                     </tableViewCell>

@@ -10,6 +10,8 @@ import UIKit
 class NhomCell: UITableViewCell {
 
     @IBOutlet weak var anhNhom: UIImageView!
+    
+    @IBOutlet weak var tenNhom: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

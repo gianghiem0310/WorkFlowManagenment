@@ -6,21 +6,25 @@
 //
 
 import UIKit
-
+import FirebaseDatabase
 class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate {
-    var mang = ["A","B","C","D"]
+    var mangNhom:[Nhom] = []
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mang.count
+        return mangNhom.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = "groupCell"
+        let data = mangNhom[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? NhomCell else{
             return UITableViewCell()
         }
+        
+            cell.tenNhom.text = data.title
+        
         return cell
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -36,7 +40,7 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
             
         }
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
-            self.mang.remove(at: indexPath.row)
+            self.mangNhom.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
         return [editAction,deleteAction]
@@ -64,6 +68,26 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         tableView.delegate = self
         
         // Do any additional setup after loading the view.
+        
+        let database = Enum.DB_REALTIME
+        database.child(Enum.NHOM_TABLE).child("0").observe(DataEventType.value){ (snapshot) in
+            for child in snapshot.children{
+                if let snap = child as? DataSnapshot{
+                    if let snap2 = snap.value as? NSDictionary{
+                        let id = snap2["id"] as? Int ?? -1
+                        let title = snap2["title"] as? String ?? ""
+                        let image = snap2["image"] as? String ?? ""
+                        let quantity = snap2["quantity"] as? Int ?? -1
+                        let captain = snap2["captain"] as? Int ?? -1
+                        let status = snap2["status"] as? Bool ?? false
+                        let us = Nhom(id: id, title: title, image: image, quantity: quantity, captain: captain, status: status)
+                        self.mangNhom.append(us)
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        }
+        
     }
     
 
