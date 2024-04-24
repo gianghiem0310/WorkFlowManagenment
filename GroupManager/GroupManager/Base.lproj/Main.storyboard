@@ -93,11 +93,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="M5d-Gj-VAX">
+                            <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="M5d-Gj-VAX">
                                 <rect key="frame" x="10" y="98" width="394" height="220"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="220" id="mZK-AV-ygA"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="QzP-Ss-o9l" appends="YES" id="AbH-zn-ztv"/>
+                                </connections>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="g7A-mn-lwL">
                                 <rect key="frame" x="10" y="338" width="394" height="139"/>
@@ -111,7 +115,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nhập tên nhóm..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s9A-n8-B5V">
                                         <rect key="frame" x="0.0" y="30.5" width="394" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Số lượng thành viên tối đa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlK-a1-E3j">
                                         <rect key="frame" x="0.0" y="74.5" width="197.5" height="20.5"/>
@@ -122,7 +126,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nhập số lượng" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S7L-Wr-tvJ">
                                         <rect key="frame" x="0.0" y="105" width="394" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                 </subviews>
                                 <constraints>
@@ -150,10 +154,24 @@
                                 <action selector="cancel:" destination="7cJ-iR-mn6" id="YPG-I1-8Z9"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Xong" id="Gt2-q7-OKr"/>
+                        <barButtonItem key="rightBarButtonItem" title="Xong" id="Gt2-q7-OKr">
+                            <connections>
+                                <action selector="done:" destination="7cJ-iR-mn6" id="GTe-rs-6o2"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageNhom" destination="M5d-Gj-VAX" id="wmg-l6-qc0"/>
+                        <outlet property="inputSoLuong" destination="S7L-Wr-tvJ" id="qNq-Eu-gA5"/>
+                        <outlet property="inputTen" destination="s9A-n8-B5V" id="hyY-Tj-7PC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ve7-dY-s5d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="QzP-Ss-o9l">
+                    <connections>
+                        <action selector="chooseImage:" destination="7cJ-iR-mn6" id="BSu-D5-fZo"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1591.304347826087" y="3732.5892857142853"/>
         </scene>

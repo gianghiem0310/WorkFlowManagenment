@@ -26,8 +26,19 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
             cell.tenNhom.text = data.title
         cell.soLuong.text = "\(data.quantity) Thành viên"
         
-       
-        
+        let imageUrlString = data.image
+        if let imageUrl = URL(string: imageUrlString){
+            let task = URLSession.shared.dataTask(with: imageUrl){(data,response,error)in
+                if let dataa = data{
+                    if let image = UIImage(data: dataa){
+                        DispatchQueue.main.async {
+                            cell.anhNhom.image = image
+                        }
+                    }
+                }
+            }
+            task.resume()
+        }
         
         return cell
     }
@@ -40,8 +51,6 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
                  navigation.modalPresentationStyle = .fullScreen
                  self.present(navigation, animated: true, completion: nil)
             }
-          
-            
         }
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
             self.mangNhom.remove(at: indexPath.row)

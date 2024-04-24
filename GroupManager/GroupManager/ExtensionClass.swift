@@ -6,3 +6,8 @@
 //
 
 import Foundation
+extension Group{
+    func toDictionary()->[String:Any]{
+        return ["id":id,"title":title,"image":image,"quantity":quantity,"captain":captain,"status":status]
+    }
+}
