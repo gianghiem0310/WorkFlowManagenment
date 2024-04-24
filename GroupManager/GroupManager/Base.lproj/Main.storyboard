@@ -609,7 +609,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="anhNhom" destination="gEr-Ev-Hny" id="oXI-Tv-72E"/>
+                                            <outlet property="anhNhom" destination="gEr-Ev-Hny" id="p0N-QF-ZGe"/>
+                                            <outlet property="soLuong" destination="Ugo-Uq-3VS" id="5ic-M0-Lqi"/>
                                             <outlet property="tenNhom" destination="dMA-mY-mGZ" id="yew-h3-kZF"/>
                                             <segue destination="Hpt-wy-8E5" kind="presentation" modalPresentationStyle="fullScreen" id="nFL-0e-BXZ"/>
                                         </connections>

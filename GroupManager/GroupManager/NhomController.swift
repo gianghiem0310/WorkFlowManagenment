@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseDatabase
 class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate {
-    var mangNhom:[Nhom] = []
+    var mangNhom:[Group] = []
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -24,6 +24,10 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         }
         
             cell.tenNhom.text = data.title
+        cell.soLuong.text = "\(data.quantity) Thành viên"
+        
+       
+        
         
         return cell
     }
@@ -70,19 +74,37 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         // Do any additional setup after loading the view.
         
         let database = Enum.DB_REALTIME
-        database.child(Enum.NHOM_TABLE).child("0").observe(DataEventType.value){ (snapshot) in
+        database.child(Enum.GROUP_JOIN_TABLE).child("15").observe(DataEventType.value){ (snapshot) in
             for child in snapshot.children{
                 if let snap = child as? DataSnapshot{
                     if let snap2 = snap.value as? NSDictionary{
+                        
                         let id = snap2["id"] as? Int ?? -1
-                        let title = snap2["title"] as? String ?? ""
-                        let image = snap2["image"] as? String ?? ""
-                        let quantity = snap2["quantity"] as? Int ?? -1
-                        let captain = snap2["captain"] as? Int ?? -1
-                        let status = snap2["status"] as? Bool ?? false
-                        let us = Nhom(id: id, title: title, image: image, quantity: quantity, captain: captain, status: status)
-                        self.mangNhom.append(us)
-                        self.tableView.reloadData()
+                        
+                        database.child(Enum.GROUP_TABLE).child(String(id)).observe(DataEventType.value){ (snapshotIn) in
+                            if let snapHe = snapshotIn as? DataSnapshot{
+                                if let snap3 = snapHe.value as? NSDictionary{
+                                
+                                    let idIn = snap3["id"] as? Int ?? -1
+                                    let title = snap3["title"] as? String ?? ""
+                                    let image = snap3["image"] as? String ?? ""
+                                    let quantity = snap3["quantity"] as? Int ?? -1
+                                    let captain = snap3["captain"] as? Int ?? -1
+                                    let status = snap3["status"] as? Bool ?? false
+                                    let us = Group(id: idIn, title: title, image: image, quantity: quantity, captain: captain, status: status)
+                                    
+                                    
+                                    
+                                    self.mangNhom.append(us)
+                                    self.tableView.reloadData()
+                                }
+                            }
+                           
+                        }
+                       
+                        
+                        
+                        
                     }
                 }
             }

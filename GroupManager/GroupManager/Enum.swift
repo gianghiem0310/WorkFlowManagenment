@@ -16,5 +16,6 @@ class Enum{
     
     static let DB_REALTIME = Database.database().reference()
     // MARK: Kí tự database
-    static let NHOM_TABLE = "Nhoms"
+    static let GROUP_TABLE = "Groups"
+    static let GROUP_JOIN_TABLE = "Group_Joins"
 }

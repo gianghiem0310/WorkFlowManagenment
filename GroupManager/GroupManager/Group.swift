@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class Nhom {
+class Group {
     var id: Int
     var title: String
     var image: String
