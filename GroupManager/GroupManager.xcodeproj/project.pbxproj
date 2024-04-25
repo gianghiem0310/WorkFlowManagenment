@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9579117B2BDA0DC80089EA21 /* ThongBaoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9579117A2BDA0DC80089EA21 /* ThongBaoCell.swift */; };
+		9579117E2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9579117D2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift */; };
 		C1045BE22BD6299B00B89F5D /* CongViec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1045BE12BD6299B00B89F5D /* CongViec.swift */; };
 		C1A0C2EC2BD4BAA500BD78BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A0C2EB2BD4BAA500BD78BA /* AppDelegate.swift */; };
 		C1A0C2EE2BD4BAA500BD78BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A0C2ED2BD4BAA500BD78BA /* SceneDelegate.swift */; };
@@ -35,6 +37,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9579117A2BDA0DC80089EA21 /* ThongBaoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThongBaoCell.swift; sourceTree = "<group>"; };
+		9579117D2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanhVienCongViecCell.swift; sourceTree = "<group>"; };
 		C1045BE12BD6299B00B89F5D /* CongViec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongViec.swift; sourceTree = "<group>"; };
 		C1A0C2E82BD4BAA500BD78BA /* GroupManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1A0C2EB2BD4BAA500BD78BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 				C1A0C32C2BD4EA4800BD78BA /* DuAnCell.swift */,
 				C1A0C32F2BD4EA5D00BD78BA /* ThanhVienCell.swift */,
 				C1EE84F82BD4F55D00547392 /* CongViecCell.swift */,
+				9579117A2BDA0DC80089EA21 /* ThongBaoCell.swift */,
+				9579117D2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -251,6 +257,7 @@
 				C1A0C3062BD4BC4600BD78BA /* DangNhapController.swift in Sources */,
 				C1EE84FC2BD4F57C00547392 /* DanhSachCongViecController.swift in Sources */,
 				C1A0C3252BD4CE4200BD78BA /* NhomCell.swift in Sources */,
+				9579117E2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift in Sources */,
 				C1A0C31B2BD4C68800BD78BA /* ThongBaoController.swift in Sources */,
 				C1A0C2EC2BD4BAA500BD78BA /* AppDelegate.swift in Sources */,
 				C1EE84FF2BD4F7EA00547392 /* ChiTietCongViecController.swift in Sources */,
@@ -263,6 +270,7 @@
 				C1A0C3122BD4C2AE00BD78BA /* DisplayManagerController.swift in Sources */,
 				C1A0C3152BD4C66100BD78BA /* NhomController.swift in Sources */,
 				C1A0C3212BD4CB4800BD78BA /* TaoNhomController.swift in Sources */,
+				9579117B2BDA0DC80089EA21 /* ThongBaoCell.swift in Sources */,
 				C1045BE22BD6299B00B89F5D /* CongViec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

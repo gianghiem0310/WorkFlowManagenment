@@ -51,13 +51,13 @@ class ChiTietCongViecController: UIViewController {
             containerView.backgroundColor = .white
         }
     }
-    
-    func thongBao(message: String){
-        let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
-    }
+   
+//    func thongBao(message: String){
+//        let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//        alert.addAction(okAction)
+//        self.present(alert, animated: true, completion: nil)
+//    }
     
    override func viewDidLoad() {
         super.viewDidLoad()
