@@ -30,7 +30,15 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //Ẩn bàn phím khi nhấn bất cứ đâu ở màn hinh
+        let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGes)
+        
+        
         customGiaoDien()
+    }
+    @objc func hideKeyboard(){
+        view.endEditing(true)
     }
     
     @IBAction func tapGestureAvatar(_ sender: UITapGestureRecognizer) {

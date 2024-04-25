@@ -23,6 +23,11 @@ class DangNhapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGes)
+        
+        
+        
         if UserDefaults.standard.bool(forKey: "isLogin"){
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if let des = storyboard.instantiateViewController(identifier: "DisplayManager") as? DisplayManagerController{
@@ -33,7 +38,9 @@ class DangNhapController: UIViewController {
         customGiaoDien()
         
     }
-    
+    @objc func hideKeyboard(){
+        view.endEditing(true)
+    }
     
    
     @IBAction func btnLogin(_ sender: UIButton) {
