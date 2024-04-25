@@ -11,3 +11,8 @@ extension Group{
         return ["id":id,"title":title,"image":image,"quantity":quantity,"captain":captain,"status":status]
     }
 }
+extension Job{
+    func toDictionary()->[String:Any]{
+        return ["id":id, "idDeadline":idDeadline,"title":title,"image":image,"quantity":quantity,"description": description,"deadline":deadline,"point":point,"status":status,"titleGroup":titleGroup,"titleDeadline":titleDeadline]
+    }
+}

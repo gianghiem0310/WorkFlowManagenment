@@ -14,28 +14,148 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
     }
     
     @IBAction func done(_ sender: UIBarButtonItem) {
-        if let quantity = Int(soLuong){
-            if !tenNhom.isEmpty && !soLuong.isEmpty
+        
+        if manHinh {
+            if let quantity = Int(soLuong){
+                if !tenNhom.isEmpty && !soLuong.isEmpty
                     {
-                        let nhom = Group(id: idNhom, title: tenNhom, image: anh, quantity: quantity, captain: idUser, status: status)
-                let database = Enum.DB_REALTIME
-                database.child(Enum.GROUP_TABLE).child("\(idNhom)").setValue(nhom.toDictionary()){
-                    (result,error) in
-                    guard error != nil else{
-                        self.thongBao(message: "Tạo nhóm thất bại!")
-                        return
-                    }
-                    self.thongBao(message: "Tạo nhóm thành công!")
-                    self.inputTen.text = ""
-                    self.inputSoLuong.text = ""
-                    
+                          
+                    let storage = Enum.DB_STORAGE
+                    if let image = imageLayRa{
+                        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+                            return
                         }
+                        
+                        let imageName = "Nhom\(idNhom).jpeg"
+                        let imageRef = storage.child("images/\(imageName)")
+                        let uploadTask = imageRef.putData(imageData,metadata: nil){
+                            (metadata,error) in
+                            imageRef.downloadURL{(url,eror)in
+                                guard let downloadURL = url else{
+                                    return
+                                }
+                                
+                                self.anh = downloadURL.absoluteString
+                                let nhom = Group(id: self.idNhom, title: self.tenNhom, image: self.anh, quantity: quantity, captain: self.idUser, status: self.status)
+                                let database = Enum.DB_REALTIME
+                                database.child(Enum.GROUP_TABLE).child("\(self.idNhom)").setValue(nhom.toDictionary()){
+                                (result,error) in
+                                guard error != nil else{
+                                    self.thongBao(message: "Tạo nhóm thất bại!")
+                                    return
+                                }
+                                    database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(nhom.id)").child("id").setValue(nhom.id)
+                                self.thongBao(message: "Tạo nhóm thành công!")
+                                self.inputTen.text = ""
+                                self.inputSoLuong.text = ""
+                                self.anh = "NULL"
+                                self.imageLayRa = nil
+                                    self.imageNhom.image = UIImage(named: "default")
+                                }
+                            }
+                        }
+                        
+                        uploadTask.observe(.success){
+                            snap in
+                            
+                        }
+                        
+                        
+                    }
+                    else{
+                        
+                        let nhom = Group(id: idNhom, title: tenNhom, image: anh, quantity: quantity, captain: idUser, status: status)
+                        let database = Enum.DB_REALTIME
+                        database.child(Enum.GROUP_TABLE).child("\(idNhom)").setValue(nhom.toDictionary()){
+                        (result,error) in
+                        guard error != nil else{
+                            self.thongBao(message: "Tạo nhóm thất bại!")
+                            return
+                        }
+                            database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(nhom.id)").child("id").setValue(nhom.id)
+                        self.thongBao(message: "Tạo nhóm thành công!")
+                        self.inputTen.text = ""
+                        self.inputSoLuong.text = ""
+                        }
+                        
+                    }
                     }else{
                         self.thongBao(message: "Thông tin còn thiếu!")
                     }
-        }
-        else{
-            self.thongBao(message: "Số lượng phải là kí tự số!")
+            }
+            else{
+                self.thongBao(message: "Số lượng phải là kí tự số!")
+            }
+        }else{
+            if let quantity = Int(soLuong){
+                if !tenNhom.isEmpty && !soLuong.isEmpty
+                    {
+                          
+                    let storage = Enum.DB_STORAGE
+                    if let image = imageLayRa{
+                        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+                            return
+                        }
+                        
+                        let imageName = "Nhom\(idNhom).jpeg"
+                        let imageRef = storage.child("images/\(imageName)")
+                        let uploadTask = imageRef.putData(imageData,metadata: nil){
+                            (metadata,error) in
+                            imageRef.downloadURL{(url,eror)in
+                                guard let downloadURL = url else{
+                                    return
+                                }
+                                
+                                if let nhomEdit = self.nhomEdit{
+                                    self.anh = downloadURL.absoluteString
+                                    let nhom = Group(id: nhomEdit.id, title: self.tenNhom, image: self.anh, quantity: quantity, captain: nhomEdit.captain, status: nhomEdit.status)
+                                    let database = Enum.DB_REALTIME
+                                    database.child(Enum.GROUP_TABLE).child("\(nhomEdit.id)").setValue(nhom.toDictionary()){
+                                    (result,error) in
+                                    guard error != nil else{
+                                        self.thongBao(message: "Chỉnh sửa thất bại!")
+                                        return
+                                    }
+                                        
+                                    self.thongBao(message: "Chỉnh sửa thành công!")
+                                    }
+                                }
+                               
+                            }
+                        }
+                        
+                        uploadTask.observe(.success){
+                            snap in
+                            
+                        }
+                        
+                        
+                    }
+                    else{
+                        
+                        if let nhomEdit = nhomEdit{
+                            let nhom = Group(id: nhomEdit.id, title: tenNhom, image: nhomEdit.image, quantity: quantity, captain: nhomEdit.captain, status: nhomEdit.status)
+                            let database = Enum.DB_REALTIME
+                            database.child(Enum.GROUP_TABLE).child("\(idNhom)").setValue(nhom.toDictionary()){
+                            (result,error) in
+                            guard error != nil else{
+                                self.thongBao(message: "Chỉnh sửa thất bại!")
+                                return
+                            }
+                            self.thongBao(message: "Chỉnh sửa thành công!")
+                            }
+                        }
+                        
+                       
+                        
+                    }
+                    }else{
+                        self.thongBao(message: "Thông tin còn thiếu!")
+                    }
+            }
+            else{
+                self.thongBao(message: "Số lượng phải là kí tự số!")
+            }
         }
     }
     
@@ -59,23 +179,58 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
     var tenNhom = ""
     var soLuong = ""
     var anh = "NULL"
-    var idUser = 0
+    var idUser = 15
     var status = true
     var idNhom = -1
     
+    var imageLayRa:UIImage?
+    var manHinh:Bool = true
+    var nhomEdit:Group?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if manHinh{
+            title = "Tạo nhóm"
+        }
+        else{
+            title = "Chỉnh sửa"
+            setDataEditNhom()
+        }
         inputTen.delegate = self
         inputSoLuong.delegate = self
         getIdLienTuc()
         // Do any additional setup after loading the view.
     }
     
+    func setDataEditNhom() {
+        if let nhomEdit = nhomEdit{
+            inputTen.text = nhomEdit.title
+            inputSoLuong.text = String(nhomEdit.quantity)
+            soLuong = String(nhomEdit.quantity)
+            tenNhom = nhomEdit.title
+            let imageUrlString = nhomEdit.image
+            if imageUrlString != "NULL"{
+                if let imageUrl = URL(string: imageUrlString){
+                    let task = URLSession.shared.dataTask(with: imageUrl){(data,response,error)in
+                        if let dataa = data{
+                            if let image = UIImage(data: dataa){
+                                DispatchQueue.main.async {
+                                    self.imageNhom.image = image
+                                }
+                            }
+                        }
+                    }
+                    task.resume()
+                }
+            }
+        }
+    }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedName = info[.originalImage] as? UIImage else{
                    print("Khong the lay anh")
                    return
                }
+                imageLayRa = selectedName
                imageNhom.image = selectedName
               
                dismiss(animated: true,completion: nil)
@@ -83,9 +238,22 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
     
     func getIdLienTuc(){
         let database = Enum.DB_REALTIME
-        database.child(Enum.GROUP_TABLE).observe(DataEventType.value){ (snapshot) in
-            self.idNhom = Int(snapshot.childrenCount)
+        let groupRef = database.child(Enum.GROUP_TABLE)
+        let lastElement = groupRef.queryOrderedByKey().queryLimited(toLast: 1)
+        lastElement.observeSingleEvent(of: .value){
+            (snapshot) in
+            guard snapshot.exists() else{
+                self.idNhom = 0
+                return
+            }
+            if let lastE = snapshot.children.allObjects.first as? DataSnapshot{
+                if let child = lastE.value as? NSDictionary{
+                    self.idNhom = child["id"] as? Int ?? -1
+                    self.idNhom += 1
+                }
+            }
         }
+        
     }
     
     func thongBao(message: String){

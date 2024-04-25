@@ -672,21 +672,21 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="congViecCell" rowHeight="140" id="bBT-nA-kfU" customClass="CongViecCell" customModule="GroupManager" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="140"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="congViecCaNhanCell" rowHeight="120" id="bBT-nA-kfU" customClass="CongViecCaNhanCell" customModule="GroupManager" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bBT-nA-kfU" id="9qT-Q1-2PW">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="6bK-NR-QJP">
-                                                    <rect key="frame" x="10" y="10" width="140" height="120"/>
+                                                    <rect key="frame" x="10" y="10" width="116.5" height="100"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="6bK-NR-QJP" secondAttribute="height" multiplier="7:6" id="wWn-o8-8su"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="eLk-bx-u1W">
-                                                    <rect key="frame" x="160" y="10" width="244" height="102"/>
+                                                    <rect key="frame" x="136.5" y="10" width="267.5" height="102"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Djw-Kj-hjq">
                                                             <rect key="frame" x="0.0" y="0.0" width="209.5" height="71.5"/>
@@ -730,6 +730,13 @@
                                                 <constraint firstItem="6bK-NR-QJP" firstAttribute="leading" secondItem="9qT-Q1-2PW" secondAttribute="leading" constant="10" id="u66-52-2Lo"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="anhCongViec" destination="6bK-NR-QJP" id="LMe-Py-qNt"/>
+                                            <outlet property="deadline" destination="jcu-nN-MEN" id="bJz-MW-2BR"/>
+                                            <outlet property="nhomCongViec" destination="vPg-b7-1CX" id="YBV-pr-aEL"/>
+                                            <outlet property="tenCongViec" destination="ATk-hI-Pip" id="5v5-Xa-UwG"/>
+                                            <outlet property="trangThai" destination="2Gf-md-pIJ" id="DpW-Du-DSj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

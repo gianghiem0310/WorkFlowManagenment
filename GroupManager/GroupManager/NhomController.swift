@@ -9,6 +9,7 @@ import UIKit
 import FirebaseDatabase
 class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var mangNhom:[Group] = []
+    var idUser = 15
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -23,40 +24,64 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
             return UITableViewCell()
         }
         
-            cell.tenNhom.text = data.title
+        cell.tenNhom.text = data.title
         cell.soLuong.text = "\(data.quantity) Thành viên"
         
         let imageUrlString = data.image
-        if let imageUrl = URL(string: imageUrlString){
-            let task = URLSession.shared.dataTask(with: imageUrl){(data,response,error)in
-                if let dataa = data{
-                    if let image = UIImage(data: dataa){
-                        DispatchQueue.main.async {
-                            cell.anhNhom.image = image
+        if imageUrlString != "NULL"{
+            if let imageUrl = URL(string: imageUrlString){
+                let task = URLSession.shared.dataTask(with: imageUrl){(data,response,error)in
+                    if let dataa = data{
+                        if let image = UIImage(data: dataa){
+                            DispatchQueue.main.async {
+                                cell.anhNhom.image = image
+                            }
                         }
                     }
                 }
+                task.resume()
             }
-            task.resume()
         }
-        
         return cell
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let editAction = UITableViewRowAction(style: .normal, title: "Edit"){action,indexPath in
             let storyboard = Enum.STORYBOARD
             if let des = storyboard.instantiateViewController(identifier: "taoNhom") as? TaoNhomController{
-                des.title = "Sửa dự án"
                 let navigation = UINavigationController(rootViewController: des)
                  navigation.modalPresentationStyle = .fullScreen
+                des.manHinh = false
+                des.nhomEdit = self.mangNhom[indexPath.row]
                  self.present(navigation, animated: true, completion: nil)
             }
         }
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
-            self.mangNhom.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            let alert = UIAlertController(title: "Thông báo", message: "Bạn chắc chắn muốn xoá nhóm này?", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
+            let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
+                let database = Enum.DB_REALTIME
+                database.child(Enum.GROUP_TABLE).child("\(self.mangNhom[indexPath.row].id)").removeValue(){
+                    (error,_)in
+                    if let error = error{
+                        self.thongBao(message: "Không thể xoá!")
+                    }
+                    else{
+                        
+                        database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(self.mangNhom[indexPath.row].id)").removeValue()
+                        self.mangNhom.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                        tableView.reloadData()
+                        self.thongBao(message: "Xoá nhóm thành công!")
+                    }
+                }
+            }
+            alert.addAction(cancel)
+            alert.addAction(confirm)
+            self.present(alert, animated: true, completion: nil)
+            
         }
-        return [editAction,deleteAction]
+        return [deleteAction,editAction]
     }
     func thongBao(message: String){
         let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
@@ -84,38 +109,42 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         
         let database = Enum.DB_REALTIME
         database.child(Enum.GROUP_JOIN_TABLE).child("15").observe(DataEventType.value){ (snapshot) in
-            for child in snapshot.children{
-                if let snap = child as? DataSnapshot{
-                    if let snap2 = snap.value as? NSDictionary{
-                        
-                        let id = snap2["id"] as? Int ?? -1
-                        
-                        database.child(Enum.GROUP_TABLE).child(String(id)).observe(DataEventType.value){ (snapshotIn) in
-                            if let snapHe = snapshotIn as? DataSnapshot{
-                                if let snap3 = snapHe.value as? NSDictionary{
-                                
-                                    let idIn = snap3["id"] as? Int ?? -1
-                                    let title = snap3["title"] as? String ?? ""
-                                    let image = snap3["image"] as? String ?? ""
-                                    let quantity = snap3["quantity"] as? Int ?? -1
-                                    let captain = snap3["captain"] as? Int ?? -1
-                                    let status = snap3["status"] as? Bool ?? false
-                                    let us = Group(id: idIn, title: title, image: image, quantity: quantity, captain: captain, status: status)
+            self.mangNhom.removeAll()
+            if snapshot.childrenCount > 0{
+                for child in snapshot.children{
+                    if let snap = child as? DataSnapshot{
+                        if let snap2 = snap.value as? NSDictionary{
+                            let id = snap2["id"] as? Int ?? -1
+                            database.child(Enum.GROUP_TABLE).child(String(id)).observe(DataEventType.value){ (snapshotIn) in
+                                if let snapHe = snapshotIn as? DataSnapshot{
+                                   print(snapHe)
+                                    if let snap3 = snapHe.value as? NSDictionary{
                                     
-                                    
-                                    
-                                    self.mangNhom.append(us)
-                                    self.tableView.reloadData()
+                                        let idIn = snap3["id"] as? Int ?? -1
+                                        let title = snap3["title"] as? String ?? ""
+                                        let image = snap3["image"] as? String ?? ""
+                                        let quantity = snap3["quantity"] as? Int ?? -1
+                                        let captain = snap3["captain"] as? Int ?? -1
+                                        let status = snap3["status"] as? Bool ?? false
+                                        let us = Group(id: idIn, title: title, image: image, quantity: quantity, captain: captain, status: status)
+                                        
+                                        
+                                        
+                                        self.mangNhom.append(us)
+                                        self.tableView.reloadData()
+                                    }
                                 }
+                               
                             }
                            
+                            
+                            
+                            
                         }
-                       
-                        
-                        
-                        
                     }
-                }
+            }
+            
+            
             }
         }
         
