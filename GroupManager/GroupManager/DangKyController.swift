@@ -65,8 +65,6 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         txtTenNguoiDung.resignFirstResponder()
         txtSoDienThoai.resignFirstResponder()
         txtEmail.resignFirstResponder()
-       
-        
         return true
     }
 //    func textFieldDidEndEditing(_ textField: UITextField) {
@@ -104,9 +102,9 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         txtEmail.layer.borderWidth = 2
         txtEmail.layer.cornerRadius = 10
         
-        mauBtnDangKy.applyGradient(colors: [UIColor(red: 0.00, green: 0.60, blue: 0.96, alpha: 1.00).cgColor,UIColor(red: 0.00, green: 0.85, blue: 0.67, alpha: 1.00).cgColor ])
-        mauBtnDangKy.layer.cornerRadius = 10
-        mauBtnDangKy.layer.masksToBounds = true
+//        mauBtnDangKy.applyGradient(colors: [UIColor(red: 0.00, green: 0.60, blue: 0.96, alpha: 1.00).cgColor,UIColor(red: 0.00, green: 0.85, blue: 0.67, alpha: 1.00).cgColor ])
+//        mauBtnDangKy.layer.cornerRadius = 10
+//        mauBtnDangKy.layer.masksToBounds = true
         
         
       

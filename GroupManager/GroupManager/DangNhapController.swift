@@ -69,33 +69,26 @@ class DangNhapController: UIViewController {
         txtMatKhau.layer.borderWidth = 2
         txtMatKhau.layer.cornerRadius = 10
         
-        mauBtnLogin.applyGradient(colors: [UIColor(red: 0.00, green: 0.60, blue: 0.96, alpha: 1.00).cgColor,UIColor(red: 0.00, green: 0.85, blue: 0.67, alpha: 1.00).cgColor ])
-        mauBtnLogin.layer.cornerRadius = 10
-        mauBtnLogin.layer.masksToBounds = true
         
-//        let gradi = CAGradientLayer()
-//        gradi.colors = [UIColor.systemOrange.cgColor,
-//                        UIColor.systemYellow.cgColor]
-//        gradi.frame = mauBtnLogin.bounds
-//        mauBtnLogin.layer.insertSublayer(gradi, at: 0)
+        
+//        mauBtnLogin.applyGradient(colors: [UIColor(red: 0.00, green: 0.60, blue: 0.96, alpha: 1.00).cgColor,UIColor(red: 0.00, green: 0.85, blue: 0.67, alpha: 1.00).cgColor ])
 //        mauBtnLogin.layer.cornerRadius = 10
 //        mauBtnLogin.layer.masksToBounds = true
-        
-    }
+    //}
  
 
 }
 
-extension UIButton {
-    func applyGradient(colors : [CGColor]) {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colors
-        gradientLayer.cornerRadius = layer.cornerRadius
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 0)
-        gradientLayer.frame = bounds
-        layer.insertSublayer(gradientLayer, at: 0)
-        
-    }
+//extension UIButton {
+//    func applyGradient(colors : [CGColor]) {
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = colors
+//        gradientLayer.cornerRadius = layer.cornerRadius
+//        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+//        gradientLayer.endPoint = CGPoint(x: 1, y: 0)
+//        gradientLayer.frame = bounds
+//        layer.insertSublayer(gradientLayer, at: 0)
+//
+//    }
 }
 
