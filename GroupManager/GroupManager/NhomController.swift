@@ -28,20 +28,7 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         cell.soLuong.text = "\(data.quantity) Thành viên"
         
         let imageUrlString = data.image
-        if imageUrlString != "NULL"{
-            if let imageUrl = URL(string: imageUrlString){
-                let task = URLSession.shared.dataTask(with: imageUrl){(data,response,error)in
-                    if let dataa = data{
-                        if let image = UIImage(data: dataa){
-                            DispatchQueue.main.async {
-                                cell.anhNhom.image = image
-                            }
-                        }
-                    }
-                }
-                task.resume()
-            }
-        }
+        Enum.setImageFromURL(urlString: imageUrlString, imageView: cell.anhNhom)
         return cell
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

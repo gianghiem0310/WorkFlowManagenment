@@ -25,20 +25,7 @@ class CongViecController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.deadline.text = data.deadline
         cell.nhomCongViec.text = data.titleGroup
         let imageUrlString = data.image
-        if imageUrlString != "NULL"{
-            if let imageUrl = URL(string: imageUrlString){
-                let task = URLSession.shared.dataTask(with: imageUrl){(data,response,error)in
-                    if let dataa = data{
-                        if let image = UIImage(data: dataa){
-                            DispatchQueue.main.async {
-                                cell.anhCongViec.image = image
-                            }
-                        }
-                    }
-                }
-                task.resume()
-            }
-        }
+        Enum.setImageFromURL(urlString: imageUrlString, imageView: cell.anhCongViec)
         return cell
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

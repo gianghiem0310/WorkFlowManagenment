@@ -209,20 +209,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
             soLuong = String(nhomEdit.quantity)
             tenNhom = nhomEdit.title
             let imageUrlString = nhomEdit.image
-            if imageUrlString != "NULL"{
-                if let imageUrl = URL(string: imageUrlString){
-                    let task = URLSession.shared.dataTask(with: imageUrl){(data,response,error)in
-                        if let dataa = data{
-                            if let image = UIImage(data: dataa){
-                                DispatchQueue.main.async {
-                                    self.imageNhom.image = image
-                                }
-                            }
-                        }
-                    }
-                    task.resume()
-                }
-            }
+            Enum.setImageFromURL(urlString: imageUrlString, imageView: self.imageNhom)
         }
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
