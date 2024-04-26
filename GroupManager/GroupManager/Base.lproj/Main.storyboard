@@ -93,11 +93,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="M5d-Gj-VAX">
+                            <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="M5d-Gj-VAX">
                                 <rect key="frame" x="10" y="98" width="394" height="220"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="220" id="mZK-AV-ygA"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="QzP-Ss-o9l" appends="YES" id="AbH-zn-ztv"/>
+                                </connections>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="g7A-mn-lwL">
                                 <rect key="frame" x="10" y="338" width="394" height="139"/>
@@ -111,7 +115,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nhập tên nhóm..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s9A-n8-B5V">
                                         <rect key="frame" x="0.0" y="30.5" width="394" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Số lượng thành viên tối đa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlK-a1-E3j">
                                         <rect key="frame" x="0.0" y="74.5" width="197.5" height="20.5"/>
@@ -122,7 +126,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nhập số lượng" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S7L-Wr-tvJ">
                                         <rect key="frame" x="0.0" y="105" width="394" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                 </subviews>
                                 <constraints>
@@ -150,10 +154,24 @@
                                 <action selector="cancel:" destination="7cJ-iR-mn6" id="YPG-I1-8Z9"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Xong" id="Gt2-q7-OKr"/>
+                        <barButtonItem key="rightBarButtonItem" title="Xong" id="Gt2-q7-OKr">
+                            <connections>
+                                <action selector="done:" destination="7cJ-iR-mn6" id="GTe-rs-6o2"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageNhom" destination="M5d-Gj-VAX" id="wmg-l6-qc0"/>
+                        <outlet property="inputSoLuong" destination="S7L-Wr-tvJ" id="qNq-Eu-gA5"/>
+                        <outlet property="inputTen" destination="s9A-n8-B5V" id="hyY-Tj-7PC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ve7-dY-s5d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="QzP-Ss-o9l">
+                    <connections>
+                        <action selector="chooseImage:" destination="7cJ-iR-mn6" id="BSu-D5-fZo"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1591.304347826087" y="3732.5892857142853"/>
         </scene>
@@ -609,7 +627,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="anhNhom" destination="gEr-Ev-Hny" id="oXI-Tv-72E"/>
+                                            <outlet property="anhNhom" destination="gEr-Ev-Hny" id="p0N-QF-ZGe"/>
+                                            <outlet property="soLuong" destination="Ugo-Uq-3VS" id="5ic-M0-Lqi"/>
+                                            <outlet property="tenNhom" destination="dMA-mY-mGZ" id="yew-h3-kZF"/>
                                             <segue destination="Hpt-wy-8E5" kind="presentation" modalPresentationStyle="fullScreen" id="nFL-0e-BXZ"/>
                                         </connections>
                                     </tableViewCell>
@@ -652,21 +672,21 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="congViecCell" rowHeight="140" id="bBT-nA-kfU" customClass="CongViecCell" customModule="GroupManager" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="140"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="congViecCaNhanCell" rowHeight="120" id="bBT-nA-kfU" customClass="CongViecCaNhanCell" customModule="GroupManager" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bBT-nA-kfU" id="9qT-Q1-2PW">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="6bK-NR-QJP">
-                                                    <rect key="frame" x="10" y="10" width="140" height="120"/>
+                                                    <rect key="frame" x="10" y="10" width="116.5" height="100"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="6bK-NR-QJP" secondAttribute="height" multiplier="7:6" id="wWn-o8-8su"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="eLk-bx-u1W">
-                                                    <rect key="frame" x="160" y="10" width="244" height="102"/>
+                                                    <rect key="frame" x="136.5" y="10" width="267.5" height="102"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Djw-Kj-hjq">
                                                             <rect key="frame" x="0.0" y="0.0" width="209.5" height="71.5"/>
@@ -710,6 +730,13 @@
                                                 <constraint firstItem="6bK-NR-QJP" firstAttribute="leading" secondItem="9qT-Q1-2PW" secondAttribute="leading" constant="10" id="u66-52-2Lo"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="anhCongViec" destination="6bK-NR-QJP" id="LMe-Py-qNt"/>
+                                            <outlet property="deadline" destination="jcu-nN-MEN" id="bJz-MW-2BR"/>
+                                            <outlet property="nhomCongViec" destination="vPg-b7-1CX" id="YBV-pr-aEL"/>
+                                            <outlet property="tenCongViec" destination="ATk-hI-Pip" id="5v5-Xa-UwG"/>
+                                            <outlet property="trangThai" destination="2Gf-md-pIJ" id="DpW-Du-DSj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
