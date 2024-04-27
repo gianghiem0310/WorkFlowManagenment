@@ -15,7 +15,11 @@ class NhomCell: UITableViewCell {
     
     @IBOutlet weak var soLuong: UILabel!
     
-    
+    @IBAction func xemChiTiet(_ sender: UIButton) {
+        let storyboard = Enum.STORYBOARD
+        
+    }
+    var data:Group?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

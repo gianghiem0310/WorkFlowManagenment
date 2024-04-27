@@ -16,3 +16,10 @@ extension Job{
         return ["id":id, "idDeadline":idDeadline,"title":title,"image":image,"quantity":quantity,"description": description,"deadline":deadline,"point":point,"status":status,"titleGroup":titleGroup,"titleDeadline":titleDeadline]
     }
 }
+extension Deadline{
+    func toDictionary() -> [String:Any] {
+        return ["id":id,"idGroup":idGroup,"deadline":deadline,"quantity":quantity,"status":status]
+    }
+}
+
+

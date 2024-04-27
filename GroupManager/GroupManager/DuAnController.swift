@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import FirebaseDatabase
 class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
    
@@ -76,6 +76,9 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
             guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? DuAnCell else{
                 return UITableViewCell()
             }
+            let data = mangProject[indexPath.row]
+            cell.quantity.text = String(data.quantity)
+            cell.title.text = data.deadline
             return cell
         }
         else{
@@ -120,15 +123,63 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         dismiss(animated: true, completion: nil)
     }
     var choose = true
-    var mangProject = [1,2,3,4,5,6]
+    var mangProject:[Deadline] = []
     var mangMember = [1,2,3,4,5,6]
-    
+    var group:Group?
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
         tableView.delegate = self
+        tableView.dataSource = self
+        
         // Do any additional setup after loading the view.
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let group = group{
+            if group.image != "NULL"{
+                Enum.setImageFromURL(urlString: group.image, imageView: imageView)
+            }
+            title = group.title
+            getDataForTable(idGroup: group.id)
+        }
+    }
+    func thongBao(message: String){
+        let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    func getDataForTable(idGroup: Int) {
+        mangProject.removeAll()
+        tableView.reloadData()
+        let database = Enum.DB_REALTIME
+        if choose {
+            database.child(Enum.DEADLINE_TABLE).child("\(idGroup)").observe(DataEventType.value){
+                snapshot in
+                self.mangProject.removeAll()
+                self.tableView.reloadData()
+                if snapshot.childrenCount > 0{
+                    for child in snapshot.children{
+                        if let childSnap = child as? DataSnapshot {
+                            if let object = childSnap.value as? NSDictionary{
+                                let id = object["id"] as? Int ?? -1
+                                let idGroup = object["idGroup"] as? Int ?? -1
+                                let deadline = object["deadline"] as? String ?? ""
+                                let quantity = object["quantity"] as? Int ?? -1
+                                let status = object["status"] as? Bool ?? true
+                                let value = Deadline(id: id, idGroup: idGroup, deadline: deadline, quantity: quantity, status: status)
+                                self.mangProject.append(value)
+                                self.tableView.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            
+        }
     }
     
 

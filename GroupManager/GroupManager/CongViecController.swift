@@ -56,8 +56,12 @@ class CongViecController: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        getDataForTableView()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getDataForTableView()
     }
     func getDataForTableView(){
         let database = Enum.DB_REALTIME

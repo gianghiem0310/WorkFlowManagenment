@@ -90,14 +90,12 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
             if let quantity = Int(soLuong){
                 if !tenNhom.isEmpty && !soLuong.isEmpty
                     {
-                          
                     let storage = Enum.DB_STORAGE
                     if let image = imageLayRa{
                         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                             return
                         }
-                        
-                        let imageName = "Nhom\(idNhom).jpeg"
+                        let imageName = "Nhom\(self.nhomEdit?.id).jpeg"
                         let imageRef = storage.child("images/\(imageName)")
                         let uploadTask = imageRef.putData(imageData,metadata: nil){
                             (metadata,error) in
@@ -136,7 +134,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                         if let nhomEdit = nhomEdit{
                             let nhom = Group(id: nhomEdit.id, title: tenNhom, image: nhomEdit.image, quantity: quantity, captain: nhomEdit.captain, status: nhomEdit.status)
                             let database = Enum.DB_REALTIME
-                            database.child(Enum.GROUP_TABLE).child("\(idNhom)").setValue(nhom.toDictionary()){
+                            database.child(Enum.GROUP_TABLE).child("\(nhom.id)").setValue(nhom.toDictionary()){
                             (result,error) in
                             guard error != nil else{
                                 self.thongBao(message: "Chỉnh sửa thất bại!")

@@ -26,7 +26,7 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         
         cell.tenNhom.text = data.title
         cell.soLuong.text = "\(data.quantity) Thành viên"
-        
+        cell.data = data
         let imageUrlString = data.image
         Enum.setImageFromURL(urlString: imageUrlString, imageView: cell.anhNhom)
         return cell
@@ -78,8 +78,16 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
     }
     // Override to support conditional editing of the table view.
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let cell = tableView.cellForRow(at: indexPath) as! NhomCell
+        let storyboard = Enum.STORYBOARD
+        if let des = storyboard.instantiateViewController(identifier: "duAnController") as? DuAnController{
+            let navigation = UINavigationController(rootViewController: des)
+             navigation.modalPresentationStyle = .fullScreen
+            des.group = cell.data
+             self.present(navigation, animated: true, completion: nil)
+        }
     }
   
     
@@ -89,11 +97,18 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
         tableView.delegate = self
+        tableView.dataSource = self
+      
         
         // Do any additional setup after loading the view.
         
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.mangNhom.removeAll()
+        tableView.reloadData()
         let database = Enum.DB_REALTIME
         database.child(Enum.GROUP_JOIN_TABLE).child("15").observe(DataEventType.value){ (snapshot) in
             self.mangNhom.removeAll()
@@ -134,18 +149,23 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
             
             }
         }
-        
     }
-    
+   
 
-    /*
+   
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        // Get the new view controller using segue.destination.
+//        // Pass the selected object to the new view controller.
+//
+//        if segue.identifier == "segueGroup"{
+//            if let viewConB = segue.destination as? DuAnController{
+//                viewConB.group = data
+//            }
+//        }
+//    }
+    
 
 }

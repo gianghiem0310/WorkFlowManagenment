@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D4B16A62BDCC731000CB1BE /* TaoCongViecController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B16A52BDCC731000CB1BE /* TaoCongViecController.swift */; };
-		4D4B16A92BDCC7BE000CB1BE /* DangCanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B16A82BDCC7BE000CB1BE /* DangCanCell.swift */; };
-		4D4B16AC2BDCC7D4000CB1BE /* ChotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B16AB2BDCC7D4000CB1BE /* ChotCell.swift */; };
-		C1045BE22BD6299B00B89F5D /* CongViec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1045BE12BD6299B00B89F5D /* CongViec.swift */; };
 		C19343C72BD79B0C009217CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C19343C62BD79B0C009217CF /* GoogleService-Info.plist */; };
 		C19343CB2BD79D4A009217CF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C19343CA2BD79D4A009217CF /* FirebaseAnalytics */; };
 		C19343CD2BD79D4A009217CF /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C19343CC2BD79D4A009217CF /* FirebaseStorage */; };
@@ -39,6 +35,11 @@
 		C1B44FED2BD7566400996CA6 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B44FEC2BD7566400996CA6 /* Enum.swift */; };
 		C1E521762BD76F97009F5665 /* CongViecCaNhanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E521752BD76F97009F5665 /* CongViecCaNhanCell.swift */; };
 		C1E521792BD78BC7009F5665 /* TaoDuAnController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E521782BD78BC7009F5665 /* TaoDuAnController.swift */; };
+		C1E7AEF62BDF612000170EC7 /* CongViec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E7AEF52BDF612000170EC7 /* CongViec.swift */; };
+		C1E7AEFB2BDF62FC00170EC7 /* DangCanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E7AEF92BDF62FC00170EC7 /* DangCanCell.swift */; };
+		C1E7AEFC2BDF62FC00170EC7 /* ChotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E7AEFA2BDF62FC00170EC7 /* ChotCell.swift */; };
+		C1E7AEFF2BDF632200170EC7 /* TaoCongViecController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E7AEFE2BDF632200170EC7 /* TaoCongViecController.swift */; };
+		C1E7AF022BDF6BFB00170EC7 /* Deadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E7AF012BDF6BFB00170EC7 /* Deadline.swift */; };
 		C1EC26E92BDA3A4600FFAF50 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EC26E82BDA3A4500FFAF50 /* Job.swift */; };
 		C1EE84F92BD4F55D00547392 /* CongViecCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EE84F82BD4F55D00547392 /* CongViecCell.swift */; };
 		C1EE84FC2BD4F57C00547392 /* DanhSachCongViecController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EE84FB2BD4F57C00547392 /* DanhSachCongViecController.swift */; };
@@ -48,10 +49,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4D4B16A52BDCC731000CB1BE /* TaoCongViecController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaoCongViecController.swift; sourceTree = "<group>"; };
-		4D4B16A82BDCC7BE000CB1BE /* DangCanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DangCanCell.swift; sourceTree = "<group>"; };
-		4D4B16AB2BDCC7D4000CB1BE /* ChotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChotCell.swift; sourceTree = "<group>"; };
-		C1045BE12BD6299B00B89F5D /* CongViec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongViec.swift; sourceTree = "<group>"; };
 		C19343C62BD79B0C009217CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C19343D52BD7A673009217CF /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		C1A0C2E82BD4BAA500BD78BA /* GroupManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +74,11 @@
 		C1B44FEC2BD7566400996CA6 /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		C1E521752BD76F97009F5665 /* CongViecCaNhanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongViecCaNhanCell.swift; sourceTree = "<group>"; };
 		C1E521782BD78BC7009F5665 /* TaoDuAnController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaoDuAnController.swift; sourceTree = "<group>"; };
+		C1E7AEF52BDF612000170EC7 /* CongViec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongViec.swift; sourceTree = "<group>"; };
+		C1E7AEF92BDF62FC00170EC7 /* DangCanCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DangCanCell.swift; sourceTree = "<group>"; };
+		C1E7AEFA2BDF62FC00170EC7 /* ChotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChotCell.swift; sourceTree = "<group>"; };
+		C1E7AEFE2BDF632200170EC7 /* TaoCongViecController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaoCongViecController.swift; sourceTree = "<group>"; };
+		C1E7AF012BDF6BFB00170EC7 /* Deadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deadline.swift; sourceTree = "<group>"; };
 		C1EC26E82BDA3A4500FFAF50 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		C1EE84F82BD4F55D00547392 /* CongViecCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongViecCell.swift; sourceTree = "<group>"; };
 		C1EE84FB2BD4F57C00547392 /* DanhSachCongViecController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanhSachCongViecController.swift; sourceTree = "<group>"; };
@@ -104,9 +106,10 @@
 		C1045BE02BD6297700B89F5D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C1045BE12BD6299B00B89F5D /* CongViec.swift */,
+				C1E7AEF52BDF612000170EC7 /* CongViec.swift */,
 				C19343D52BD7A673009217CF /* Group.swift */,
 				C1EC26E82BDA3A4500FFAF50 /* Job.swift */,
+				C1E7AF012BDF6BFB00170EC7 /* Deadline.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 		C1A0C3042BD4BC1E00BD78BA /* MainActivity */ = {
 			isa = PBXGroup;
 			children = (
+				C1E7AEFE2BDF632200170EC7 /* TaoCongViecController.swift */,
 				C1A0C3112BD4C2AE00BD78BA /* DisplayManagerController.swift */,
 				C1A0C3142BD4C66100BD78BA /* NhomController.swift */,
 				C1A0C3172BD4C67700BD78BA /* CongViecController.swift */,
@@ -185,6 +189,8 @@
 		C1A0C3232BD4CE2700BD78BA /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C1E7AEFA2BDF62FC00170EC7 /* ChotCell.swift */,
+				C1E7AEF92BDF62FC00170EC7 /* DangCanCell.swift */,
 				C1A0C3242BD4CE4200BD78BA /* NhomCell.swift */,
 				C1A0C32C2BD4EA4800BD78BA /* DuAnCell.swift */,
 				C1A0C32F2BD4EA5D00BD78BA /* ThanhVienCell.swift */,
@@ -295,21 +301,25 @@
 				C1A0C3252BD4CE4200BD78BA /* NhomCell.swift in Sources */,
 				C19343D62BD7A673009217CF /* Group.swift in Sources */,
 				C1A0C31B2BD4C68800BD78BA /* ThongBaoController.swift in Sources */,
+				C1E7AEFC2BDF62FC00170EC7 /* ChotCell.swift in Sources */,
 				C1E521762BD76F97009F5665 /* CongViecCaNhanCell.swift in Sources */,
+				C1E7AF022BDF6BFB00170EC7 /* Deadline.swift in Sources */,
 				C1A0C2EC2BD4BAA500BD78BA /* AppDelegate.swift in Sources */,
 				C1EE84FF2BD4F7EA00547392 /* ChiTietCongViecController.swift in Sources */,
 				C1A0C32A2BD4E0F900BD78BA /* DuAnController.swift in Sources */,
 				C1A0C2EE2BD4BAA500BD78BA /* SceneDelegate.swift in Sources */,
 				C1EE85052BD4FDDB00547392 /* FragmentThanhVienCongViecController.swift in Sources */,
 				C1EC26E92BDA3A4600FFAF50 /* Job.swift in Sources */,
+				C1E7AEFB2BDF62FC00170EC7 /* DangCanCell.swift in Sources */,
 				C1A0C31E2BD4C69700BD78BA /* CaNhanController.swift in Sources */,
+				C1E7AEFF2BDF632200170EC7 /* TaoCongViecController.swift in Sources */,
 				C1A0C32D2BD4EA4800BD78BA /* DuAnCell.swift in Sources */,
 				C1E521792BD78BC7009F5665 /* TaoDuAnController.swift in Sources */,
+				C1E7AEF62BDF612000170EC7 /* CongViec.swift in Sources */,
 				C1A0C3182BD4C67700BD78BA /* CongViecController.swift in Sources */,
 				C1A0C3122BD4C2AE00BD78BA /* DisplayManagerController.swift in Sources */,
 				C1A0C3152BD4C66100BD78BA /* NhomController.swift in Sources */,
 				C1A0C3212BD4CB4800BD78BA /* TaoNhomController.swift in Sources */,
-				C1045BE22BD6299B00B89F5D /* CongViec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
