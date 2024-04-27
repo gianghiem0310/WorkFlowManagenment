@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DangNhapController: UIViewController {
+class DangNhapController: UIViewController,UITextFieldDelegate {
 
     @IBOutlet weak var imageLogo: UIImageView!
     
@@ -23,6 +23,8 @@ class DangNhapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        txtTenDangNhap.delegate = self
+        txtMatKhau.delegate = self
         let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGes)
         
@@ -40,6 +42,11 @@ class DangNhapController: UIViewController {
     }
     @objc func hideKeyboard(){
         view.endEditing(true)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        txtTenDangNhap.resignFirstResponder()
+        txtMatKhau.resignFirstResponder()
+        return true
     }
     
    

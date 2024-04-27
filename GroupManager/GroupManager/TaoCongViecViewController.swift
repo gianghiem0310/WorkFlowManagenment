@@ -23,6 +23,10 @@ class TaoCongViecViewController: UIViewController,UITextFieldDelegate,UIImagePic
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        txtTieuDe.delegate = self
+        txtMoTa.delegate = self
+        txtDiemFit.delegate = self
+        txtSoLuongCan.delegate = self
         
         let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGes)

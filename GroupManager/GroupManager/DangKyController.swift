@@ -29,7 +29,11 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
   
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        txtTenDangNhap.delegate = self
+        txtMatKhau.delegate = self
+        txtTenNguoiDung.delegate = self
+        txtSoDienThoai.delegate = self
+        txtEmail.delegate = self
         //Ẩn bàn phím khi nhấn bất cứ đâu ở màn hinh
         let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGes)
