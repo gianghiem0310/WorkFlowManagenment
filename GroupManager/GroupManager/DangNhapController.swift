@@ -7,32 +7,29 @@
 
 import UIKit
 
-class DangNhapController: UIViewController {
+class DangNhapController: UIViewController,UITextFieldDelegate {
 
+    @IBOutlet weak var imageLogo: UIImageView!
     
-    @IBAction func btnLogin(_ sender: UIButton) {
-       
-        
-        UserDefaults.standard.setValue(true, forKey: Enum.ISLOGIN)
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let des = storyboard.instantiateViewController(identifier: "DisplayManager") as? DisplayManagerController{
-            des.modalPresentationStyle = .fullScreen
-            present(des, animated: true, completion: nil)
-        }
-        
-    }
+    @IBOutlet weak var txtTenDangNhap: UITextField!
     
-    @IBOutlet weak var logoApp: UIImageView!
+    @IBOutlet weak var txtMatKhau: UITextField!
     
-    @IBOutlet weak var tenDangNhap: UITextField!
+    
+    
+    @IBOutlet weak var mauBtnLogin: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        logoApp.layer.cornerRadius = logoApp.frame.width / 2
-
         // Do any additional setup after loading the view.
+        txtTenDangNhap.delegate = self
+        txtMatKhau.delegate = self
+        let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGes)
+        
+        
+        
         if UserDefaults.standard.bool(forKey: "isLogin"){
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if let des = storyboard.instantiateViewController(identifier: "DisplayManager") as? DisplayManagerController{
@@ -40,20 +37,72 @@ class DangNhapController: UIViewController {
                 present(des, animated: true, completion: nil)
             }
         }
+        customGiaoDien()
         
-        
+    }
+    @objc func hideKeyboard(){
+        view.endEditing(true)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        txtTenDangNhap.resignFirstResponder()
+        txtMatKhau.resignFirstResponder()
+        return true
+    }
+    
+   
+    @IBAction func btnLogin(_ sender: UIButton) {
+        UserDefaults.standard.setValue(true, forKey: Enum.ISLOGIN)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let des = storyboard.instantiateViewController(identifier: "DisplayManager") as? DisplayManagerController{
+            des.modalPresentationStyle = .fullScreen
+            present(des, animated: true, completion: nil)
+        }
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func btnQuenMatKhau(_ sender: UIButton) {
     }
-    */
+    
+    @IBAction func btnDangKyTaiKhoan(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "signup")
+        vc.modalPresentationStyle = .overFullScreen
+       present(vc, animated: true, completion: nil)
+    }
+    
+    func customGiaoDien(){
+        imageLogo.layer.cornerRadius = imageLogo.frame.size.width / 2
+        imageLogo.clipsToBounds = true
+        
+        txtTenDangNhap.layer.borderColor = UIColor.gray.cgColor
+        txtTenDangNhap.layer.borderWidth = 2
+        txtTenDangNhap.layer.cornerRadius = 10
+        
 
+        txtMatKhau.layer.borderColor = UIColor.gray.cgColor
+        txtMatKhau.layer.borderWidth = 2
+        txtMatKhau.layer.cornerRadius = 10
+        
+        
+        
+//        mauBtnLogin.applyGradient(colors: [UIColor(red: 0.00, green: 0.60, blue: 0.96, alpha: 1.00).cgColor,UIColor(red: 0.00, green: 0.85, blue: 0.67, alpha: 1.00).cgColor ])
+//        mauBtnLogin.layer.cornerRadius = 10
+//        mauBtnLogin.layer.masksToBounds = true
+    //}
+ 
+
+}
+
+//extension UIButton {
+//    func applyGradient(colors : [CGColor]) {
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = colors
+//        gradientLayer.cornerRadius = layer.cornerRadius
+//        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+//        gradientLayer.endPoint = CGPoint(x: 1, y: 0)
+//        gradientLayer.frame = bounds
+//        layer.insertSublayer(gradientLayer, at: 0)
+//
+//    }
 }
 
