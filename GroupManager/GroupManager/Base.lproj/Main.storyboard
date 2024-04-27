@@ -393,7 +393,7 @@
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="aaaaaaaaaaaaaaaaaaaaaaaaaa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="loQ-xH-2vj">
                                                                     <rect key="frame" x="55" y="0.0" width="319" height="45"/>
-                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -1240,7 +1240,7 @@
         <image name="bag" catalog="system" width="128" height="128"/>
         <image name="bell" catalog="system" width="128" height="124"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
-        <image name="chevron.left" catalog="system" width="96" height="128"/>
+        <image name="chevron.left" catalog="system" width="32" height="32"/>
         <image name="default" width="245.33332824707031" height="138"/>
         <image name="list.bullet.rectangle" catalog="system" width="128" height="93"/>
         <image name="logoApp" width="166.66667175292969" height="166.66667175292969"/>
