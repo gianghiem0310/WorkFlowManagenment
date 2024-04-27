@@ -14,7 +14,6 @@ class DangNhapController: UIViewController {
        
         
         UserDefaults.standard.setValue(true, forKey: Enum.ISLOGIN)
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let des = storyboard.instantiateViewController(identifier: "DisplayManager") as? DisplayManagerController{
             des.modalPresentationStyle = .fullScreen
