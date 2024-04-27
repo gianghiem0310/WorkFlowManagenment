@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D4B16A62BDCC731000CB1BE /* TaoCongViecController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B16A52BDCC731000CB1BE /* TaoCongViecController.swift */; };
+		4D4B16A92BDCC7BE000CB1BE /* DangCanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B16A82BDCC7BE000CB1BE /* DangCanCell.swift */; };
+		4D4B16AC2BDCC7D4000CB1BE /* ChotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B16AB2BDCC7D4000CB1BE /* ChotCell.swift */; };
 		C1045BE22BD6299B00B89F5D /* CongViec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1045BE12BD6299B00B89F5D /* CongViec.swift */; };
 		C19343C72BD79B0C009217CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C19343C62BD79B0C009217CF /* GoogleService-Info.plist */; };
 		C19343CB2BD79D4A009217CF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C19343CA2BD79D4A009217CF /* FirebaseAnalytics */; };
@@ -45,6 +48,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D4B16A52BDCC731000CB1BE /* TaoCongViecController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaoCongViecController.swift; sourceTree = "<group>"; };
+		4D4B16A82BDCC7BE000CB1BE /* DangCanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DangCanCell.swift; sourceTree = "<group>"; };
+		4D4B16AB2BDCC7D4000CB1BE /* ChotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChotCell.swift; sourceTree = "<group>"; };
 		C1045BE12BD6299B00B89F5D /* CongViec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongViec.swift; sourceTree = "<group>"; };
 		C19343C62BD79B0C009217CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C19343D52BD7A673009217CF /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
