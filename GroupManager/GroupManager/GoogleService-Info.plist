@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBHqQuPmpW-XFe0p52pTAG8XbEpLdvZxBM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>745413537622</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>vn.tdc.edu.GroupManager</string>
+	<key>PROJECT_ID</key>
+	<string>workflow-69592</string>
+	<key>STORAGE_BUCKET</key>
+	<string>workflow-69592.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:745413537622:ios:690d95af36e6a4509eb0f7</string>
+</dict>
+</plist>
