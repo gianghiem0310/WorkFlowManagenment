@@ -192,10 +192,10 @@
             </objects>
             <point key="canvasLocation" x="-4749.275362318841" y="2300.2232142857142"/>
         </scene>
-        <!--Tao Cong Viec View Controller-->
+        <!--Tao Cong Viec Controller-->
         <scene sceneID="AxG-fI-SzR">
             <objects>
-                <viewController id="F4Z-Kn-joM" customClass="TaoCongViecViewController" customModule="GroupManager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="F4Z-Kn-joM" customClass="TaoCongViecController" customModule="GroupManager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jk3-L3-gtg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -273,7 +273,7 @@
                                         <rect key="frame" x="0.0" y="197.5" width="394" height="34"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mô tả" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylf-KU-UoK">
                                         <rect key="frame" x="0.0" y="240.5" width="394" height="19.5"/>
@@ -285,7 +285,7 @@
                                         <rect key="frame" x="0.0" y="269" width="394" height="34"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Điểm fit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95C-hg-ZcF">
                                         <rect key="frame" x="0.0" y="312" width="394" height="19.5"/>
