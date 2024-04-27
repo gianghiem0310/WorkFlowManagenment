@@ -7,6 +7,10 @@
 
 import UIKit
 
+
+
+
+
 class ChotCell: UITableViewCell {
 
     override func awakeFromNib() {
