@@ -9,6 +9,11 @@ import UIKit
 
 class FragmentThanhVienCongViecController: UIViewController {
 
+    @IBOutlet weak var imageAvater: UIImageView!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var trangthai: UILabel!
+    @IBOutlet weak var thongBao: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

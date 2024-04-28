@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		955C64462BDE0B41001F64BD /* DoiMatKhauController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955C64452BDE0B41001F64BD /* DoiMatKhauController.swift */; };
 		956ED2E52BDCED120079D787 /* CapNhatThongTinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956ED2E42BDCED120079D787 /* CapNhatThongTinController.swift */; };
 		9579117B2BDA0DC80089EA21 /* ThongBaoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9579117A2BDA0DC80089EA21 /* ThongBaoCell.swift */; };
 		9579117E2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9579117D2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		955C64452BDE0B41001F64BD /* DoiMatKhauController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoiMatKhauController.swift; sourceTree = "<group>"; };
 		956ED2E42BDCED120079D787 /* CapNhatThongTinController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapNhatThongTinController.swift; sourceTree = "<group>"; };
 		9579117A2BDA0DC80089EA21 /* ThongBaoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThongBaoCell.swift; sourceTree = "<group>"; };
 		9579117D2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanhVienCongViecCell.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				C1EE85012BD4FCB700547392 /* FragmentChiTietCongViecController.swift */,
 				C1EE85042BD4FDDB00547392 /* FragmentThanhVienCongViecController.swift */,
 				956ED2E42BDCED120079D787 /* CapNhatThongTinController.swift */,
+				955C64452BDE0B41001F64BD /* DoiMatKhauController.swift */,
 			);
 			name = MainActivity;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				C1A0C3302BD4EA5D00BD78BA /* ThanhVienCell.swift in Sources */,
 				C1EE85022BD4FCB700547392 /* FragmentChiTietCongViecController.swift in Sources */,
 				C1B44FE92BD7563E00996CA6 /* ExtensionClass.swift in Sources */,
+				955C64462BDE0B41001F64BD /* DoiMatKhauController.swift in Sources */,
 				C1B44FED2BD7566400996CA6 /* Enum.swift in Sources */,
 				C1EE84F92BD4F55D00547392 /* CongViecCell.swift in Sources */,
 				C1A0C3062BD4BC4600BD78BA /* DangNhapController.swift in Sources */,

@@ -14,6 +14,9 @@ class CapNhatThongTinController: UIViewController,UITextFieldDelegate,UIImagePic
     @IBOutlet weak var txtSDT: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
     
+    @IBAction func back(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         txtTenNguoiDung.delegate = self
