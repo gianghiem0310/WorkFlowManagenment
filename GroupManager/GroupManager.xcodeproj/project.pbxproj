@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		956ED2E52BDCED120079D787 /* CapNhatThongTinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956ED2E42BDCED120079D787 /* CapNhatThongTinController.swift */; };
 		9579117B2BDA0DC80089EA21 /* ThongBaoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9579117A2BDA0DC80089EA21 /* ThongBaoCell.swift */; };
 		9579117E2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9579117D2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift */; };
 		C1045BE22BD6299B00B89F5D /* CongViec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1045BE12BD6299B00B89F5D /* CongViec.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		956ED2E42BDCED120079D787 /* CapNhatThongTinController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapNhatThongTinController.swift; sourceTree = "<group>"; };
 		9579117A2BDA0DC80089EA21 /* ThongBaoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThongBaoCell.swift; sourceTree = "<group>"; };
 		9579117D2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanhVienCongViecCell.swift; sourceTree = "<group>"; };
 		C1045BE12BD6299B00B89F5D /* CongViec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongViec.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				C1EE84FE2BD4F7EA00547392 /* ChiTietCongViecController.swift */,
 				C1EE85012BD4FCB700547392 /* FragmentChiTietCongViecController.swift */,
 				C1EE85042BD4FDDB00547392 /* FragmentThanhVienCongViecController.swift */,
+				956ED2E42BDCED120079D787 /* CapNhatThongTinController.swift */,
 			);
 			name = MainActivity;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				9579117E2BDA5A4F0089EA21 /* ThanhVienCongViecCell.swift in Sources */,
 				C1A0C31B2BD4C68800BD78BA /* ThongBaoController.swift in Sources */,
 				C1A0C2EC2BD4BAA500BD78BA /* AppDelegate.swift in Sources */,
+				956ED2E52BDCED120079D787 /* CapNhatThongTinController.swift in Sources */,
 				C1EE84FF2BD4F7EA00547392 /* ChiTietCongViecController.swift in Sources */,
 				C1A0C32A2BD4E0F900BD78BA /* DuAnController.swift in Sources */,
 				C1A0C2EE2BD4BAA500BD78BA /* SceneDelegate.swift in Sources */,
