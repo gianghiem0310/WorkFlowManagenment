@@ -21,8 +21,6 @@ class ThongBaoController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var thongBaoTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     let array = [thongBao(tenDeTai: "bachend", tenNhom: "DeadLine", ngayHetHan: "ngay:16/7/2024", tinhTrang: "sap hoan thanh", thongBao: "Nhắc bạn sắp đến hạn nộp ", hinh: "default"),thongBao(tenDeTai: "bachend", tenNhom: "DeadLine", ngayHetHan: "ngay:16/7/2024", tinhTrang: "sap hoan thanh", thongBao: "", hinh: "logoApp"),thongBao(tenDeTai: "bachend", tenNhom: "DeadLine", ngayHetHan: "ngay:16/7/2024", tinhTrang: "sap hoan thanh", thongBao: "Nhắc bạn sắp đến hạn nộp ", hinh: "logoApp"),thongBao(tenDeTai: "bachend", tenNhom: "DeadLine", ngayHetHan: "ngay:16/7/2024", tinhTrang: "sap hoan thanh", thongBao: "", hinh: "default")]

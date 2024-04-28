@@ -9,14 +9,15 @@ import UIKit
 
 class ThanhVienCongViecCell: UITableViewCell {
     
-
-    @IBOutlet weak var avatar: UIImageView!
+    @IBOutlet weak var imageAvatar: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var trangThai: UILabel!
+    @IBOutlet weak var ThongBao: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.imageAvatar.layer.cornerRadius = self.imageAvatar.frame.width / 2
+        self.imageAvatar.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
