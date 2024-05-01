@@ -45,6 +45,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                                     return
                                 }
                                     database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(nhom.id)").child("id").setValue(nhom.id)
+                                    database.child(Enum.MEMBER_TABLE).child("\(nhom.id)").child("\(self.idUser)").child("id").setValue(self.idUser)
                                 self.thongBao(message: "Tạo nhóm thành công!")
                                 self.inputTen.text = ""
                                 self.inputSoLuong.text = ""
@@ -73,6 +74,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                             return
                         }
                             database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(nhom.id)").child("id").setValue(nhom.id)
+                            database.child(Enum.MEMBER_TABLE).child("\(nhom.id)").child("\(self.idUser)").child("id").setValue(self.idUser)
                         self.thongBao(message: "Tạo nhóm thành công!")
                         self.inputTen.text = ""
                         self.inputSoLuong.text = ""

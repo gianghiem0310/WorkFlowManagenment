@@ -9,9 +9,13 @@ import UIKit
 
 class ThanhVienGroupCell: UITableViewCell {
 
+    @IBOutlet weak var avtThanhVien: UIImageView!
+    @IBOutlet weak var tenThanhVien: UILabel!
+    @IBOutlet weak var diemFit: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        avtThanhVien.layer.cornerRadius = avtThanhVien.frame.width / 2
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

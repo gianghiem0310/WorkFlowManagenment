@@ -7,7 +7,7 @@
 
 import UIKit
 import FirebaseDatabase
-class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate {
     
    
     @IBAction func tool(_ sender: UIBarButtonItem) {
@@ -34,13 +34,56 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         let alert = UIAlertController(title: "Thêm thành viên", message: nil, preferredStyle: .alert)
         alert.addTextField(configurationHandler: {
             textField in
-            textField.placeholder = "Nhập email"
+            textField.placeholder = "Nhập id"
             textField.borderStyle = .line
+            textField.delegate = self
         })
         let cancel = UIAlertAction(title: "Huỷ", style: .destructive, handler: nil)
         let okAction = UIAlertAction(title: "Đồng ý", style: .default, handler: {
             action in
-            
+            self.trangThaiKiemTra = true
+            if self.trangThaiKiemTra == true {
+                if let alert = alert.textFields {
+                    if let textF = alert.first{
+                        if let value = textF.text, !value.isEmpty{
+                            if let idReceiver = Int(value){
+                            let database = Enum.DB_REALTIME
+                                database.child(Enum.PROFILE_TABLE).child("\(idReceiver)").observe(DataEventType.value){
+                                snapshot in
+                                if snapshot.childrenCount > 0,self.trangThaiKiemTra == true {
+                                    if let child = snapshot.value as? NSDictionary{
+                                        if let group = self.group{
+                                            let content = "Nhóm trưởng mời bạn vào nhóm \(group.title)"
+                                            let type = Enum.THAM_GIA_GROUP
+                                            let date = Enum.getCurrentDateDDMMYYYY()
+                                            let newNotification = Notification(idSender: group.captain, idReceiver: idReceiver, content: content, type: type, idGroup: group.id, idDeadline: -1, idJob: -1, date: date)
+                                            if self.trangThaiKiemTra == true {
+                                                database.child(Enum.NOTIFICATION_TABLE).child("\(newNotification.idReceiver)").child("\(newNotification.idSender)").setValue(newNotification.toDictionary())
+                                                self.trangThaiKiemTra = false
+                                                self.thongBao(message: "Gửi lời mời thành công!")
+                                                textF.text = ""
+                                            }
+                                        }
+                                  
+                                      
+                                    }
+                                }
+                                self.thongBao(message: "Id không tồn tại!")
+                                self.trangThaiKiemTra = false
+                            }
+                          
+                            }else{
+                                self.thongBao(message: "Id phải là số")
+                                textF.text = ""
+                            }
+                        }else{
+                            self.thongBao(message: "Hãy nhập email!")
+                        }
+                        
+                    }
+                }
+                
+            }
         })
         alert.addAction(cancel)
         alert.addAction(okAction)
@@ -51,9 +94,15 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         switch sender.selectedSegmentIndex {
         case 0:
             choose = true
+            if let group = group{
+                getDataForTable(idGroup: group.id)
+            }
             tableView.reloadData()
         case 1:
             choose = false
+            if let group = group{
+                getDataForTable(idGroup: group.id)
+            }
             tableView.reloadData()
         default:
             choose = true
@@ -82,10 +131,14 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
             return cell
         }
         else{
-            let identifier = "memberProjectCell"
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? ThanhVienCell else{
+            let identifier = "memberCell"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? ThanhVienGroupCell else{
                 return UITableViewCell()
             }
+            let data = mangMember[indexPath.row]
+            Enum.setImageFromURL(urlString: data.avatar, imageView: cell.avtThanhVien)
+            cell.tenThanhVien.text = data.name
+            cell.diemFit.text = "\(data.fit) fit"
             return cell
         }
        
@@ -123,8 +176,9 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         dismiss(animated: true, completion: nil)
     }
     var choose = true
+    var trangThaiKiemTra = false
     var mangProject:[Deadline] = []
-    var mangMember = [1,2,3,4,5,6]
+    var mangMember:[Profile] = []
     var group:Group?
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -158,6 +212,7 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         if choose {
             database.child(Enum.DEADLINE_TABLE).child("\(idGroup)").observe(DataEventType.value){
                 snapshot in
+                self.mangMember.removeAll()
                 self.mangProject.removeAll()
                 self.tableView.reloadData()
                 if snapshot.childrenCount > 0{
@@ -178,7 +233,39 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                 }
             }
         } else {
-            
+            database.child(Enum.MEMBER_TABLE).child("\(idGroup)").observe(DataEventType.value){
+                snapshot in
+              
+                self.mangMember.removeAll()
+                self.mangProject.removeAll()
+                self.tableView.reloadData()
+                if snapshot.childrenCount > 0{
+                    for child in snapshot.children{
+                        if let childSnap = child as? DataSnapshot{
+                            if let value = childSnap.value as? NSDictionary{
+                                let id = value["id"] as? Int ?? -1
+                                if id != -1 {
+                                    database.child(Enum.PROFILE_TABLE).child("\(id)").observe(DataEventType.value){
+                                        (snapshot) in
+                                        if let object = snapshot.value as? NSDictionary{
+                                            let idAccount = object["idAccount"] as? Int ?? -1
+                                            let avatar = object["avatar"] as? String ?? ""
+                                            let name = object["name"] as? String ?? ""
+                                            let phone = object["phone"] as? String ?? ""
+                                            let email = object["email"] as? String ?? ""
+                                            let fit = object["fit"] as? Int ?? -1
+                                            let profile = Profile(idAccount: idAccount, avatar: avatar, name: name, phone: phone, email: email, fit: fit)
+                                            self.mangMember.append(profile)
+                                            self.tableView.reloadData()
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     

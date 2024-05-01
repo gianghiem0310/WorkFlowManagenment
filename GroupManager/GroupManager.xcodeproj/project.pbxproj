@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C13AAC1B2BE259EC003927AB /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13AAC1A2BE259EC003927AB /* Notification.swift */; };
+		C146F8992BE0F11A00F68394 /* ThanhVienGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146F8982BE0F11A00F68394 /* ThanhVienGroupCell.swift */; };
+		C146F89C2BE0F41600F68394 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146F89B2BE0F41600F68394 /* Profile.swift */; };
 		C19343C72BD79B0C009217CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C19343C62BD79B0C009217CF /* GoogleService-Info.plist */; };
 		C19343CB2BD79D4A009217CF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C19343CA2BD79D4A009217CF /* FirebaseAnalytics */; };
 		C19343CD2BD79D4A009217CF /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C19343CC2BD79D4A009217CF /* FirebaseStorage */; };
@@ -49,6 +52,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C13AAC1A2BE259EC003927AB /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		C146F8982BE0F11A00F68394 /* ThanhVienGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanhVienGroupCell.swift; sourceTree = "<group>"; };
+		C146F89B2BE0F41600F68394 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		C19343C62BD79B0C009217CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C19343D52BD7A673009217CF /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		C1A0C2E82BD4BAA500BD78BA /* GroupManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +116,8 @@
 				C19343D52BD7A673009217CF /* Group.swift */,
 				C1EC26E82BDA3A4500FFAF50 /* Job.swift */,
 				C1E7AF012BDF6BFB00170EC7 /* Deadline.swift */,
+				C146F89B2BE0F41600F68394 /* Profile.swift */,
+				C13AAC1A2BE259EC003927AB /* Notification.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -196,6 +204,7 @@
 				C1A0C32F2BD4EA5D00BD78BA /* ThanhVienCell.swift */,
 				C1EE84F82BD4F55D00547392 /* CongViecCell.swift */,
 				C1E521752BD76F97009F5665 /* CongViecCaNhanCell.swift */,
+				C146F8982BE0F11A00F68394 /* ThanhVienGroupCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -298,6 +307,7 @@
 				C1EE84F92BD4F55D00547392 /* CongViecCell.swift in Sources */,
 				C1A0C3062BD4BC4600BD78BA /* DangNhapController.swift in Sources */,
 				C1EE84FC2BD4F57C00547392 /* DanhSachCongViecController.swift in Sources */,
+				C13AAC1B2BE259EC003927AB /* Notification.swift in Sources */,
 				C1A0C3252BD4CE4200BD78BA /* NhomCell.swift in Sources */,
 				C19343D62BD7A673009217CF /* Group.swift in Sources */,
 				C1A0C31B2BD4C68800BD78BA /* ThongBaoController.swift in Sources */,
@@ -308,12 +318,14 @@
 				C1EE84FF2BD4F7EA00547392 /* ChiTietCongViecController.swift in Sources */,
 				C1A0C32A2BD4E0F900BD78BA /* DuAnController.swift in Sources */,
 				C1A0C2EE2BD4BAA500BD78BA /* SceneDelegate.swift in Sources */,
+				C146F8992BE0F11A00F68394 /* ThanhVienGroupCell.swift in Sources */,
 				C1EE85052BD4FDDB00547392 /* FragmentThanhVienCongViecController.swift in Sources */,
 				C1EC26E92BDA3A4600FFAF50 /* Job.swift in Sources */,
 				C1E7AEFB2BDF62FC00170EC7 /* DangCanCell.swift in Sources */,
 				C1A0C31E2BD4C69700BD78BA /* CaNhanController.swift in Sources */,
 				C1E7AEFF2BDF632200170EC7 /* TaoCongViecController.swift in Sources */,
 				C1A0C32D2BD4EA4800BD78BA /* DuAnCell.swift in Sources */,
+				C146F89C2BE0F41600F68394 /* Profile.swift in Sources */,
 				C1E521792BD78BC7009F5665 /* TaoDuAnController.swift in Sources */,
 				C1E7AEF62BDF612000170EC7 /* CongViec.swift in Sources */,
 				C1A0C3182BD4C67700BD78BA /* CongViecController.swift in Sources */,

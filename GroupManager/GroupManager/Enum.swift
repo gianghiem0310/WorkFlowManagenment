@@ -27,6 +27,19 @@ class Enum{
     static let DEADLINE_TABLE = "Deadlines"
     static let DEADLINE_JOIN_TABLE = "Deadline_Joins"
     static let JOB_MEMBER_TABLE = "Job_Members"
+    static let MEMBER_TABLE = "Members"
+    static let NOTIFICATION_TABLE = "Notifications"
+    // MARK: Key thông báo
+    static let THAM_GIA_GROUP = 0
+    static let THAM_GIA_DEADLINE = 1
+    static let THAM_GIA_JOB = 2
+    static let NHAC_NHO = 3
+    static let XAC_NHAN_COMPLETE = 4
+    static let TEXT_BINH_THUONG = 5
+    static let BI_XOA_KHOI_GROUP = 6
+    static let BI_XOA_KHOI_DEADLINE = 7
+    static let BI_XOA_KHOI_JOB = 8
+    
     // MARK: Hàm tool
     static func setImageFromURL(urlString: String,imageView:UIImageView){
         if urlString != "NULL"{
@@ -46,5 +59,11 @@ class Enum{
             imageView.image = UIImage(named: "default")
         }
       
+    }
+    static func getCurrentDateDDMMYYYY()->String{
+        let dateFormat = DateFormatter()
+        dateFormat.dateFormat = "dd/MM/yyyy"
+        let current = Date()
+        return dateFormat.string(from: current)
     }
 }

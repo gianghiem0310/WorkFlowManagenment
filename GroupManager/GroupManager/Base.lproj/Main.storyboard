@@ -855,7 +855,7 @@
                                             <segue destination="4ht-kB-89a" kind="show" id="L4e-aq-HJx"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="memberProjectCell" rowHeight="120" id="bRV-Dg-77U" customClass="ThanhVienCell" customModule="GroupManager" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="memberCell" rowHeight="120" id="bRV-Dg-77U" customClass="ThanhVienGroupCell" customModule="GroupManager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="148" width="394" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bRV-Dg-77U" id="Zhf-nV-A0X">
@@ -909,7 +909,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="avtThanhVien" destination="pFE-Gi-HAE" id="AGr-S2-D0y"/>
+                                            <outlet property="avtThanhVien" destination="pFE-Gi-HAE" id="m3h-QD-1lC"/>
+                                            <outlet property="diemFit" destination="cBd-Yx-OJU" id="6yo-UX-6GX"/>
+                                            <outlet property="tenThanhVien" destination="4jq-im-ZN2" id="ZIz-vX-p4c"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1474,7 +1476,6 @@
         <!--Navigation Controller-->
         <scene sceneID="psw-k8-C5y">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NGl-NK-JYv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hpt-wy-8E5" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pc8-WY-vGF">
@@ -1486,6 +1487,7 @@
                         <segue destination="tyj-v2-uT5" kind="relationship" relationship="rootViewController" id="xyb-Dx-60L"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NGl-NK-JYv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-246" y="2237"/>
         </scene>

@@ -21,5 +21,10 @@ extension Deadline{
         return ["id":id,"idGroup":idGroup,"deadline":deadline,"quantity":quantity,"status":status]
     }
 }
+extension Notification{
+    func toDictionary() -> [String:Any] {
+        return ["idSender":idSender,"idReceiver":idReceiver,"content":content,"type":type,"idGroup":idGroup,"idDeadline":idDeadline,"idJob":idJob,"date":date]
+    }
+}
 
 
