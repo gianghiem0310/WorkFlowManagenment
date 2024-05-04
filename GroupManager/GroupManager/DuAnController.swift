@@ -27,6 +27,28 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
             action in
             self.formAdd()
         }))
+        actionSheet.addAction(UIAlertAction(title: "Rời nhóm", style: .destructive, handler:{
+            action in
+            if let group = self.group {
+                if group.captain == self.idUser {
+                    self.thongBao(message: "Chức năng dành cho thành viên bình thường!")
+                }
+                else{
+                    let alert = UIAlertController(title: "Thông báo", message: "Bạn chắc chắn muốn rời nhóm?", preferredStyle: .alert)
+                    let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
+                    let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
+                        
+                        self.outGroup(idGroup: group.id)
+                        
+                    }
+                    alert.addAction(cancel)
+                    alert.addAction(confirm)
+                    self.present(alert, animated: true, completion: nil)
+                }
+                  
+                
+            }
+        }))
         actionSheet.addAction(UIAlertAction(title: "Huỷ", style: .destructive, handler:nil))
         present(actionSheet, animated: true, completion: nil)
     }
@@ -145,30 +167,79 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
        
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        let editAction = UITableViewRowAction(style: .normal, title: "Edit"){action,indexPath in
-            if self.choose{
+        if choose {
+            let editAction = UITableViewRowAction(style: .normal, title: "Edit"){action,indexPath in
+                if self.choose{
+                    
+                     let storyboard = Enum.STORYBOARD
+                     if let des = storyboard.instantiateViewController(identifier: "taoDuAn") as? TaoDuAnController{
+                         let navigation = UINavigationController(rootViewController: des)
+                          navigation.modalPresentationStyle = .fullScreen
+                        des.title = "Sửa dự án"
+                          self.present(navigation, animated: true, completion: nil)
+                     }
+                }
+             
+              
                 
-                 let storyboard = Enum.STORYBOARD
-                 if let des = storyboard.instantiateViewController(identifier: "taoDuAn") as? TaoDuAnController{
-                     let navigation = UINavigationController(rootViewController: des)
-                      navigation.modalPresentationStyle = .fullScreen
-                    des.title = "Sửa dự án"
-                      self.present(navigation, animated: true, completion: nil)
-                 }
             }
-         
-          
+            let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+                if self.choose {
+                    
+                    self.mangProject.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+              
+            }
+            return [editAction,deleteAction]
+        }else{
             
-        }
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
-            if self.choose {
-                self.mangProject.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
+            let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+                if self.choose == false {
+                    let data = self.mangMember[indexPath.row]
+                    if let group = self.group{
+                        if group.captain == self.idUser{
+                            if data.idAccount == group.captain {
+                                self.thongBao(message: "Không thể xoá nhóm trưởng!")
+                            }else{
+                                let alert = UIAlertController(title: "Thông báo", message: "Bạn chắc chắn muốn xoá thành viên \(data.name)?", preferredStyle: .alert)
+                                let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
+                                let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
+                                    
+                                    self.removeMember(idGroup: group.id, idMember: data.idAccount)
+                                    self.mangMember.remove(at: indexPath.row)
+                                    tableView.deleteRows(at: [indexPath], with: .fade)
+                                    self.thongBao(message: "Đã xoá \(data.name) ra khỏi nhóm!")
+                                    
+                                }
+                                alert.addAction(cancel)
+                                alert.addAction(confirm)
+                                self.present(alert, animated: true, completion: nil)
+                            }
+                            
+                        }else{
+                            self.thongBao(message: "Bạn không phải là nhóm trưởng!")
+                        }
+                    }
+                    
+                   
+                }
+              
             }
-          
+            return [deleteAction]
         }
-        return [editAction,deleteAction]
+       
+    }
+    func outGroup(idGroup:Int){
+        let database = Enum.DB_REALTIME
+        database.child(Enum.GROUP_JOIN_TABLE).child("\(idUser)").child("\(idGroup)").removeValue()
+        database.child(Enum.MEMBER_TABLE).child("\(idGroup)").child("\(idUser)").removeValue()
+        dismiss(animated: true, completion: nil)
+    }
+    func removeMember(idGroup:Int,idMember:Int){
+        let database = Enum.DB_REALTIME
+        database.child(Enum.GROUP_JOIN_TABLE).child("\(idMember)").child("\(idGroup)").removeValue()
+        database.child(Enum.MEMBER_TABLE).child("\(idGroup)").child("\(idMember)").removeValue()
     }
     
 
@@ -180,6 +251,7 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
     var mangProject:[Deadline] = []
     var mangMember:[Profile] = []
     var group:Group?
+    var idUser = 1
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {

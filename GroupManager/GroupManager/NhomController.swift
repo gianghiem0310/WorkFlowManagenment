@@ -9,7 +9,7 @@ import UIKit
 import FirebaseDatabase
 class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var mangNhom:[Group] = []
-    var idUser = 15
+    var idUser = 1
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -110,7 +110,7 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         self.mangNhom.removeAll()
         tableView.reloadData()
         let database = Enum.DB_REALTIME
-        database.child(Enum.GROUP_JOIN_TABLE).child("15").observe(DataEventType.value){ (snapshot) in
+        database.child(Enum.GROUP_JOIN_TABLE).child("\(idUser)").observe(DataEventType.value){ (snapshot) in
             self.mangNhom.removeAll()
             if snapshot.childrenCount > 0{
                 for child in snapshot.children{
