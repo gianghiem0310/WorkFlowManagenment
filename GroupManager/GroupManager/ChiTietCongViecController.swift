@@ -94,7 +94,7 @@ class ChiTietCongViecController: UIViewController {
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
-    var job:Job = Job(id: 0, idDeadline: 1, title: "Công Việc Back-end Web", image: "https://static-xf1.vietnix.vn/wp-content/uploads/2021/01/Back-end.jpg", quantity: 20, description: "Công việc đòi hỏi kỹ năng cao trong việc giải các thuật toán logic và nặng tính chính trị trong luận văn hay nhungữ yêu cầu vốn sinh ra để giải đáp@!s", deadline: "Ngày 24 tháng 5 năm 2024", point: 20, titleDeadline: "Ngày 24 tháng 4 năm 2024", titleGroup: "Nhóm Công Việc ", status: true)
+    var job:Job = Job(id: 0, idDeadline: 1, title: "Công Việc Back-end Web", image: "https://static-xf1.vietnix.vn/wp-content/uploads/2021/01/Back-end.jpg", quantity: 20, description: "Công việc đòi hỏi kỹ năng cao trong việc giải các thuật toán logic và nặng tính chính trị trong luận văn hay nhungữ yêu cầu vốn sinh ra để giải đáp@!s", deadline: "Ngày 24 tháng 5 năm 2024", point: 20, titleDeadline: "Ngày 24 tháng 4 năm 2024", titleGroup: "Nhóm Công Việc ", status: true,join: 1)
     var idUser = 15
     
    override func viewDidLoad() {

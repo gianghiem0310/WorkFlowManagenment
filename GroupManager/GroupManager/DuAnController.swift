@@ -311,7 +311,8 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                                 let deadline = object["deadline"] as? String ?? ""
                                 let quantity = object["quantity"] as? Int ?? -1
                                 let status = object["status"] as? Bool ?? true
-                                let value = Deadline(id: id, idGroup: idGroup, deadline: deadline, quantity: quantity, status: status)
+                                let join = object["join"] as? Int ?? -1
+                                let value = Deadline(id: id, idGroup: idGroup, deadline: deadline, quantity: quantity, status: status,join: join)
                                 self.mangProject.append(value)
                                 self.tableView.reloadData()
                             }

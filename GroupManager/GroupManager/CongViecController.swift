@@ -89,7 +89,8 @@ class CongViecController: UIViewController,UITableViewDelegate,UITableViewDataSo
                                                     let status = childJob["status"] as? Bool ?? true
                                                     let titleGroup = childJob["titleGroup"] as? String ?? ""
                                                     let titleDeadline = childJob["titleDeadline"] as? String ?? ""
-                                                    let congViec = Job(id: id, idDeadline: idDeadline, title: title, image: image, quantity: quantity, description: description, deadline: deadline, point: point, titleDeadline: titleDeadline, titleGroup: titleGroup, status: status)
+                                                    let join = childJob["join"] as? Int ?? -1
+                                                    let congViec = Job(id: id, idDeadline: idDeadline, title: title, image: image, quantity: quantity, description: description, deadline: deadline, point: point, titleDeadline: titleDeadline, titleGroup: titleGroup, status: status,join: join)
                                                     self.mang.append(congViec)
                                                     self.tableView.reloadData()
                                                 }

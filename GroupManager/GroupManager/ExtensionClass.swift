@@ -13,12 +13,12 @@ extension Group{
 }
 extension Job{
     func toDictionary()->[String:Any]{
-        return ["id":id, "idDeadline":idDeadline,"title":title,"image":image,"quantity":quantity,"description": description,"deadline":deadline,"point":point,"status":status,"titleGroup":titleGroup,"titleDeadline":titleDeadline]
+        return ["id":id, "idDeadline":idDeadline,"title":title,"image":image,"quantity":quantity,"description": description,"deadline":deadline,"point":point,"status":status,"titleGroup":titleGroup,"titleDeadline":titleDeadline,"join":join]
     }
 }
 extension Deadline{
     func toDictionary() -> [String:Any] {
-        return ["id":id,"idGroup":idGroup,"deadline":deadline,"quantity":quantity,"status":status]
+        return ["id":id,"idGroup":idGroup,"deadline":deadline,"quantity":quantity,"status":status,"join":join]
     }
 }
 extension Notification{

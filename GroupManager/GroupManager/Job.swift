@@ -18,7 +18,8 @@ class Job{
     var titleDeadline:String
     var titleGroup:String
     var status: Bool
-    init(id:Int,idDeadline:Int,title:String,image:String,quantity:Int,description:String,deadline:String,point:Int,titleDeadline:String,titleGroup:String,status:Bool) {
+    var join:Int
+    init(id:Int,idDeadline:Int,title:String,image:String,quantity:Int,description:String,deadline:String,point:Int,titleDeadline:String,titleGroup:String,status:Bool,join:Int) {
         self.id = id
         self.idDeadline = idDeadline
         self.title = title
@@ -30,5 +31,6 @@ class Job{
         self.titleDeadline = titleDeadline
         self.titleGroup = titleGroup
         self.status = status
+        self.join = join
     }
 }

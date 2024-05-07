@@ -12,11 +12,13 @@ class Deadline{
     var deadline:String
     var quantity:Int
     var status:Bool
-    init(id:Int,idGroup:Int,deadline:String,quantity:Int,status:Bool) {
+    var join:Int
+    init(id:Int,idGroup:Int,deadline:String,quantity:Int,status:Bool,join:Int) {
         self.id = id
         self.idGroup = idGroup
         self.deadline = deadline
         self.quantity = quantity
         self.status = status
+        self.join = join
     }
 }
