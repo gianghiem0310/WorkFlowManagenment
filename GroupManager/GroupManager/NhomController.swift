@@ -9,7 +9,7 @@ import UIKit
 import FirebaseDatabase
 class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var mangNhom:[Group] = []
-    var idUser = 1
+    var idUser = 15
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

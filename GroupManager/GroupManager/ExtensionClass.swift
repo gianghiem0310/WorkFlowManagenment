@@ -23,7 +23,7 @@ extension Deadline{
 }
 extension Notification{
     func toDictionary() -> [String:Any] {
-        return ["idSender":idSender,"idReceiver":idReceiver,"content":content,"type":type,"idGroup":idGroup,"idDeadline":idDeadline,"idJob":idJob,"date":date]
+        return ["id":id,"idSender":idSender,"idReceiver":idReceiver,"content":content,"type":type,"idGroup":idGroup,"idDeadline":idDeadline,"idJob":idJob,"date":date]
     }
 }
 

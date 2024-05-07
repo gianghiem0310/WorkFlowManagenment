@@ -78,20 +78,35 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                                             let content = "Nhóm trưởng mời bạn vào nhóm \(group.title)"
                                             let type = Enum.THAM_GIA_GROUP
                                             let date = Enum.getCurrentDateDDMMYYYY()
-                                            let newNotification = Notification(idSender: group.captain, idReceiver: idReceiver, content: content, type: type, idGroup: group.id, idDeadline: -1, idJob: -1, date: date)
+                                            
                                             if self.trangThaiKiemTra == true {
-                                                database.child(Enum.NOTIFICATION_TABLE).child("\(newNotification.idReceiver)").child("\(newNotification.idSender)").setValue(newNotification.toDictionary())
-                                                self.trangThaiKiemTra = false
-                                                self.thongBao(message: "Gửi lời mời thành công!")
-                                                textF.text = ""
+                                                var idNewNoti = 0
+                                                database.child(Enum.NOTIFICATION_TABLE).child("\(idReceiver)").child("\(self.idUser)").observe(DataEventType.value){
+                                                    snapshot in
+                                                    if self.trangThaiKiemTra == true{
+                                                        let newNotification = Notification(id:Int(snapshot.childrenCount),idSender: group.captain, idReceiver: idReceiver, content: content, type: type, idGroup: group.id, idDeadline: -1, idJob: -1, date: date)
+
+                                                        database.child(Enum.NOTIFICATION_TABLE).child("\(newNotification.idReceiver)").child("\(newNotification.idSender)").child("\(newNotification.id)").setValue(newNotification.toDictionary())
+                                                        self.trangThaiKiemTra = false
+                                                        self.thongBao(message: "Gửi lời mời thành công!")
+                                                        textF.text = ""
+                                                     
+                                                        
+                                                    }
+                                                   
+                                                }
+//
+                                             
                                             }
                                         }
                                   
                                       
                                     }
+                                }else{
+                                    self.thongBao(message: "Id không tồn tại!")
+                                    self.trangThaiKiemTra = false
                                 }
-                                self.thongBao(message: "Id không tồn tại!")
-                                self.trangThaiKiemTra = false
+                               
                             }
                           
                             }else{
@@ -251,7 +266,7 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
     var mangProject:[Deadline] = []
     var mangMember:[Profile] = []
     var group:Group?
-    var idUser = 1
+    var idUser = 15
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {

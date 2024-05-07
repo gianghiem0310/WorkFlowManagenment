@@ -36,6 +36,7 @@
 		C1A0C3302BD4EA5D00BD78BA /* ThanhVienCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A0C32F2BD4EA5D00BD78BA /* ThanhVienCell.swift */; };
 		C1B44FE92BD7563E00996CA6 /* ExtensionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B44FE82BD7563E00996CA6 /* ExtensionClass.swift */; };
 		C1B44FED2BD7566400996CA6 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B44FEC2BD7566400996CA6 /* Enum.swift */; };
+		C1BA55A12BEA0F5B00424D53 /* XacNhanThamGiaNhomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA55A02BEA0F5B00424D53 /* XacNhanThamGiaNhomCell.swift */; };
 		C1E521762BD76F97009F5665 /* CongViecCaNhanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E521752BD76F97009F5665 /* CongViecCaNhanCell.swift */; };
 		C1E521792BD78BC7009F5665 /* TaoDuAnController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E521782BD78BC7009F5665 /* TaoDuAnController.swift */; };
 		C1E7AEF62BDF612000170EC7 /* CongViec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E7AEF52BDF612000170EC7 /* CongViec.swift */; };
@@ -78,6 +79,7 @@
 		C1A0C32F2BD4EA5D00BD78BA /* ThanhVienCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanhVienCell.swift; sourceTree = "<group>"; };
 		C1B44FE82BD7563E00996CA6 /* ExtensionClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionClass.swift; sourceTree = "<group>"; };
 		C1B44FEC2BD7566400996CA6 /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		C1BA55A02BEA0F5B00424D53 /* XacNhanThamGiaNhomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XacNhanThamGiaNhomCell.swift; sourceTree = "<group>"; };
 		C1E521752BD76F97009F5665 /* CongViecCaNhanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongViecCaNhanCell.swift; sourceTree = "<group>"; };
 		C1E521782BD78BC7009F5665 /* TaoDuAnController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaoDuAnController.swift; sourceTree = "<group>"; };
 		C1E7AEF52BDF612000170EC7 /* CongViec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongViec.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				C1EE84F82BD4F55D00547392 /* CongViecCell.swift */,
 				C1E521752BD76F97009F5665 /* CongViecCaNhanCell.swift */,
 				C146F8982BE0F11A00F68394 /* ThanhVienGroupCell.swift */,
+				C1BA55A02BEA0F5B00424D53 /* XacNhanThamGiaNhomCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				C1EE85022BD4FCB700547392 /* FragmentChiTietCongViecController.swift in Sources */,
 				C1B44FE92BD7563E00996CA6 /* ExtensionClass.swift in Sources */,
 				C1B44FED2BD7566400996CA6 /* Enum.swift in Sources */,
+				C1BA55A12BEA0F5B00424D53 /* XacNhanThamGiaNhomCell.swift in Sources */,
 				C1EE84F92BD4F55D00547392 /* CongViecCell.swift in Sources */,
 				C1A0C3062BD4BC4600BD78BA /* DangNhapController.swift in Sources */,
 				C1EE84FC2BD4F57C00547392 /* DanhSachCongViecController.swift in Sources */,

@@ -7,6 +7,7 @@
 
 import Foundation
 class Notification  {
+    var id:Int
     var idSender:Int
     var idReceiver:Int
     var content:String
@@ -15,7 +16,8 @@ class Notification  {
     var idDeadline:Int
     var idJob:Int
     var date:String
-    init(idSender:Int,idReceiver:Int,content:String,type:Int,idGroup:Int,idDeadline:Int,idJob:Int,date:String) {
+    init(id:Int,idSender:Int,idReceiver:Int,content:String,type:Int,idGroup:Int,idDeadline:Int,idJob:Int,date:String) {
+        self.id = id
         self.idSender = idSender
         self.idReceiver = idReceiver
         self.content = content
