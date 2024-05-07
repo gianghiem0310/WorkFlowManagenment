@@ -8,28 +8,80 @@
 import UIKit
 
 class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-    var mang = [1,2,3,4,5,6,7]
+    
+    var idView = 0
+    var ar = [1,2,3,4,5,6]
+    var ar2 = [1,2,3,4]
+    var ar3 = [1,2]
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBAction func changeView(_ sender: UISegmentedControl) {
+        
+        switch sender.selectedSegmentIndex {
+        case 0:
+            idView = 0
+            tableView.reloadData()
+        case 1:
+            idView = 1
+            tableView.reloadData()
+        case 2:
+            idView = 2
+            tableView.reloadData()
+        default:
+            break
+        }
+        
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if idView == 0 {
+            return ar.count
+        }
+        if idView == 1 {
+            return ar2.count
+        }
+        
+        return ar3.count
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mang.count
-    }
+    
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let identifier = "jobInProjectCell"
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? CongViecCell else{
-            return UITableViewCell()
+        if idView == 0 {
+            let identifier = "dangCanCell"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? DangCanCell else{
+                return UITableViewCell()
+            }
+            return cell
         }
-        return cell
+        if idView == 1 {
+            let identifier = "chotCell"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? ChotCell else{
+                return UITableViewCell()
+            }
+            return cell
+        }
+  
+            let identifier = "thanhVienCell"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? ThanhVienCell else{
+                return UITableViewCell()
+            }
+            return cell
     }
     
 
-    @IBOutlet weak var tableView: UITableView!
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.delegate = self
         tableView.dataSource = self
+        
+        
         // Do any additional setup after loading the view.
     }
     

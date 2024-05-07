@@ -1,16 +1,18 @@
 //
-//  ProjectCell.swift
+//  ChotCell.swift
 //  GroupManager
 //
-//  Created by Gia Nghiem on 4/20/24.
+//  Created by Nguyen Hong Phuc on 4/26/24.
 //
 
 import UIKit
 
-class DuAnCell: UITableViewCell {
 
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var quantity: UILabel!
+
+
+
+class ChotCell: UITableViewCell {
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

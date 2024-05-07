@@ -28,10 +28,19 @@ class ChiTietCongViecController: UIViewController {
             containerView.addSubview(viewMoi.view)
             viewMoi.didMove(toParent: self)
             if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController{
-                if let data = receivedData{
-                    viewMoi1.tenCongViec = data.title
-                    viewMoi1.ten.text = data.title
-                }
+                
+                
+                    viewMoi1.job = job
+              
+                viewMoi1.nameJob.text = job.title
+                viewMoi1.quantityJob.text = String(job.quantity)
+                viewMoi1.deadlineJob.text = job.deadline
+                viewMoi1.fitJob.text = "Điểm tích luỹ: \(job.point) fit"
+                viewMoi1.descriptionJob.text = job.description
+                Enum.setImageFromURL(urlString: job.image, imageView: viewMoi1.imageJob)
+                    
+                
+                
             
             }
             
@@ -48,7 +57,34 @@ class ChiTietCongViecController: UIViewController {
             containerView.addSubview(viewMoi.view)
             viewMoi.didMove(toParent: self)
         default:
-            containerView.backgroundColor = .white
+            let viewCu = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController2")
+            viewCu.willMove(toParent: nil)
+            viewCu.view.removeFromSuperview()
+            viewCu.removeFromParent()
+            
+            
+            let viewMoi = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController1")
+            
+            addChild(viewMoi)
+            viewMoi.view.frame = containerView.bounds
+            containerView.addSubview(viewMoi.view)
+            viewMoi.didMove(toParent: self)
+            if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController{
+                
+                
+                    viewMoi1.job = job
+              
+                viewMoi1.nameJob.text = job.title
+                viewMoi1.quantityJob.text = String(job.quantity)
+                viewMoi1.deadlineJob.text = job.deadline
+                viewMoi1.fitJob.text = "Điểm tích luỹ: \(job.point) fit"
+                viewMoi1.descriptionJob.text = job.description
+                Enum.setImageFromURL(urlString: job.image, imageView: viewMoi1.imageJob)
+                    
+                
+                
+            
+            }
         }
     }
     
@@ -58,10 +94,40 @@ class ChiTietCongViecController: UIViewController {
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
+    var job:Job = Job(id: 0, idDeadline: 1, title: "Công Việc Back-end Web", image: "https://static-xf1.vietnix.vn/wp-content/uploads/2021/01/Back-end.jpg", quantity: 20, description: "Công việc đòi hỏi kỹ năng cao trong việc giải các thuật toán logic và nặng tính chính trị trong luận văn hay nhungữ yêu cầu vốn sinh ra để giải đáp@!s", deadline: "Ngày 24 tháng 5 năm 2024", point: 20, titleDeadline: "Ngày 24 tháng 4 năm 2024", titleGroup: "Nhóm Công Việc ", status: true,join: 1)
+    var idUser = 15
     
    override func viewDidLoad() {
         super.viewDidLoad()
+    title = job.title
+    let viewCu = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController2")
+    viewCu.willMove(toParent: nil)
+    viewCu.view.removeFromSuperview()
+    viewCu.removeFromParent()
+    
+    
+    let viewMoi = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController1")
+    
+    addChild(viewMoi)
+    viewMoi.view.frame = containerView.bounds
+    containerView.addSubview(viewMoi.view)
+    viewMoi.didMove(toParent: self)
+    if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController{
         
+        
+            viewMoi1.job = job
+      
+        viewMoi1.nameJob.text = job.title
+        viewMoi1.quantityJob.text = String(job.quantity)
+        viewMoi1.deadlineJob.text = job.deadline
+        viewMoi1.fitJob.text = "Điểm tích luỹ: \(job.point) fit"
+        viewMoi1.descriptionJob.text = job.description
+        Enum.setImageFromURL(urlString: job.image, imageView: viewMoi1.imageJob)
+            
+        
+        
+    
+    }
         // Do any additional setup after loading the view.
     }
     

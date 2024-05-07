@@ -1,16 +1,14 @@
 //
-//  ProjectCell.swift
+//  CongViecDangLamCell.swift
 //  GroupManager
 //
-//  Created by Gia Nghiem on 4/20/24.
+//  Created by Gia Nghiem on 4/24/24.
 //
 
 import UIKit
 
-class DuAnCell: UITableViewCell {
+class CongViecDangLamCell: UITableViewCell {
 
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var quantity: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
