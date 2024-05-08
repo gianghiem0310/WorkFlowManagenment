@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C122D96A2BEB28AB00E3C89E /* ThanhVienCongViecCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C122D9692BEB28AB00E3C89E /* ThanhVienCongViecCell.swift */; };
+		C122D9752BEB2A6200E3C89E /* CapNhatThongTinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C122D9732BEB2A6100E3C89E /* CapNhatThongTinController.swift */; };
+		C122D97A2BEB2ABF00E3C89E /* DoiMatKhauController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C122D9792BEB2ABF00E3C89E /* DoiMatKhauController.swift */; };
 		C13AAC1B2BE259EC003927AB /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13AAC1A2BE259EC003927AB /* Notification.swift */; };
 		C146F8992BE0F11A00F68394 /* ThanhVienGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146F8982BE0F11A00F68394 /* ThanhVienGroupCell.swift */; };
 		C146F89C2BE0F41600F68394 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146F89B2BE0F41600F68394 /* Profile.swift */; };
@@ -53,6 +56,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C122D9692BEB28AB00E3C89E /* ThanhVienCongViecCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThanhVienCongViecCell.swift; sourceTree = "<group>"; };
+		C122D9732BEB2A6100E3C89E /* CapNhatThongTinController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CapNhatThongTinController.swift; sourceTree = "<group>"; };
+		C122D9792BEB2ABF00E3C89E /* DoiMatKhauController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoiMatKhauController.swift; sourceTree = "<group>"; };
 		C13AAC1A2BE259EC003927AB /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		C146F8982BE0F11A00F68394 /* ThanhVienGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanhVienGroupCell.swift; sourceTree = "<group>"; };
 		C146F89B2BE0F41600F68394 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -179,9 +185,11 @@
 		C1A0C3042BD4BC1E00BD78BA /* MainActivity */ = {
 			isa = PBXGroup;
 			children = (
+				C122D9792BEB2ABF00E3C89E /* DoiMatKhauController.swift */,
 				C1E7AEFE2BDF632200170EC7 /* TaoCongViecController.swift */,
 				C1A0C3112BD4C2AE00BD78BA /* DisplayManagerController.swift */,
 				C1A0C3142BD4C66100BD78BA /* NhomController.swift */,
+				C122D9732BEB2A6100E3C89E /* CapNhatThongTinController.swift */,
 				C1A0C3172BD4C67700BD78BA /* CongViecController.swift */,
 				C1A0C31A2BD4C68800BD78BA /* ThongBaoController.swift */,
 				C1A0C31D2BD4C69700BD78BA /* CaNhanController.swift */,
@@ -199,6 +207,7 @@
 		C1A0C3232BD4CE2700BD78BA /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C122D9692BEB28AB00E3C89E /* ThanhVienCongViecCell.swift */,
 				C1E7AEFA2BDF62FC00170EC7 /* ChotCell.swift */,
 				C1E7AEF92BDF62FC00170EC7 /* DangCanCell.swift */,
 				C1A0C3242BD4CE4200BD78BA /* NhomCell.swift */,
@@ -322,6 +331,7 @@
 				C1EE84FF2BD4F7EA00547392 /* ChiTietCongViecController.swift in Sources */,
 				C1A0C32A2BD4E0F900BD78BA /* DuAnController.swift in Sources */,
 				C1A0C2EE2BD4BAA500BD78BA /* SceneDelegate.swift in Sources */,
+				C122D9752BEB2A6200E3C89E /* CapNhatThongTinController.swift in Sources */,
 				C146F8992BE0F11A00F68394 /* ThanhVienGroupCell.swift in Sources */,
 				C1EE85052BD4FDDB00547392 /* FragmentThanhVienCongViecController.swift in Sources */,
 				C1EC26E92BDA3A4600FFAF50 /* Job.swift in Sources */,
@@ -335,6 +345,8 @@
 				C1A0C3182BD4C67700BD78BA /* CongViecController.swift in Sources */,
 				C1A0C3122BD4C2AE00BD78BA /* DisplayManagerController.swift in Sources */,
 				C1A0C3152BD4C66100BD78BA /* NhomController.swift in Sources */,
+				C122D97A2BEB2ABF00E3C89E /* DoiMatKhauController.swift in Sources */,
+				C122D96A2BEB28AB00E3C89E /* ThanhVienCongViecCell.swift in Sources */,
 				C1A0C3212BD4CB4800BD78BA /* TaoNhomController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
