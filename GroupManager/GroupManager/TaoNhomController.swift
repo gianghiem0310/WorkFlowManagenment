@@ -237,10 +237,10 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                 if let child = lastE.value as? NSDictionary{
                     self.idNhom = child["id"] as? Int ?? -1
                     self.idNhom += 1
+                    self.thongBao(message: "Thay doi!")
                 }
             }
         }
-        
     }
     
     func thongBao(message: String){

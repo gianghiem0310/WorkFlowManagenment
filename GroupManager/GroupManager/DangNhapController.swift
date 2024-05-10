@@ -6,9 +6,9 @@
 //
 
 import UIKit
-
+import FirebaseDatabase
 class DangNhapController: UIViewController,UITextFieldDelegate {
-
+    
     @IBOutlet weak var imageLogo: UIImageView!
     
     @IBOutlet weak var txtTenDangNhap: UITextField!
@@ -18,7 +18,7 @@ class DangNhapController: UIViewController,UITextFieldDelegate {
     
     
     @IBOutlet weak var mauBtnLogin: UIButton!
-    
+    var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,11 @@ class DangNhapController: UIViewController,UITextFieldDelegate {
         let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGes)
         
+        // Khởi tạo UIActivityIndicatorView
+              activityIndicator = UIActivityIndicatorView(style: .large)
+              activityIndicator.center = view.center
+              activityIndicator.hidesWhenStopped = true
+              view.addSubview(activityIndicator)
         
         
         if UserDefaults.standard.bool(forKey: "isLogin"){
@@ -40,6 +45,16 @@ class DangNhapController: UIViewController,UITextFieldDelegate {
         customGiaoDien()
         
     }
+    func toggleActivityIndicator(_ show: Bool) {
+          if show {
+              activityIndicator.startAnimating()
+          } else {
+              activityIndicator.stopAnimating()
+          }
+      }
+    
+    var tenDangNhap = ""
+    var matKhau = ""
     @objc func hideKeyboard(){
         view.endEditing(true)
     }
@@ -49,26 +64,105 @@ class DangNhapController: UIViewController,UITextFieldDelegate {
         return true
     }
     
-   
+    
+    let db = Enum.DB_REALTIME
+    
+    var checkIsLogin = false
+    var idUser = -1
+    
     @IBAction func btnLogin(_ sender: UIButton) {
-        UserDefaults.standard.setValue(true, forKey: Enum.ISLOGIN)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let des = storyboard.instantiateViewController(identifier: "DisplayManager") as? DisplayManagerController{
-            des.modalPresentationStyle = .fullScreen
-            present(des, animated: true, completion: nil)
+        self.toggleActivityIndicator(true)
+        if let txtTenDangNhap = txtTenDangNhap , let txtMatKhau = txtMatKhau{
+            if let ten = txtTenDangNhap.text, let matKhau = txtMatKhau.text{
+                if !ten.isEmpty || !matKhau.isEmpty{
+                    
+                    db.child(Enum.ACCCOUNT_TABLE).observe(DataEventType.value){
+                        snapshot in
+                        if snapshot.childrenCount > 0{
+                            self.checkIsLogin = false
+                            for child in snapshot.children{
+                                
+                                if let object = child as? DataSnapshot{
+                                    
+                                    if let value = object.value as? NSDictionary{
+                                        
+                                        let tenDangNhapFb = value["username"] as? String ?? ""
+                                        let matKhauFb = value["password"] as? String ?? ""
+
+                                        if ten == tenDangNhapFb && matKhau == matKhauFb{
+                                            self.checkIsLogin = true
+                                            self.idUser = value["id"] as? Int ?? -1
+                                            
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                            
+                            
+                        }
+                        
+                    }
+               
+                    toggleActivityIndicator(true)
+                    DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
+                        if self.checkIsLogin{
+                            self.db.child(Enum.PROFILE_TABLE).child("\(self.idUser)").observe(DataEventType.value){
+                                snap in
+                                if let value = snap.value as? NSDictionary{
+                                    let id = value["idAccount"] as? Int ?? -1
+                                    let ten = value["name"] as? String ?? ""
+                                    let avatar = value["avatar"] as? String ?? ""
+                                    
+                                    UserDefaults.standard.setValue(id, forKey: "idUser")
+                                    UserDefaults.standard.setValue(ten, forKey: "nameUser")
+                                    UserDefaults.standard.setValue(avatar, forKey: "imageUser")
+                                    
+                                    UserDefaults.standard.setValue(true, forKey: Enum.ISLOGIN)
+                                    UserDefaults.standard.synchronize()
+                                    
+                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                    if let des = storyboard.instantiateViewController(identifier: "DisplayManager") as? DisplayManagerController{
+                                        des.modalPresentationStyle = .fullScreen
+                                        self.present(des, animated: true, completion: nil)
+                                    }
+                                }
+                            }
+                            
+                        }else{
+                            self.toggleActivityIndicator(false)
+                            self.thongBao(message: "Tên đăng nhập hoặc mật khẩu không đúng!")
+                        }
+                    
+                    }
+                }else{
+                    toggleActivityIndicator(false)
+                    thongBao(message: "Chưa nhập tài khoản hoặc mật khẩu!")
+                }
+            }
         }
     }
     
-
+    
+    func thongBao(message: String){
+        let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     @IBAction func btnQuenMatKhau(_ sender: UIButton) {
     }
     
     @IBAction func btnDangKyTaiKhoan(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "signup")
-        vc.modalPresentationStyle = .overFullScreen
-       present(vc, animated: true, completion: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
     }
+    
+    
     
     func customGiaoDien(){
         imageLogo.layer.cornerRadius = imageLogo.frame.size.width / 2
@@ -78,31 +172,11 @@ class DangNhapController: UIViewController,UITextFieldDelegate {
         txtTenDangNhap.layer.borderWidth = 2
         txtTenDangNhap.layer.cornerRadius = 10
         
-
+        
         txtMatKhau.layer.borderColor = UIColor.gray.cgColor
         txtMatKhau.layer.borderWidth = 2
         txtMatKhau.layer.cornerRadius = 10
         
         
-        
-//        mauBtnLogin.applyGradient(colors: [UIColor(red: 0.00, green: 0.60, blue: 0.96, alpha: 1.00).cgColor,UIColor(red: 0.00, green: 0.85, blue: 0.67, alpha: 1.00).cgColor ])
-//        mauBtnLogin.layer.cornerRadius = 10
-//        mauBtnLogin.layer.masksToBounds = true
-    //}
- 
-
+    }
 }
-
-//extension UIButton {
-//    func applyGradient(colors : [CGColor]) {
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.colors = colors
-//        gradientLayer.cornerRadius = layer.cornerRadius
-//        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-//        gradientLayer.endPoint = CGPoint(x: 1, y: 0)
-//        gradientLayer.frame = bounds
-//        layer.insertSublayer(gradientLayer, at: 0)
-//
-//    }
-}
-

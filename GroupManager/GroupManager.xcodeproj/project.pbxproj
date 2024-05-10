@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D4B16A62BDCC731000CB1BE /* TaoCongViecController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B16A52BDCC731000CB1BE /* TaoCongViecController.swift */; };
-		4D4B16A92BDCC7BE000CB1BE /* DangCanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B16A82BDCC7BE000CB1BE /* DangCanCell.swift */; };
-		4D4B16AC2BDCC7D4000CB1BE /* ChotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B16AB2BDCC7D4000CB1BE /* ChotCell.swift */; };
+		4D32AD692BEDC54C00C6D674 /* ChotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D32AD682BEDC54C00C6D674 /* ChotCell.swift */; };
+		4D32AD6C2BEDC55F00C6D674 /* DangCanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D32AD6B2BEDC55F00C6D674 /* DangCanCell.swift */; };
+		4D32AD6F2BEDC56B00C6D674 /* TaoCongViecViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D32AD6E2BEDC56B00C6D674 /* TaoCongViecViewController.swift */; };
+		4D32AD722BEDC58B00C6D674 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D32AD712BEDC58A00C6D674 /* Profile.swift */; };
+		4D32AD752BEDC59700C6D674 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D32AD742BEDC59700C6D674 /* Account.swift */; };
 		C1045BE22BD6299B00B89F5D /* CongViec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1045BE12BD6299B00B89F5D /* CongViec.swift */; };
 		C19343C72BD79B0C009217CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C19343C62BD79B0C009217CF /* GoogleService-Info.plist */; };
 		C19343CB2BD79D4A009217CF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C19343CA2BD79D4A009217CF /* FirebaseAnalytics */; };
@@ -48,9 +50,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4D4B16A52BDCC731000CB1BE /* TaoCongViecController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaoCongViecController.swift; sourceTree = "<group>"; };
-		4D4B16A82BDCC7BE000CB1BE /* DangCanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DangCanCell.swift; sourceTree = "<group>"; };
-		4D4B16AB2BDCC7D4000CB1BE /* ChotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChotCell.swift; sourceTree = "<group>"; };
+		4D32AD682BEDC54C00C6D674 /* ChotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChotCell.swift; sourceTree = "<group>"; };
+		4D32AD6B2BEDC55F00C6D674 /* DangCanCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DangCanCell.swift; sourceTree = "<group>"; };
+		4D32AD6E2BEDC56B00C6D674 /* TaoCongViecViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaoCongViecViewController.swift; sourceTree = "<group>"; };
+		4D32AD712BEDC58A00C6D674 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		4D32AD742BEDC59700C6D674 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C1045BE12BD6299B00B89F5D /* CongViec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongViec.swift; sourceTree = "<group>"; };
 		C19343C62BD79B0C009217CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C19343D52BD7A673009217CF /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 		C1045BE02BD6297700B89F5D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4D32AD742BEDC59700C6D674 /* Account.swift */,
+				4D32AD712BEDC58A00C6D674 /* Profile.swift */,
 				C1045BE12BD6299B00B89F5D /* CongViec.swift */,
 				C19343D52BD7A673009217CF /* Group.swift */,
 				C1EC26E82BDA3A4500FFAF50 /* Job.swift */,
@@ -178,6 +184,7 @@
 				C1EE85012BD4FCB700547392 /* FragmentChiTietCongViecController.swift */,
 				C1EE85042BD4FDDB00547392 /* FragmentThanhVienCongViecController.swift */,
 				C1E521782BD78BC7009F5665 /* TaoDuAnController.swift */,
+				4D32AD6E2BEDC56B00C6D674 /* TaoCongViecViewController.swift */,
 			);
 			name = MainActivity;
 			sourceTree = "<group>";
@@ -185,11 +192,13 @@
 		C1A0C3232BD4CE2700BD78BA /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				4D32AD682BEDC54C00C6D674 /* ChotCell.swift */,
 				C1A0C3242BD4CE4200BD78BA /* NhomCell.swift */,
 				C1A0C32C2BD4EA4800BD78BA /* DuAnCell.swift */,
 				C1A0C32F2BD4EA5D00BD78BA /* ThanhVienCell.swift */,
 				C1EE84F82BD4F55D00547392 /* CongViecCell.swift */,
 				C1E521752BD76F97009F5665 /* CongViecCaNhanCell.swift */,
+				4D32AD6B2BEDC55F00C6D674 /* DangCanCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -285,16 +294,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1A0C30A2BD4BC5700BD78BA /* DangKyController.swift in Sources */,
+				4D32AD722BEDC58B00C6D674 /* Profile.swift in Sources */,
 				C1A0C3302BD4EA5D00BD78BA /* ThanhVienCell.swift in Sources */,
 				C1EE85022BD4FCB700547392 /* FragmentChiTietCongViecController.swift in Sources */,
+				4D32AD692BEDC54C00C6D674 /* ChotCell.swift in Sources */,
 				C1B44FE92BD7563E00996CA6 /* ExtensionClass.swift in Sources */,
 				C1B44FED2BD7566400996CA6 /* Enum.swift in Sources */,
 				C1EE84F92BD4F55D00547392 /* CongViecCell.swift in Sources */,
 				C1A0C3062BD4BC4600BD78BA /* DangNhapController.swift in Sources */,
+				4D32AD6C2BEDC55F00C6D674 /* DangCanCell.swift in Sources */,
 				C1EE84FC2BD4F57C00547392 /* DanhSachCongViecController.swift in Sources */,
 				C1A0C3252BD4CE4200BD78BA /* NhomCell.swift in Sources */,
 				C19343D62BD7A673009217CF /* Group.swift in Sources */,
 				C1A0C31B2BD4C68800BD78BA /* ThongBaoController.swift in Sources */,
+				4D32AD752BEDC59700C6D674 /* Account.swift in Sources */,
+				4D32AD6F2BEDC56B00C6D674 /* TaoCongViecViewController.swift in Sources */,
 				C1E521762BD76F97009F5665 /* CongViecCaNhanCell.swift in Sources */,
 				C1A0C2EC2BD4BAA500BD78BA /* AppDelegate.swift in Sources */,
 				C1EE84FF2BD4F7EA00547392 /* ChiTietCongViecController.swift in Sources */,

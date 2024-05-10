@@ -16,3 +16,15 @@ extension Job{
         return ["id":id, "idDeadline":idDeadline,"title":title,"image":image,"quantity":quantity,"description": description,"deadline":deadline,"point":point,"status":status,"titleGroup":titleGroup,"titleDeadline":titleDeadline]
     }
 }
+
+extension Account{
+    func toDictionary() -> [String:Any] {
+        return ["id":id, "username":username, "password":password]
+    }
+}
+
+extension Profile{
+    func toDictionary() -> [String:Any] {
+        return ["idAccount":idAccount, "avatar":avatar, "name":name, "phone":phone, "email":email, "fit":fit]
+    }
+}

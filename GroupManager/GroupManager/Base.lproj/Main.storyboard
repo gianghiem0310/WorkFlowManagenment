@@ -263,7 +263,7 @@
         <!--Tạo vông việc-->
         <scene sceneID="AxG-fI-SzR">
             <objects>
-                <viewController id="F4Z-Kn-joM" customClass="TaoCongViecController" customModule="GroupManager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="F4Z-Kn-joM" customClass="TaoCongViecViewController" customModule="GroupManager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jk3-L3-gtg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -396,7 +396,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="dateHanCongViec" destination="KjS-3M-WHN" id="Hto-IK-GjF"/>
-                        <outlet property="imageNhom" destination="n5N-ch-ONR" id="fbo-wh-OBO"/>
                         <outlet property="txtDiemFit" destination="awk-Jr-AV7" id="xWC-bs-VUS"/>
                         <outlet property="txtMoTa" destination="rki-hO-mwH" id="R5R-vM-NwK"/>
                         <outlet property="txtSoLuongCan" destination="zPM-P2-6Od" id="j1m-Dw-8NP"/>
@@ -1237,13 +1236,16 @@
                                 <state key="normal" title="Đăng ký">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="btnDangKyTaiKhoan:" destination="859-ld-IsG" eventType="touchUpInside" id="O01-yD-LAu"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0XQ-38-crz">
                                 <rect key="frame" x="10" y="703" width="394" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="Bạn đã có tài khoản ?"/>
                                 <connections>
-                                    <action selector="btnDangKy:" destination="859-ld-IsG" eventType="touchUpInside" id="7CW-2v-i4u"/>
+                                    <action selector="banDaCoTaiKhoan:" destination="859-ld-IsG" eventType="touchUpInside" id="7CW-2v-i4u"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1269,7 +1271,7 @@
                     <connections>
                         <outlet property="imageAvatar" destination="ceb-4h-PTr" id="vHd-QU-dod"/>
                         <outlet property="mauBtnDangKy" destination="sC7-18-0VL" id="v1o-v6-RZc"/>
-                        <outlet property="txtEmail" destination="YaA-rB-POG" id="1CW-p2-cxi"/>
+                        <outlet property="txtEmail" destination="YaA-rB-POG" id="Dyc-e8-h1R"/>
                         <outlet property="txtMatKhau" destination="m82-PW-R5H" id="szL-Xc-h1b"/>
                         <outlet property="txtSoDienThoai" destination="q1d-Bd-vYk" id="hfA-uJ-AAd"/>
                         <outlet property="txtTenDangNhap" destination="9wt-Pz-DWu" id="xLR-ab-tkw"/>
@@ -1599,7 +1601,7 @@
         <image name="bag" catalog="system" width="128" height="128"/>
         <image name="bell" catalog="system" width="128" height="124"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
-        <image name="chevron.left" catalog="system" width="32" height="32"/>
+        <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="default" width="245.33332824707031" height="138"/>
         <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
         <image name="list.bullet.rectangle" catalog="system" width="128" height="93"/>
