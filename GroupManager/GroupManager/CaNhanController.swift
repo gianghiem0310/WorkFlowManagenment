@@ -9,11 +9,13 @@ import UIKit
 import FirebaseDatabase
 
 class CaNhanController: UIViewController {
-    var idUser = 0
+    var idUser = 1
     var nameUser = ""
     var imageUser = ""
     var phoneUser = ""
     var emailUser = ""
+    let database = Enum.DB_REALTIME
+    var profile:Profile?
 
     @IBAction func logOut(_ sender: UIButton) {
         UserDefaults.standard.removeObject(forKey: Enum.ISLOGIN)
@@ -43,24 +45,28 @@ class CaNhanController: UIViewController {
     //NTD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UserDefaults.standard.setValue(1, forKey: "idUser")
-        UserDefaults.standard.setValue("Thai", forKey: "nameUser")
-        UserDefaults.standard.setValue("https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg", forKey: "imageUser")
-        UserDefaults.standard.setValue("012234556789", forKey: "phoneUser")
-        UserDefaults.standard.setValue("taodeptrai@mail.com", forKey: "emailUser")
-        UserDefaults.standard.synchronize()
         idUser = UserDefaults.standard.integer(forKey: "idUser")
-        nameUser = UserDefaults.standard.string(forKey: "nameUser") ?? ""
-        imageUser = UserDefaults.standard.string(forKey: "imageUser") ?? ""
-        phoneUser = UserDefaults.standard.string(forKey: "phoneUser") ?? ""
-        emailUser = UserDefaults.standard.string(forKey: "emailUser") ?? ""
-        
-        id.text = "\(idUser)"
-        Name.text = nameUser
-        Enum.setImageFromURL(urlString: imageUser, imageView: avatar)
-        SDT.text = phoneUser
-        email.text = emailUser
-        
+        database.child(Enum.PROFILE_TABLE).child("\(idUser)").observe(DataEventType.value){
+            (snapshot) in
+            if snapshot.childrenCount>0{
+                        if let snap2 = snapshot.value as? NSDictionary{
+                            let id = snap2["idAccount"] as? Int ?? -1
+                            let name = snap2["name"] as? String ?? ""
+                            let fit = snap2["fit"] as? Int ?? -1
+                            let avatar = snap2["avatar"] as? String ?? ""
+                            let sdt = snap2["phone"] as? String ?? ""
+                            let email = snap2["email"] as? String ?? ""
+                            self.profile = Profile(idAccount: id, avatar: avatar, name: name, phone: sdt, email: email, fit: fit)
+                            if let profile = self.profile{
+                                self.id.text = "\(profile.idAccount)"
+                                self.Name.text = profile.name
+                                self.SDT.text = profile.phone
+                                self.email.text = profile.email
+                                Enum.setImageFromURL(urlString: avatar, imageView: self.avatar)
+                            }
+                        }
+        }
+        }
     }
     
 
