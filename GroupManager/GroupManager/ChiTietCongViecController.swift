@@ -10,7 +10,29 @@ import UIKit
 class ChiTietCongViecController: UIViewController {
     var receivedData:CongViec?
     
-
+    var job:Job?
+    var idUser = 15
+    var idCaptain:Int?
+    @IBOutlet weak var navigation: UINavigationItem!
+    
+    @IBAction func menu(_ sender: UIBarButtonItem) {
+        let actionSheet = UIAlertController(title: "Select Option", message: nil, preferredStyle: .actionSheet)
+             actionSheet.addAction(UIAlertAction(title: "Tham gia", style: .default, handler:{
+                    action in
+                    self.thongBao(message: "Tạo công việc!")
+                }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Rời Công việc", style: .destructive, handler:{
+            action in
+            self.thongBao(message: "Rời Job!")
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Huỷ", style: .destructive, handler:nil))
+        present(actionSheet, animated: true, completion: nil)
+    }
+    @IBAction func back(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBOutlet weak var containerView: UIView!
     @IBAction func changView(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
@@ -27,13 +49,12 @@ class ChiTietCongViecController: UIViewController {
             viewMoi.view.frame = containerView.bounds
             containerView.addSubview(viewMoi.view)
             viewMoi.didMove(toParent: self)
-            if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController{
-                
+            if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController,let job = job{
                 
                     viewMoi1.job = job
               
                 viewMoi1.nameJob.text = job.title
-                viewMoi1.quantityJob.text = String(job.quantity)
+                viewMoi1.quantityJob.text =  "\(job.join)/\(job.quantity)"
                 viewMoi1.deadlineJob.text = job.deadline
                 viewMoi1.fitJob.text = "Điểm tích luỹ: \(job.point) fit"
                 viewMoi1.descriptionJob.text = job.description
@@ -69,13 +90,13 @@ class ChiTietCongViecController: UIViewController {
             viewMoi.view.frame = containerView.bounds
             containerView.addSubview(viewMoi.view)
             viewMoi.didMove(toParent: self)
-            if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController{
+            if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController,let job = job{
                 
                 
                     viewMoi1.job = job
               
                 viewMoi1.nameJob.text = job.title
-                viewMoi1.quantityJob.text = String(job.quantity)
+                viewMoi1.quantityJob.text = "\(job.join)/\(job.quantity)"
                 viewMoi1.deadlineJob.text = job.deadline
                 viewMoi1.fitJob.text = "Điểm tích luỹ: \(job.point) fit"
                 viewMoi1.descriptionJob.text = job.description
@@ -94,12 +115,13 @@ class ChiTietCongViecController: UIViewController {
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
-    var job:Job = Job(id: 0, idDeadline: 1, title: "Công Việc Back-end Web", image: "https://static-xf1.vietnix.vn/wp-content/uploads/2021/01/Back-end.jpg", quantity: 20, description: "Công việc đòi hỏi kỹ năng cao trong việc giải các thuật toán logic và nặng tính chính trị trong luận văn hay nhungữ yêu cầu vốn sinh ra để giải đáp@!s", deadline: "Ngày 24 tháng 5 năm 2024", point: 20, titleDeadline: "Ngày 24 tháng 4 năm 2024", titleGroup: "Nhóm Công Việc ", status: true,join: 1)
-    var idUser = 15
+   
     
    override func viewDidLoad() {
         super.viewDidLoad()
-    title = job.title
+    if let job = job{
+        navigation.title = job.title
+    }
     let viewCu = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController2")
     viewCu.willMove(toParent: nil)
     viewCu.view.removeFromSuperview()
@@ -112,13 +134,13 @@ class ChiTietCongViecController: UIViewController {
     viewMoi.view.frame = containerView.bounds
     containerView.addSubview(viewMoi.view)
     viewMoi.didMove(toParent: self)
-    if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController{
+    if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController, let job = job{
         
         
             viewMoi1.job = job
       
         viewMoi1.nameJob.text = job.title
-        viewMoi1.quantityJob.text = String(job.quantity)
+        viewMoi1.quantityJob.text = "\(job.join)/\(job.quantity)"
         viewMoi1.deadlineJob.text = job.deadline
         viewMoi1.fitJob.text = "Điểm tích luỹ: \(job.point) fit"
         viewMoi1.descriptionJob.text = job.description

@@ -13,13 +13,15 @@ class Group {
     var quantity: Int
     var captain: Int
     var status: Bool
-    init(id:Int, title:String,image:String,quantity:Int,captain:Int,status:Bool) {
+    var join:Int
+    init(id:Int, title:String,image:String,quantity:Int,captain:Int,status:Bool,join:Int) {
         self.id = id
         self.title = title
         self.image = image
         self.quantity = quantity
         self.captain = captain
         self.status = status
+        self.join = join
     }
     
 }

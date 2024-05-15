@@ -19,16 +19,18 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = "groupCell"
-        let data = mangNhom[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? NhomCell else{
             return UITableViewCell()
         }
+        if mangNhom.count > 0{
+            let data = mangNhom[indexPath.row]
+            cell.tenNhom.text = data.title
+            cell.soLuong.text = "\(data.quantity) Thành viên"
+            cell.data = data
+            let imageUrlString = data.image
+            Enum.setImageFromURL(urlString: imageUrlString, imageView: cell.anhNhom)
+        }
         
-        cell.tenNhom.text = data.title
-        cell.soLuong.text = "\(data.quantity) Thành viên"
-        cell.data = data
-        let imageUrlString = data.image
-        Enum.setImageFromURL(urlString: imageUrlString, imageView: cell.anhNhom)
         return cell
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -128,7 +130,8 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
                                         let quantity = snap3["quantity"] as? Int ?? -1
                                         let captain = snap3["captain"] as? Int ?? -1
                                         let status = snap3["status"] as? Bool ?? false
-                                        let us = Group(id: idIn, title: title, image: image, quantity: quantity, captain: captain, status: status)
+                                        let join = snap3["join"] as? Int ?? -1
+                                        let us = Group(id: idIn, title: title, image: image, quantity: quantity, captain: captain, status: status,join: join)
                                         
                                         
                                         

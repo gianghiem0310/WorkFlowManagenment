@@ -9,24 +9,28 @@ import UIKit
 import FirebaseDatabase
 class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate {
     
-   
+    var idUser = 15
     @IBAction func tool(_ sender: UIBarButtonItem) {
         let actionSheet = UIAlertController(title: "Select Option", message: nil, preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Tạo dự án", style: .default, handler:{
-            action in
-            
-            let storyboard = Enum.STORYBOARD
-            if let des = storyboard.instantiateViewController(identifier: "taoDuAn") as? TaoDuAnController{
-                let navigation = UINavigationController(rootViewController: des)
-                 navigation.modalPresentationStyle = .fullScreen
-                 self.present(navigation, animated: true, completion: nil)
+        
+        if let group = self.group{
+            if idUser == group.captain{
+                actionSheet.addAction(UIAlertAction(title: "Thêm thành viên", style: .default, handler:{
+                    action in
+                    self.formAdd()
+                }))
+                actionSheet.addAction(UIAlertAction(title: "Tạo dự án", style: .default, handler:{
+                    action in
+                    let storyboard = Enum.STORYBOARD
+                    if let des = storyboard.instantiateViewController(identifier: "taoDuAn") as? TaoDuAnController{
+                        let navigation = UINavigationController(rootViewController: des)
+                         navigation.modalPresentationStyle = .fullScreen
+                         self.present(navigation, animated: true, completion: nil)
+                    }
+                    
+                }))
             }
-            
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Thêm thành viên", style: .default, handler:{
-            action in
-            self.formAdd()
-        }))
+        }
         actionSheet.addAction(UIAlertAction(title: "Rời nhóm", style: .destructive, handler:{
             action in
             if let group = self.group {
@@ -38,7 +42,9 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                     let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
                     let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
                         
-                        self.outGroup(idGroup: group.id)
+//                        self.outGroup(idGroup: group.id)
+                        Enum.roiGroup(idReceiver: group.captain, idSender: self.idUser, content: "1 đã rời nhóm", idGroup: group.id,closure: self.outGroup)
+                        
                         
                     }
                     alert.addAction(cancel)
@@ -64,6 +70,8 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         let okAction = UIAlertAction(title: "Đồng ý", style: .default, handler: {
             action in
             self.trangThaiKiemTra = true
+            
+            
             if self.trangThaiKiemTra == true {
                 if let alert = alert.textFields {
                     if let textF = alert.first{
@@ -74,19 +82,18 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                                 snapshot in
                                 if snapshot.childrenCount > 0,self.trangThaiKiemTra == true {
                                     if let child = snapshot.value as? NSDictionary{
-                                        if let group = self.group{
+                                        if let group = self.group,group.captain == self.idUser{
                                             let content = "Nhóm trưởng mời bạn vào nhóm \(group.title)"
                                             let type = Enum.THAM_GIA_GROUP
                                             let date = Enum.getCurrentDateDDMMYYYY()
                                             
                                             if self.trangThaiKiemTra == true {
-                                                var idNewNoti = 0
                                                 database.child(Enum.NOTIFICATION_TABLE).child("\(idReceiver)").child("\(self.idUser)").observe(DataEventType.value){
                                                     snapshot in
                                                     if self.trangThaiKiemTra == true{
                                                         let newNotification = Notification(id:Int(snapshot.childrenCount),idSender: group.captain, idReceiver: idReceiver, content: content, type: type, idGroup: group.id, idDeadline: -1, idJob: -1, date: date)
 
-                                                        database.child(Enum.NOTIFICATION_TABLE).child("\(newNotification.idReceiver)").child("\(newNotification.idSender)").child("\(newNotification.id)").setValue(newNotification.toDictionary())
+                                                        Enum.guiLoiMoiThamGiaGroup(notification: newNotification)
                                                         self.trangThaiKiemTra = false
                                                         self.thongBao(message: "Gửi lời mời thành công!")
                                                         textF.text = ""
@@ -99,6 +106,7 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                                              
                                             }
                                         }
+                                        
                                   
                                       
                                     }
@@ -221,7 +229,7 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                                 let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
                                 let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
                                     
-                                    self.removeMember(idGroup: group.id, idMember: data.idAccount)
+                                    self.removeMember(idGroup: group.id, idMember: data.idAccount,group: group)
                                     self.mangMember.remove(at: indexPath.row)
                                     tableView.deleteRows(at: [indexPath], with: .fade)
                                     self.thongBao(message: "Đã xoá \(data.name) ra khỏi nhóm!")
@@ -245,16 +253,35 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         }
        
     }
-    func outGroup(idGroup:Int){
-        let database = Enum.DB_REALTIME
-        database.child(Enum.GROUP_JOIN_TABLE).child("\(idUser)").child("\(idGroup)").removeValue()
-        database.child(Enum.MEMBER_TABLE).child("\(idGroup)").child("\(idUser)").removeValue()
+    func outGroup(){
+//        let database = Enum.DB_REALTIME
+//        database.child(Enum.GROUP_JOIN_TABLE).child("\(idUser)").child("\(idGroup)").removeValue()
+//        database.child(Enum.MEMBER_TABLE).child("\(idGroup)").child("\(idUser)").removeValue()
         dismiss(animated: true, completion: nil)
     }
-    func removeMember(idGroup:Int,idMember:Int){
+    func removeMember(idGroup:Int,idMember:Int,group:Group){
         let database = Enum.DB_REALTIME
-        database.child(Enum.GROUP_JOIN_TABLE).child("\(idMember)").child("\(idGroup)").removeValue()
-        database.child(Enum.MEMBER_TABLE).child("\(idGroup)").child("\(idMember)").removeValue()
+        self.trangThaiKiemTra = true
+                database.child(Enum.GROUP_JOIN_TABLE).child("\(idMember)").child("\(idGroup)").removeValue()
+                database.child(Enum.MEMBER_TABLE).child("\(idGroup)").child("\(idMember)").removeValue()
+                if self.trangThaiKiemTra == true {
+                    var idNewNoti = 0
+                    database.child(Enum.NOTIFICATION_TABLE).child("\(idMember)").child("\(self.idUser)").observe(DataEventType.value){
+                        snapshot in
+                        if self.trangThaiKiemTra == true{
+                            let content = "Bạn bị xoá khỏi nhóm!"
+                            let date = Enum.getCurrentDateDDMMYYYY()
+                            let newNotification = Notification(id:Int(snapshot.childrenCount),idSender: group.captain, idReceiver: idMember, content: content, type: Enum.BI_XOA_KHOI_GROUP, idGroup: group.id, idDeadline: -1, idJob: -1, date: date)
+                            Enum.xoaThanhVienGroup(notification: newNotification)
+                            
+                            self.trangThaiKiemTra = false
+                        }
+                        self.trangThaiKiemTra = false
+                    }
+                }
+            
+        
+        
     }
     
 
@@ -266,7 +293,7 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
     var mangProject:[Deadline] = []
     var mangMember:[Profile] = []
     var group:Group?
-    var idUser = 15
+   
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -367,5 +394,18 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         // Pass the selected object to the new view controller.
     }
     */
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if choose {
+            let storyboard = Enum.STORYBOARD
+            if let view = storyboard.instantiateViewController(identifier: "manHinhDanhSachCongViec") as? DanhSachCongViecController{
+                view.deadline = mangProject[indexPath.row]
+                if let gr = group{
+                    view.idCaptain = gr.captain
+                }
+                view.modalPresentationStyle = .fullScreen
+                self.present(view, animated: true, completion: nil)
+            }
+        }
+    }
 
 }

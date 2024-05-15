@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
@@ -39,10 +40,15 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         view.addGestureRecognizer(tapGes)
         
         
+        
         customGiaoDien()
     }
     @objc func hideKeyboard(){
         view.endEditing(true)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getIdLienTuc()
     }
     
     @IBAction func tapGestureAvatar(_ sender: UITapGestureRecognizer) {
@@ -67,9 +73,19 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "loginView")
         vc.modalPresentationStyle = .overFullScreen
-       present(vc, animated: true, completion: nil)
+//       present(vc, animated: true, completion: nil)
+        trangThaiKiemTra = true
+        
+        let dataa = Enum.DB_REALTIME
+        dataa.child(Enum.PROFILE_TABLE).child("\(idNew)").child("idAccount").setValue(idNew)
+       
     }
-    
+    func thongBao(message: String){
+        let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //An ban phim
         txtTenDangNhap.resignFirstResponder()
@@ -127,6 +143,24 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
       
          
        }
-
-
+    var idNew = 0
+    var trangThaiKiemTra = true
+    func getIdLienTuc(){
+        let database = Enum.DB_REALTIME
+        let groupRef = database.child(Enum.PROFILE_TABLE)
+        let lastElement = groupRef.queryOrderedByKey().queryLimited(toLast: 1)
+        lastElement.observeSingleEvent(of: .value){
+            (snapshot) in
+            guard snapshot.exists() else{
+                self.idNew = 0
+                return
+            }
+            if let lastE = snapshot.children.allObjects.first as? DataSnapshot{
+                if let child = lastE.value as? NSDictionary{
+                    self.idNew = child["idAccount"] as? Int ?? -1
+                    self.idNew += 1
+                }
+            }
+        }
+    }
 }

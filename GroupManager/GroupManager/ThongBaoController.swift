@@ -8,7 +8,10 @@
 import UIKit
 import FirebaseDatabase
 
+
 class ThongBaoController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+
+    var idUser = 1
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -17,26 +20,89 @@ class ThongBaoController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       let iden = "xacNhanThamGiaNhom"
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: iden,for: indexPath) as? XacNhanThamGiaNhomCell else{
-            return UITableViewCell()
-        }
         let data = mangThongBao[indexPath.row]
-        cell.confirm = data
-        cell.view = self
-        let database = Enum.DB_REALTIME
-        database.child(Enum.GROUP_TABLE).child("\(data.idGroup)").observe(DataEventType.value){
-            snapshot in
-            if snapshot.childrenCount > 0{
-                if let object = snapshot.value as? NSDictionary{
-                    let title = object["title"] as? String ?? ""
-                    let image = object["image"] as? String ?? ""
-                    cell.titleGroup.text = title
-                    Enum.setImageFromURL(urlString: image, imageView: cell.imageNoti)
+        let type = data.type
+        var iden = "xacNhanThamGia"
+        
+        switch type {
+        case Enum.THAM_GIA_GROUP,
+             Enum.THAM_GIA_DEADLINE,
+             Enum.THAM_GIA_JOB,
+             Enum.XAC_NHAN_COMPLETE:
+            iden = "xacNhanThamGia"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: iden,for: indexPath) as? XacNhanThamGiaCell else{
+                return UITableViewCell()
+            }
+            cell.data = data
+            cell.view = self
+            cell.content.text = data.content
+            cell.date.text = data.date
+            let database = Enum.DB_REALTIME
+            database.child(Enum.GROUP_TABLE).child("\(data.idGroup)").observe(DataEventType.value){
+                snapshot in
+                if snapshot.childrenCount > 0{
+                    if let object = snapshot.value as? NSDictionary{
+                        let title = object["title"] as? String ?? ""
+                        let image = object["image"] as? String ?? ""
+                        cell.titleGroup.text = title
+                        Enum.setImageFromURL(urlString: image, imageView: cell.imageNoti)
+                    }
                 }
             }
+            return cell
+           
+        case Enum.NHAC_NHO,
+             Enum.TEXT_BINH_THUONG,
+             Enum.BI_XOA_KHOI_GROUP,
+             Enum.BI_XOA_KHOI_DEADLINE,
+             Enum.BI_XOA_KHOI_JOB:
+            iden = "textBinhThuong"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: iden,for: indexPath) as?  TextBinhThuongCell else{
+                return UITableViewCell()
+            }
+            cell.data = data
+            cell.contentNoti.text = data.content
+            cell.date.text = data.date
+            let database = Enum.DB_REALTIME
+            database.child(Enum.GROUP_TABLE).child("\(data.idGroup)").observe(DataEventType.value){
+                snapshot in
+                if snapshot.childrenCount > 0{
+                    if let object = snapshot.value as? NSDictionary{
+                        let title = object["title"] as? String ?? ""
+                        
+                        let image = object["image"] as? String ?? ""
+                        cell.titleNoti.text = title
+                        
+                        Enum.setImageFromURL(urlString: image, imageView: cell.imageNoti)
+                    }
+                }
+            }
+            return cell
+        default:
+            iden = "xacNhanThamGia"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: iden,for: indexPath) as?  XacNhanThamGiaCell else{
+                return UITableViewCell()
+            }
+            cell.data = data
+            cell.view = self
+            cell.content.text = data.content
+            cell.date.text = data.date
+            let database = Enum.DB_REALTIME
+            database.child(Enum.GROUP_TABLE).child("\(data.idGroup)").observe(DataEventType.value){
+                snapshot in
+                if snapshot.childrenCount > 0{
+                    if let object = snapshot.value as? NSDictionary{
+                        let title = object["title"] as? String ?? ""
+                        let image = object["image"] as? String ?? ""
+                        cell.titleGroup.text = title
+                        Enum.setImageFromURL(urlString: image, imageView: cell.imageNoti)
+                    }
+                }
+            }
+            return cell
+            
         }
-        return cell
+        
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let data = self.mangThongBao[indexPath.row]
@@ -73,7 +139,7 @@ class ThongBaoController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var tableView: UITableView!
     
     var mangThongBao = [Notification]()
-    var idUser = 2
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()

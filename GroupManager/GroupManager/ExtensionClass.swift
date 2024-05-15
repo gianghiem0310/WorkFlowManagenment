@@ -8,7 +8,7 @@
 import Foundation
 extension Group{
     func toDictionary()->[String:Any]{
-        return ["id":id,"title":title,"image":image,"quantity":quantity,"captain":captain,"status":status]
+        return ["id":id,"title":title,"image":image,"quantity":quantity,"captain":captain,"status":status,"join":join]
     }
 }
 extension Job{
@@ -26,5 +26,6 @@ extension Notification{
         return ["id":id,"idSender":idSender,"idReceiver":idReceiver,"content":content,"type":type,"idGroup":idGroup,"idDeadline":idDeadline,"idJob":idJob,"date":date]
     }
 }
+
 
 

@@ -36,7 +36,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                                 }
                                 
                                 self.anh = downloadURL.absoluteString
-                                let nhom = Group(id: self.idNhom, title: self.tenNhom, image: self.anh, quantity: quantity, captain: self.idUser, status: self.status)
+                                let nhom = Group(id: self.idNhom, title: self.tenNhom, image: self.anh, quantity: quantity, captain: self.idUser, status: self.status,join: 1)
                                 let database = Enum.DB_REALTIME
                                 database.child(Enum.GROUP_TABLE).child("\(self.idNhom)").setValue(nhom.toDictionary()){
                                 (result,error) in
@@ -45,6 +45,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                                     return
                                 }
                                     database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(nhom.id)").child("id").setValue(nhom.id)
+                                    database.child(Enum.MEMBER_TABLE).child("\(nhom.id)").child("\(self.idUser)").child("fit").setValue(0)
                                     database.child(Enum.MEMBER_TABLE).child("\(nhom.id)").child("\(self.idUser)").child("id").setValue(self.idUser)
                                 self.thongBao(message: "Tạo nhóm thành công!")
                                 self.inputTen.text = ""
@@ -65,7 +66,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                     }
                     else{
                         
-                        let nhom = Group(id: idNhom, title: tenNhom, image: anh, quantity: quantity, captain: idUser, status: status)
+                        let nhom = Group(id: idNhom, title: tenNhom, image: anh, quantity: quantity, captain: idUser, status: status,join: 1)
                         let database = Enum.DB_REALTIME
                         database.child(Enum.GROUP_TABLE).child("\(idNhom)").setValue(nhom.toDictionary()){
                         (result,error) in
@@ -74,6 +75,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                             return
                         }
                             database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(nhom.id)").child("id").setValue(nhom.id)
+                            database.child(Enum.MEMBER_TABLE).child("\(nhom.id)").child("\(self.idUser)").child("fit").setValue(0)
                             database.child(Enum.MEMBER_TABLE).child("\(nhom.id)").child("\(self.idUser)").child("id").setValue(self.idUser)
                         self.thongBao(message: "Tạo nhóm thành công!")
                         self.inputTen.text = ""
@@ -93,11 +95,11 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                 if !tenNhom.isEmpty && !soLuong.isEmpty
                     {
                     let storage = Enum.DB_STORAGE
-                    if let image = imageLayRa{
+                    if let image = imageLayRa,let nhom = self.nhomEdit{
                         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                             return
                         }
-                        let imageName = "Nhom\(self.nhomEdit?.id).jpeg"
+                        let imageName = "Nhom\(nhom.id).jpeg"
                         let imageRef = storage.child("images/\(imageName)")
                         let uploadTask = imageRef.putData(imageData,metadata: nil){
                             (metadata,error) in
@@ -108,7 +110,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                                 
                                 if let nhomEdit = self.nhomEdit{
                                     self.anh = downloadURL.absoluteString
-                                    let nhom = Group(id: nhomEdit.id, title: self.tenNhom, image: self.anh, quantity: quantity, captain: nhomEdit.captain, status: nhomEdit.status)
+                                    let nhom = Group(id: nhomEdit.id, title: self.tenNhom, image: self.anh, quantity: quantity, captain: nhomEdit.captain, status: nhomEdit.status,join: nhomEdit.join)
                                     let database = Enum.DB_REALTIME
                                     database.child(Enum.GROUP_TABLE).child("\(nhomEdit.id)").setValue(nhom.toDictionary()){
                                     (result,error) in
@@ -134,7 +136,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                     else{
                         
                         if let nhomEdit = nhomEdit{
-                            let nhom = Group(id: nhomEdit.id, title: tenNhom, image: nhomEdit.image, quantity: quantity, captain: nhomEdit.captain, status: nhomEdit.status)
+                            let nhom = Group(id: nhomEdit.id, title: tenNhom, image: nhomEdit.image, quantity: quantity, captain: nhomEdit.captain, status: nhomEdit.status,join: nhomEdit.join)
                             let database = Enum.DB_REALTIME
                             database.child(Enum.GROUP_TABLE).child("\(nhom.id)").setValue(nhom.toDictionary()){
                             (result,error) in

@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseDatabase
 
-class XacNhanThamGiaNhomCell: UITableViewCell {
+class XacNhanThamGiaCell: UITableViewCell {
 
     var confirm:Notification?
     var view:ThongBaoController?
