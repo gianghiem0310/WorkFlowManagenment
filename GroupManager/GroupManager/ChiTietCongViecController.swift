@@ -12,7 +12,9 @@ class ChiTietCongViecController: UIViewController {
     
     var job:Job?
     var idUser = 15
+    var nameUser = "Nghiêm"
     var idCaptain:Int?
+    var idGroup:Int?
     @IBOutlet weak var navigation: UINavigationItem!
     
     @IBAction func menu(_ sender: UIBarButtonItem) {
@@ -21,10 +23,15 @@ class ChiTietCongViecController: UIViewController {
                     action in
                     self.thongBao(message: "Tạo công việc!")
                 }))
-        
+        //Add du lieu gia
+        actionSheet.addAction(UIAlertAction(title: "Xoá Thành viên khỏi công việc", style: .destructive, handler:{
+            action in
+            self.xoaThanhVienJob()
+        }))
+        //End
         actionSheet.addAction(UIAlertAction(title: "Rời Công việc", style: .destructive, handler:{
             action in
-            self.thongBao(message: "Rời Job!")
+            self.roiJob()
         }))
         actionSheet.addAction(UIAlertAction(title: "Huỷ", style: .destructive, handler:nil))
         present(actionSheet, animated: true, completion: nil)
@@ -32,7 +39,32 @@ class ChiTietCongViecController: UIViewController {
     @IBAction func back(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-    
+    var profileMember = Profile(idAccount: 1, avatar: "Hello", name: "HOa", phone: "093232323", email: "9jdjf", fit: 10)
+    func xoaThanhVienJob() {
+        if let idGroup = idGroup,let job = job,let idCaptain = idCaptain,idUser == idCaptain{
+            Enum.xoaThanhVienJob(profileMember: profileMember, idGroup: idGroup, job: job, idCaptain: idCaptain, closure: self.thongBaoXoa)
+        }
+        else{
+            thongBao(message: "Bạn không thể sử dụng chức năng này!")
+        }
+    }
+    func thongBaoXoa(){
+        let alert = UIAlertController(title: "Thông báo", message: "Xoá thành công!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    func roiJob() {
+        if let idCaptain = idCaptain,let idGroup = idGroup,let job = job{
+            Enum.roiJob(idReceiver: idCaptain, idSender: idUser, content: "\(nameUser) rời công việc \(job.title)", idGroup: idGroup, idDeadline: job.idDeadline, idJob: job.id, closure: self.thongBaoRoiNhom)
+        }
+    }
+    func thongBaoRoiNhom(){
+        let alert = UIAlertController(title: "Thông báo", message: "Rời nhóm thành công!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
     @IBOutlet weak var containerView: UIView!
     @IBAction func changView(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {

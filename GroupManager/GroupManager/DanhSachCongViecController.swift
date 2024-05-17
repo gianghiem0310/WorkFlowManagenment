@@ -43,47 +43,184 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
    
     @IBOutlet weak var navigation: UINavigationItem!
     //End Nghiem
-    var idView = 15
+    var idView = 0
     var ar = [Job]()
     var ar2 = [1,2,3,4]
-    var ar3 = [1,2]
+    var ar3 = [Profile]()
     
 
     //Start Nghiem 2
     let database = Enum.DB_REALTIME
     func getDataForTableView() {
-        if let deadline = deadline{
-            database.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
-                snapshot in
-                if snapshot.childrenCount>0{
-                    self.ar.removeAll()
-                    for child in snapshot.children{
-                        if let childSnap = child as? DataSnapshot{
-                            if let object = childSnap.value as? NSDictionary{
-                                let id = object["id"] as? Int ?? -1
-                                let idDeadline = object["idDeadline"] as? Int ?? -1
-                                let title = object["title"] as? String ?? ""
-                                let image = object["image"] as? String ?? ""
-                                let quantity = object["quantity"] as? Int ?? -1
-                                let description = object["description"] as? String ?? ""
-                                let deadline = object["deadline"] as? String ?? ""
-                                let point = object["point"] as? Int ?? -1
-                                let titleDeadline = object["titleDeadline"] as? String ?? ""
-                                let titleGroup = object["titleGroup"] as? String ?? ""
-                                let status = object["status"] as? Bool ?? true
-                                let join = object["join"] as? Int ?? -1
-                                let job = Job(id: id, idDeadline: idDeadline, title: title, image: image, quantity: quantity, description: description, deadline: deadline, point: point, titleDeadline: title, titleGroup: titleGroup, status: status, join: join)
-                                self.ar.append(job)
-                                self.tableView.reloadData()
+        switch idView {
+        case 0:
+            if let deadline = deadline{
+                database.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
+                    snapshot in
+                    if snapshot.childrenCount>0{
+                        self.ar.removeAll()
+                        for child in snapshot.children{
+                            if let childSnap = child as? DataSnapshot{
+                                if let object = childSnap.value as? NSDictionary{
+                                    let id = object["id"] as? Int ?? -1
+                                    let idDeadline = object["idDeadline"] as? Int ?? -1
+                                    let title = object["title"] as? String ?? ""
+                                    let image = object["image"] as? String ?? ""
+                                    let quantity = object["quantity"] as? Int ?? -1
+                                    let description = object["description"] as? String ?? ""
+                                    let deadline = object["deadline"] as? String ?? ""
+                                    let point = object["point"] as? Int ?? -1
+                                    let titleDeadline = object["titleDeadline"] as? String ?? ""
+                                    let titleGroup = object["titleGroup"] as? String ?? ""
+                                    let status = object["status"] as? Bool ?? true
+                                    let join = object["join"] as? Int ?? -1
+                                    let job = Job(id: id, idDeadline: idDeadline, title: title, image: image, quantity: quantity, description: description, deadline: deadline, point: point, titleDeadline: title, titleGroup: titleGroup, status: status, join: join)
+                                    self.ar.append(job)
+                                    self.tableView.reloadData()
+                                }
                             }
                         }
                     }
                 }
             }
+        case 1:
+            if let deadline = deadline{
+                database.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
+                    snapshot in
+                    if snapshot.childrenCount>0{
+                        self.ar.removeAll()
+                        for child in snapshot.children{
+                            if let childSnap = child as? DataSnapshot{
+                                if let object = childSnap.value as? NSDictionary{
+                                    let id = object["id"] as? Int ?? -1
+                                    let idDeadline = object["idDeadline"] as? Int ?? -1
+                                    let title = object["title"] as? String ?? ""
+                                    let image = object["image"] as? String ?? ""
+                                    let quantity = object["quantity"] as? Int ?? -1
+                                    let description = object["description"] as? String ?? ""
+                                    let deadline = object["deadline"] as? String ?? ""
+                                    let point = object["point"] as? Int ?? -1
+                                    let titleDeadline = object["titleDeadline"] as? String ?? ""
+                                    let titleGroup = object["titleGroup"] as? String ?? ""
+                                    let status = object["status"] as? Bool ?? true
+                                    let join = object["join"] as? Int ?? -1
+                                    let job = Job(id: id, idDeadline: idDeadline, title: title, image: image, quantity: quantity, description: description, deadline: deadline, point: point, titleDeadline: title, titleGroup: titleGroup, status: status, join: join)
+                                    self.ar.append(job)
+                                    self.tableView.reloadData()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        case 2:
+            if let deadline = deadline{
+                database.child(Enum.DEADLINE_JOIN_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
+                    snapshot in
+                    self.ar3.removeAll()
+                    self.ar.removeAll()
+                    self.ar2.removeAll()
+                    if snapshot.childrenCount > 0{
+                        self.ar3.removeAll()
+                        for child in snapshot.children{
+                            if let childSnap = child as? DataSnapshot{
+                                if let value = childSnap.value as? NSDictionary{
+                                    let id = value["id"] as? Int ?? -1
+                                    if id != -1 {
+                                        self.database.child(Enum.PROFILE_TABLE).child("\(id)").observe(DataEventType.value){
+                                            (snapshot) in
+                                            if let object = snapshot.value as? NSDictionary{
+                                                let idAccount = object["idAccount"] as? Int ?? -1
+                                                let avatar = object["avatar"] as? String ?? ""
+                                                let name = object["name"] as? String ?? ""
+                                                let phone = object["phone"] as? String ?? ""
+                                                let email = object["email"] as? String ?? ""
+                                                let fit = object["fit"] as? Int ?? -1
+                                                let profile = Profile(idAccount: idAccount, avatar: avatar, name: name, phone: phone, email: email, fit: fit)
+                                                self.ar3.append(profile)
+                                                self.tableView.reloadData()
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+                
+        default:
+                if let deadline = deadline{
+                    database.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
+                        snapshot in
+                        if snapshot.childrenCount>0{
+                            self.ar.removeAll()
+                            for child in snapshot.children{
+                                if let childSnap = child as? DataSnapshot{
+                                    if let object = childSnap.value as? NSDictionary{
+                                        let id = object["id"] as? Int ?? -1
+                                        let idDeadline = object["idDeadline"] as? Int ?? -1
+                                        let title = object["title"] as? String ?? ""
+                                        let image = object["image"] as? String ?? ""
+                                        let quantity = object["quantity"] as? Int ?? -1
+                                        let description = object["description"] as? String ?? ""
+                                        let deadline = object["deadline"] as? String ?? ""
+                                        let point = object["point"] as? Int ?? -1
+                                        let titleDeadline = object["titleDeadline"] as? String ?? ""
+                                        let titleGroup = object["titleGroup"] as? String ?? ""
+                                        let status = object["status"] as? Bool ?? true
+                                        let join = object["join"] as? Int ?? -1
+                                        let job = Job(id: id, idDeadline: idDeadline, title: title, image: image, quantity: quantity, description: description, deadline: deadline, point: point, titleDeadline: title, titleGroup: titleGroup, status: status, join: join)
+                                        self.ar.append(job)
+                                        self.tableView.reloadData()
+                                    }
+                                }
+                            }
+                        }
+                    }
+        }
+        
+        
         }
        
        
     }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+            self.thongBao(message: "Ko phải bảng tv!")
+          
+        }
+        switch idView {
+        case 0:
+            break
+        case 1:
+            break
+        case 2:
+            let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+                if self.idView == 2,let deadline = self.deadline,let idCaptain = self.idCaptain {
+                    let profileMemmber = self.ar3[indexPath.row]
+                    Enum.xoaThanhVienDeadline(profileMember: profileMemmber, deadline: deadline, idCaptain: idCaptain, closure: self.thongBaoXoa)
+                    self.ar3.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                   
+                    
+                }
+              
+            }
+            return [deleteAction]
+        default:
+            break
+        }
+        return [deleteAction]
+    }
+    func thongBaoXoa(){
+        let alert = UIAlertController(title: "Thông báo", message: "Xoá thành công!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     //End Nghiem 2
     func thongBao(message: String){
         let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
@@ -98,27 +235,29 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
         switch sender.selectedSegmentIndex {
         case 0:
             idView = 0
-            tableView.reloadData()
+            getDataForTableView()
         case 1:
             idView = 1
-            tableView.reloadData()
+            getDataForTableView()
         case 2:
             idView = 2
-            tableView.reloadData()
+            getDataForTableView()
         default:
             break
         }
         
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if idView == 0 {
+        switch idView {
+        case 0:
+            return ar.count
+        case 1:
+            return ar2.count
+        case 2:
+            return ar3.count
+        default:
             return ar.count
         }
-        if idView == 1 {
-            return ar2.count
-        }
-        
-        return ar3.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -128,26 +267,36 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if idView == 0 {
-            let identifier = "dangCanCell"
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? DangCanCell else{
-                return UITableViewCell()
-            }
-            return cell
+        switch idView {
+      
+        case 0:
+        let identifier = "dangCanCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? DangCanCell else{
+            return UITableViewCell()
         }
-        if idView == 1 {
-            let identifier = "chotCell"
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? ChotCell else{
-                return UITableViewCell()
-            }
-            return cell
+        return cell
+        case 1:
+        let identifier = "chotCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? ChotCell else{
+            return UITableViewCell()
         }
-  
-            let identifier = "thanhVienCell"
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? ThanhVienCell else{
-                return UITableViewCell()
-            }
-            return cell
+        return cell
+        case 2:
+        let identifier = "thanhVienCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? ThanhVienCell else{
+            return UITableViewCell()
+        }
+        return cell
+        default:
+        let identifier = "dangCanCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? DangCanCell else{
+            return UITableViewCell()
+        }
+        return cell
+        }
+      
+        
+           
     }
     
 
@@ -176,9 +325,10 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
         case 0:
             let storyboard = Enum.STORYBOARD
             if let view = storyboard.instantiateViewController(identifier: "chiTietCongViec") as? ChiTietCongViecController{
-                if let idCaptain = idCaptain{
+                if let idCaptain = idCaptain,let deadline = deadline{
                     view.idCaptain = idCaptain
                     view.job = ar[indexPath.row]
+                    view.idGroup = deadline.idGroup
                     view.modalPresentationStyle = .fullScreen
                     present(view, animated: true, completion: nil)
                 }

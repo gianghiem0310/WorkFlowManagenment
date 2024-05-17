@@ -7,36 +7,42 @@
 
 import UIKit
 
-struct thanhVien {
-    var avatar:String
-    var name:String
-    var trangThai:String
-}
 
-class FragmentThanhVienCongViecController: UIViewController, UITableViewDataSource {
+class FragmentThanhVienCongViecController: UIViewController, UITableViewDataSource,UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
-    let array = [thanhVien(avatar: "default", name: "Nguyen Van Bi", trangThai: "hoan thanh"),thanhVien(avatar: "default", name: "Nguyen Van Bi", trangThai: "hoan thanh"),thanhVien(avatar: "default", name: "Nguyen Van Bi", trangThai: "hoan thanh"),thanhVien(avatar: "default", name: "Nguyen Van Bi", trangThai: "hoan thanh")]
+    let array = [Profile]()
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return array.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "thanhVienCongViecCell") as! ThanhVienCongViecCell
-        
-        let item = array[indexPath.item]
-        
-        cell.imageAvatar = UIImageView(image: UIImage(named: item.avatar))
-        cell.name.text = item.name
-        cell.trangThai.text = item.trangThai
-
+        //Sai
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "thanhVienCongViecCell") as! ThanhVienCongViecCell
+//
+//        let item = array[indexPath.item]
+//
+//        cell.imageAvatar = UIImageView(image: UIImage(named: item.avatar))
+//        cell.name.text = item.name
+//        cell.trangThai.text = item.trangThai
+        //Sai
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "thanhVienCongViecCell",for: indexPath) as? ThanhVienCongViecCell else{
+            return UITableViewCell()
+        }
+        let child = array[indexPath.row]
+        Enum.setImageFromURL(urlString: child.avatar, imageView: cell.imageAvatar)
+        cell.name.text = child.name
+        cell.trangThai.text = "Hoàn thành"
         return cell
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
         tableView.dataSource = self
     }
+    //Nghiem set Du Lieu G
     
+    //End
 
     /*
     // MARK: - Navigation

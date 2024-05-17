@@ -12,7 +12,7 @@ class ThanhVienCongViecCell: UITableViewCell {
     @IBOutlet weak var imageAvatar: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var trangThai: UILabel!
-    @IBOutlet weak var ThongBao: UIButton!
+    @IBOutlet weak var thongBao: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
