@@ -224,8 +224,13 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                             uploadTask.observe(.success){
                                                 snap in
                                             }
+                                        
+                                        }else{
+                                            let profile = Profile(idAccount: account.id, avatar: "NULL", name: self.tenNguoiDung, phone: self.soDienThoai, email: self.email, fit: self.fit)
+                                            
+                                            self.db.child(Enum.PROFILE_TABLE).child("\(account.id)").setValue(profile.toDictionary())
                                         }
-//                                        print("\(String(describing: self.imageLayRa))")
+                                        
                                         
                                         self.toggleActivityIndicator(false)
                                         self.thongBao(message: "Tạo tài khoản thành công!")
@@ -241,6 +246,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                         }else{
                             self.thongBao(message: "Tên đăng nhập đã tồn tại!")
                             self.toggleActivityIndicator(false)
+                            self.checkState = true
                         }
                     }
                     }else{
