@@ -19,7 +19,7 @@ class TaoCongViecViewController: UIViewController,UITextFieldDelegate,UIImagePic
     @IBOutlet weak var dateHanCongViec: UIDatePicker!
     
     
-    @IBOutlet weak var imageNhom: UIImageView!
+//    @IBOutlet weak var imageNhom: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,11 +55,11 @@ class TaoCongViecViewController: UIViewController,UITextFieldDelegate,UIImagePic
        
         present(imagePicker, animated: true)
     }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage]{imageNhom.image = image as? UIImage}
-        dismiss(animated: true)
-    }
+//
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        if let image = info[.originalImage]{imageNhom.image = image as? UIImage}
+//        dismiss(animated: true)
+//    }
     
     @objc func hideKeyboard(){
         view.endEditing(true)

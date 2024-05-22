@@ -32,4 +32,8 @@ extension Account{
     }
 }
 
-
+extension Profile{
+    func toDictionary() -> [String:Any] {
+        return ["idAccount":idAccount, "avatar":avatar, "name":name, "phone":phone, "email":email, "fit":fit]
+    }
+}
