@@ -26,6 +26,10 @@ extension Notification{
         return ["id":id,"idSender":idSender,"idReceiver":idReceiver,"content":content,"type":type,"idGroup":idGroup,"idDeadline":idDeadline,"idJob":idJob,"date":date]
     }
 }
-
+extension Account{
+    func toDictionary() -> [String:Any] {
+        return ["id":id,"username":username,"password":password]
+    }
+}
 
 

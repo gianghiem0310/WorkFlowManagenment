@@ -1614,48 +1614,69 @@
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ei0-2D-VJS">
                                 <rect key="frame" x="10" y="98" width="394" height="120"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoApp" translatesAutoresizingMaskIntoConstraints="NO" id="cPq-TZ-yFK">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="120" id="8is-Qb-59m"/>
-                                            <constraint firstAttribute="height" constant="120" id="Zjg-G2-t16"/>
-                                        </constraints>
-                                    </imageView>
-                                    <stackView opaque="NO" contentMode="center" axis="vertical" distribution="fillEqually" alignment="center" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wWD-vN-khf">
-                                        <rect key="frame" x="130" y="0.0" width="264" height="120"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Uew-cE-FgQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="120"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyễn Bi Tơ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6R-1z-VCj">
-                                                <rect key="frame" x="0.0" y="0.0" width="264" height="56.5"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0973975484" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1b-jd-WVI">
-                                                <rect key="frame" x="0.0" y="31.5" width="264" height="56"/>
-                                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="20"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bito@gmail.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wkg-9N-iXV">
-                                                <rect key="frame" x="0.0" y="63.5" width="264" height="56.5"/>
-                                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="20"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoApp" translatesAutoresizingMaskIntoConstraints="NO" id="cPq-TZ-yFK">
+                                                <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="120" id="8is-Qb-59m"/>
+                                                    <constraint firstAttribute="height" constant="120" id="Zjg-G2-t16"/>
+                                                </constraints>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="center" axis="vertical" distribution="fillEqually" alignment="center" spacing="20" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wWD-vN-khf">
+                                                <rect key="frame" x="130" y="0.0" width="264" height="120"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyễn Bi Tơ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6R-1z-VCj">
+                                                        <rect key="frame" x="0.0" y="0.0" width="264" height="30.5"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID: 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5g-al-zOz">
+                                                        <rect key="frame" x="0.0" y="30" width="264" height="30.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0973975484" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1b-jd-WVI">
+                                                        <rect key="frame" x="0.0" y="60" width="264" height="30"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bito@gmail.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wkg-9N-iXV">
+                                                        <rect key="frame" x="0.0" y="89.5" width="264" height="30.5"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="U6R-1z-VCj" firstAttribute="leading" secondItem="wWD-vN-khf" secondAttribute="leading" id="4mH-9C-ObS"/>
+                                                    <constraint firstAttribute="trailing" secondItem="p1b-jd-WVI" secondAttribute="trailing" id="CxS-3x-sVd"/>
+                                                    <constraint firstItem="p1b-jd-WVI" firstAttribute="leading" secondItem="wWD-vN-khf" secondAttribute="leading" id="EuW-zn-AnV"/>
+                                                    <constraint firstAttribute="trailing" secondItem="x5g-al-zOz" secondAttribute="trailing" id="KDP-l3-XB1"/>
+                                                    <constraint firstAttribute="trailing" secondItem="wkg-9N-iXV" secondAttribute="trailing" id="O6V-a0-X3p"/>
+                                                    <constraint firstAttribute="trailing" secondItem="U6R-1z-VCj" secondAttribute="trailing" id="U6o-BW-pAc"/>
+                                                    <constraint firstItem="wkg-9N-iXV" firstAttribute="leading" secondItem="wWD-vN-khf" secondAttribute="leading" id="b9I-3M-IvG"/>
+                                                    <constraint firstItem="x5g-al-zOz" firstAttribute="leading" secondItem="wWD-vN-khf" secondAttribute="leading" id="tBW-gG-fGN"/>
+                                                </constraints>
+                                            </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="U6R-1z-VCj" firstAttribute="leading" secondItem="wWD-vN-khf" secondAttribute="leading" id="Amh-3S-qN1"/>
-                                            <constraint firstItem="p1b-jd-WVI" firstAttribute="leading" secondItem="wWD-vN-khf" secondAttribute="leading" id="D1T-if-e2r"/>
-                                            <constraint firstAttribute="trailing" secondItem="U6R-1z-VCj" secondAttribute="trailing" id="IJ3-tV-7mC"/>
-                                            <constraint firstItem="wkg-9N-iXV" firstAttribute="leading" secondItem="wWD-vN-khf" secondAttribute="leading" id="R1h-SY-t8X"/>
-                                            <constraint firstAttribute="trailing" secondItem="p1b-jd-WVI" secondAttribute="trailing" id="UCP-R4-e6N"/>
-                                            <constraint firstAttribute="trailing" secondItem="wkg-9N-iXV" secondAttribute="trailing" id="WcT-Fv-f8X"/>
+                                            <constraint firstAttribute="trailing" secondItem="wWD-vN-khf" secondAttribute="trailing" id="59F-Bz-624"/>
+                                            <constraint firstItem="wWD-vN-khf" firstAttribute="leading" secondItem="cPq-TZ-yFK" secondAttribute="trailing" constant="10" id="M0A-ED-Gpq"/>
+                                            <constraint firstItem="wWD-vN-khf" firstAttribute="top" secondItem="Uew-cE-FgQ" secondAttribute="top" id="QAn-L4-Yzs"/>
+                                            <constraint firstAttribute="bottom" secondItem="wWD-vN-khf" secondAttribute="bottom" id="ao6-jE-MjM"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="wWD-vN-khf" secondAttribute="bottom" id="2JA-NN-iVT"/>
-                                    <constraint firstItem="wWD-vN-khf" firstAttribute="top" secondItem="Ei0-2D-VJS" secondAttribute="top" id="f59-SV-VW2"/>
+                                    <constraint firstItem="Uew-cE-FgQ" firstAttribute="leading" secondItem="Ei0-2D-VJS" secondAttribute="leading" id="G31-QN-9s8"/>
+                                    <constraint firstAttribute="trailing" secondItem="Uew-cE-FgQ" secondAttribute="trailing" id="JTw-si-w6A"/>
+                                    <constraint firstAttribute="bottom" secondItem="Uew-cE-FgQ" secondAttribute="bottom" id="hbc-hJ-PUC"/>
+                                    <constraint firstItem="Uew-cE-FgQ" firstAttribute="top" secondItem="Ei0-2D-VJS" secondAttribute="top" id="yRl-qT-Wku"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -1679,11 +1700,12 @@
                         <outlet property="SDT" destination="p1b-jd-WVI" id="pFr-2K-fei"/>
                         <outlet property="avatar" destination="cPq-TZ-yFK" id="fB1-aF-bd2"/>
                         <outlet property="email" destination="wkg-9N-iXV" id="nHj-f7-s8I"/>
+                        <outlet property="id" destination="x5g-al-zOz" id="jsN-Vz-8gn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LyE-Li-VOs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4792" y="2467"/>
+            <point key="canvasLocation" x="4791.304347826087" y="2466.9642857142858"/>
         </scene>
         <!--Cập nhật thông tin-->
         <scene sceneID="cCX-Ox-YNd">
@@ -1730,7 +1752,7 @@
                                         <rect key="frame" x="0.0" y="103" width="394" height="34"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="tel"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email liên hệ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZyS-gV-08X">
                                         <rect key="frame" x="0.0" y="147" width="394" height="19.5"/>
@@ -1763,7 +1785,11 @@
                                 <action selector="back:" destination="9he-yf-0Ot" id="NNu-eh-eo0"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Xong" id="GiW-Xf-6w9"/>
+                        <barButtonItem key="rightBarButtonItem" title="Xong" id="GiW-Xf-6w9">
+                            <connections>
+                                <action selector="btn_Xong:" destination="9he-yf-0Ot" id="cfF-ml-dD7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="imageAvatar" destination="87B-bn-PQY" id="6eW-Wj-tFs"/>
@@ -2276,7 +2302,11 @@
                                 <action selector="back:" destination="X0l-v5-H7h" id="m2j-PD-FFM"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Xong" id="h7N-Nx-YLe"/>
+                        <barButtonItem key="rightBarButtonItem" title="Xong" id="h7N-Nx-YLe">
+                            <connections>
+                                <action selector="btnXong:" destination="X0l-v5-H7h" id="bAP-a5-C1a"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="txtMatKhau" destination="19M-mz-Xug" id="05p-70-OQ7"/>
