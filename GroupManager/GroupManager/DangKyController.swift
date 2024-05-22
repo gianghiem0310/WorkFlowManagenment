@@ -165,9 +165,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                     !email.isEmpty || !matKhau.isEmpty{
                     
                     if tenDangNhap.count >= 6 || matKhau.count >= 6{
-                        
-                      
-                            
+
                             self.db.child(Enum.ACCCOUNT_TABLE).observe(DataEventType.value){
                                 snapshot in
                                 
@@ -182,6 +180,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                                 let tenDangNhapFb = value["username"] as? String ?? ""
                                                 if tenDangNhap == tenDangNhapFb {
                                                     self.checkState = false
+                                                  
                                                 }
                                             }
                                         }
@@ -189,7 +188,8 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                 }
                             }
   
-                        DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
+                        DispatchQueue.main.asyncAfter(deadline: .now()+3.0){
+                          
                             if self.checkState {
                                 self.account = Account(id: self.idNew, username: self.tenDangNhap, password: self.matKhau)
                                 if let account = self.account{
@@ -225,6 +225,8 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                                 snap in
                                             }
                                         }
+//                                        print("\(String(describing: self.imageLayRa))")
+                                        
                                         self.toggleActivityIndicator(false)
                                         self.thongBao(message: "Tạo tài khoản thành công!")
                                         self.txtTenNguoiDung.text! = ""
@@ -232,14 +234,15 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                         self.txtTenDangNhap.text! = ""
                                         self.txtSoDienThoai.text! = ""
                                         self.txtMatKhau.text! = ""
-                                    }
+                                        self.checkState = true
+//                                    }
                                 }
-                            }else{
-                                self.thongBao(message: "Tên đăng nhập đã tồn tại!")
-                                self.toggleActivityIndicator(false)
                             }
+                        }else{
+                            self.thongBao(message: "Tên đăng nhập đã tồn tại!")
+                            self.toggleActivityIndicator(false)
                         }
-                      
+                    }
                     }else{
                         self.thongBao(message: "Tên đăng nhập và mật tối thiểu 6 ký tự!")
                         self.toggleActivityIndicator(false)
