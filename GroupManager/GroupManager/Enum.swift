@@ -11,6 +11,7 @@ import FirebaseStorage
 import UIKit
 class Enum{
     static let ISLOGIN = "isLogin"
+    static let NULL = "NULL"
     // MARK: Thông tin user
     static let ID_USER = "idUser"
     static let NAME_USER = "nameUser"
