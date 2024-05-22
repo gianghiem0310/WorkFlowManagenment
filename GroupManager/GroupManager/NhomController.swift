@@ -118,7 +118,7 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         
     }
     func getDataUser(){
-        UserDefaults.standard.setValue(1, forKey: Enum.ID_USER)
+        UserDefaults.standard.setValue(15, forKey: Enum.ID_USER)
         UserDefaults.standard.setValue("Nghiêm Nguyễn", forKey: Enum.NAME_USER)
         UserDefaults.standard.synchronize()
         idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)

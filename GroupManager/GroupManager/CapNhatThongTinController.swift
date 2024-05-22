@@ -63,6 +63,7 @@ class CapNhatThongTinController: UIViewController,UITextFieldDelegate,UIImagePic
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        idUser = UserDefaults.standard.integer(forKey: "idUser")
         txtTenNguoiDung.delegate = self
         txtSDT.delegate = self
         txtEmail.delegate = self
@@ -72,7 +73,7 @@ class CapNhatThongTinController: UIViewController,UITextFieldDelegate,UIImagePic
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        idUser = UserDefaults.standard.integer(forKey: "idUser")
+        
         database.child(Enum.PROFILE_TABLE).child("\(idUser)").observe(DataEventType.value){
             (snapshot) in
             if snapshot.childrenCount>0{

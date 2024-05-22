@@ -23,7 +23,10 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                     let storyboard = Enum.STORYBOARD
                     if let des = storyboard.instantiateViewController(identifier: "taoDuAn") as? TaoDuAnController{
                         let navigation = UINavigationController(rootViewController: des)
+                        des.group = group
+                        des.status = true
                          navigation.modalPresentationStyle = .fullScreen
+                        
                          self.present(navigation, animated: true, completion: nil)
                     }
                     
@@ -195,6 +198,8 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                          let navigation = UINavigationController(rootViewController: des)
                           navigation.modalPresentationStyle = .fullScreen
                         des.title = "Sửa dự án"
+                        des.status = false
+                        des.deadline = self.mangProject[indexPath.row]
                           self.present(navigation, animated: true, completion: nil)
                      }
                 }

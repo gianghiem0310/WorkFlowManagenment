@@ -46,9 +46,8 @@ class DoiMatKhauController: UIViewController ,UITextFieldDelegate{
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UserDefaults.standard.setValue(1, forKey: "idUser")
-        UserDefaults.standard.synchronize()
-        idUser = UserDefaults.standard.integer(forKey: "idUser")
+        
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {

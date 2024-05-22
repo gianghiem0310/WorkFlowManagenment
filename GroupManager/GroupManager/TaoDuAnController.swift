@@ -9,12 +9,26 @@ import UIKit
 
 class TaoDuAnController: UIViewController {
 
+    var group:Group?
+    var deadline:Deadline?
+    var status:Bool?
+    
     @IBAction func back(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if let status = status{
+            if status{
+                if let group = group{
+                    
+                }
+            }else{
+                if let deadline = deadline{
+                    
+                }
+            }
+        }
         // Do any additional setup after loading the view.
     }
     

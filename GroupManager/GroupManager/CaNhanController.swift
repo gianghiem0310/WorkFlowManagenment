@@ -58,10 +58,10 @@ class CaNhanController: UIViewController {
                             let email = snap2["email"] as? String ?? ""
                             self.profile = Profile(idAccount: id, avatar: avatar, name: name, phone: sdt, email: email, fit: fit)
                             if let profile = self.profile{
-                                self.id.text = "\(profile.idAccount)"
-                                self.Name.text = profile.name
-                                self.SDT.text = profile.phone
-                                self.email.text = profile.email
+                                self.id.text = "ID: \(profile.idAccount)"
+                                self.Name.text = "Tên: \(profile.name)"
+                                self.SDT.text = "SĐT: \(profile.phone)"
+                                self.email.text = "Email: \(profile.email)"
                                 Enum.setImageFromURL(urlString: avatar, imageView: self.avatar)
                             }
                         }
