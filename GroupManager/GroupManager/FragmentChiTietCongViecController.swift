@@ -9,18 +9,39 @@ import UIKit
 
 class FragmentChiTietCongViecController: UIViewController {
 
-    var tenCongViec:String = ""
-    @IBOutlet weak var ten: UILabel!
+    
+    @IBOutlet weak var imageJob: UIImageView!
+    
+    @IBOutlet weak var nameJob: UILabel!
+    
+    @IBOutlet weak var quantityJob: UILabel!
+    
+    @IBOutlet weak var deadlineJob: UILabel!
+    
+    @IBOutlet weak var fitJob: UILabel!
+    
+    @IBOutlet weak var descriptionJob: UILabel!
+    
+    var job:Job?
+    var idUser = 15
     override func viewDidLoad() {
         super.viewDidLoad()
-       thongBao(message: tenCongViec)
+       
         // Do any additional setup after loading the view.
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getDataUser()
+       
     }
     func thongBao(message: String){
         let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
+    }
+    func getDataUser(){
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
     }
 
     /*

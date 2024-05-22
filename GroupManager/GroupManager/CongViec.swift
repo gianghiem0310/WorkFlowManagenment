@@ -7,14 +7,11 @@
 
 import Foundation
 class CongViec{
-    var title:String = ""
+    var title:String
+  
     init(title:String) {
         self.title = title
     }
-    func getTitle()->String{
-        return title
-    }
-    func setTitle(title:String){
-        self.title = title
-    }
+    
+   
 }

@@ -1,20 +1,21 @@
 //
-//  MemberProjectCell.swift
+//  ChotCell.swift
 //  GroupManager
 //
-//  Created by Gia Nghiem on 4/20/24.
+//  Created by Nguyen Hong Phuc on 4/26/24.
 //
 
 import UIKit
 
-class ThanhVienCell: UITableViewCell {
 
-    @IBOutlet weak var avtThanhVien: UIImageView!
+
+
+
+class ChotCell: UITableViewCell {
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-//        avtThanhVien.layer.cornerRadius = avtThanhVien.frame.width/2
-//
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

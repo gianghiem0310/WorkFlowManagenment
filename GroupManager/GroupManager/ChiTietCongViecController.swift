@@ -10,7 +10,81 @@ import UIKit
 class ChiTietCongViecController: UIViewController {
     var receivedData:CongViec?
     
-
+    var job:Job?
+    var idUser = 1
+    var nameUser = "Nghiêm"
+    var idCaptain:Int?
+    var idGroup:Int?
+    @IBOutlet weak var navigation: UINavigationItem!
+    
+    @IBAction func menu(_ sender: UIBarButtonItem) {
+        let actionSheet = UIAlertController(title: "Select Option", message: nil, preferredStyle: .actionSheet)
+             actionSheet.addAction(UIAlertAction(title: "Tham gia", style: .default, handler:{
+                    action in
+                    self.thongBao(message: "Tạo công việc!")
+                }))
+        //Add du lieu gia
+        actionSheet.addAction(UIAlertAction(title: "Xoá Thành viên khỏi công việc", style: .destructive, handler:{
+            action in
+            self.xoaThanhVienJob()
+        }))
+        //End
+        actionSheet.addAction(UIAlertAction(title: "Tham gia công việc", style: .default, handler:{
+            action in
+            var kiemTra = true
+            if kiemTra,let idGroup = self.idGroup, let job = self.job, let idCaptain = self.idCaptain{
+                Enum.xinVaoJob(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, idGroup: idGroup, job: job, closure: self.thongBaoThamGia)
+            }
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Hoàn thành", style: .default, handler:{
+            action in
+            var kiemTra = true
+            if kiemTra,let idGroup = self.idGroup, let job = self.job, let idCaptain = self.idCaptain{
+                Enum.yeuCauXacNhanHoanThanhCongViec(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, idGroup: idGroup, job: job, closure: self.thongBaoThamGia)
+            }
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Rời Công việc", style: .destructive, handler:{
+            action in
+            self.roiJob()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Huỷ", style: .destructive, handler:nil))
+        present(actionSheet, animated: true, completion: nil)
+    }
+    @IBAction func back(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    var profileMember = Profile(idAccount: 1, avatar: "Hello", name: "HOa", phone: "093232323", email: "9jdjf", fit: 10)
+    func xoaThanhVienJob() {
+        if let idGroup = idGroup,let job = job,let idCaptain = idCaptain,idUser == idCaptain{
+            Enum.xoaThanhVienJob(profileMember: profileMember, idGroup: idGroup, job: job, idCaptain: idCaptain, closure: self.thongBaoXoa)
+        }
+        else{
+            thongBao(message: "Bạn không thể sử dụng chức năng này!")
+        }
+    }
+    func thongBaoThamGia(){
+        let alert = UIAlertController(title: "Thông báo", message: "Đã gửi yêu cầu cho nhóm trưởng!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    func thongBaoXoa(){
+        let alert = UIAlertController(title: "Thông báo", message: "Xoá thành công!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    func roiJob() {
+        if let idCaptain = idCaptain,let idGroup = idGroup,let job = job{
+            Enum.roiJob(idReceiver: idCaptain, idSender: idUser, content: "\(nameUser) rời công việc \(job.title)", idGroup: idGroup, idDeadline: job.idDeadline, idJob: job.id, closure: self.thongBaoRoiNhom)
+        }
+    }
+    func thongBaoRoiNhom(){
+        let alert = UIAlertController(title: "Thông báo", message: "Rời công việc thành công!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
     @IBOutlet weak var containerView: UIView!
     @IBAction func changView(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
@@ -27,11 +101,19 @@ class ChiTietCongViecController: UIViewController {
             viewMoi.view.frame = containerView.bounds
             containerView.addSubview(viewMoi.view)
             viewMoi.didMove(toParent: self)
-            if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController{
-                if let data = receivedData{
-                    viewMoi1.tenCongViec = data.title
-                    viewMoi1.ten.text = data.title
-                }
+            if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController,let job = job{
+                
+                    viewMoi1.job = job
+              
+                viewMoi1.nameJob.text = job.title
+                viewMoi1.quantityJob.text =  "\(job.join)/\(job.quantity)"
+                viewMoi1.deadlineJob.text = job.deadline
+                viewMoi1.fitJob.text = "Điểm tích luỹ: \(job.point) fit"
+                viewMoi1.descriptionJob.text = job.description
+                Enum.setImageFromURL(urlString: job.image, imageView: viewMoi1.imageJob)
+                    
+                
+                
             
             }
             
@@ -48,7 +130,34 @@ class ChiTietCongViecController: UIViewController {
             containerView.addSubview(viewMoi.view)
             viewMoi.didMove(toParent: self)
         default:
-            containerView.backgroundColor = .white
+            let viewCu = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController2")
+            viewCu.willMove(toParent: nil)
+            viewCu.view.removeFromSuperview()
+            viewCu.removeFromParent()
+            
+            
+            let viewMoi = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController1")
+            
+            addChild(viewMoi)
+            viewMoi.view.frame = containerView.bounds
+            containerView.addSubview(viewMoi.view)
+            viewMoi.didMove(toParent: self)
+            if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController,let job = job{
+                
+                
+                    viewMoi1.job = job
+              
+                viewMoi1.nameJob.text = job.title
+                viewMoi1.quantityJob.text = "\(job.join)/\(job.quantity)"
+                viewMoi1.deadlineJob.text = job.deadline
+                viewMoi1.fitJob.text = "Điểm tích luỹ: \(job.point) fit"
+                viewMoi1.descriptionJob.text = job.description
+                Enum.setImageFromURL(urlString: job.image, imageView: viewMoi1.imageJob)
+                    
+                
+                
+            
+            }
         }
     }
     
@@ -58,10 +167,45 @@ class ChiTietCongViecController: UIViewController {
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
-    
+   
+    func getDataUser(){
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
+        nameUser = UserDefaults.standard.string(forKey: Enum.NAME_USER) ?? ""
+    }
    override func viewDidLoad() {
         super.viewDidLoad()
+    getDataUser()
+    if let job = job{
+        navigation.title = job.title
+    }
+    let viewCu = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController2")
+    viewCu.willMove(toParent: nil)
+    viewCu.view.removeFromSuperview()
+    viewCu.removeFromParent()
+    
+    
+    let viewMoi = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController1")
+    
+    addChild(viewMoi)
+    viewMoi.view.frame = containerView.bounds
+    containerView.addSubview(viewMoi.view)
+    viewMoi.didMove(toParent: self)
+    if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController, let job = job{
         
+        
+            viewMoi1.job = job
+      
+        viewMoi1.nameJob.text = job.title
+        viewMoi1.quantityJob.text = "\(job.join)/\(job.quantity)"
+        viewMoi1.deadlineJob.text = job.deadline
+        viewMoi1.fitJob.text = "Điểm tích luỹ: \(job.point) fit"
+        viewMoi1.descriptionJob.text = job.description
+        Enum.setImageFromURL(urlString: job.image, imageView: viewMoi1.imageJob)
+            
+        
+        
+    
+    }
         // Do any additional setup after loading the view.
     }
     

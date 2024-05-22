@@ -9,6 +9,10 @@ import UIKit
 
 class DuAnCell: UITableViewCell {
 
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var quantity: UILabel!
+    
+    @IBOutlet weak var quantityJob: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
