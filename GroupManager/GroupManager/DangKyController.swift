@@ -42,10 +42,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
     var imageLayRa:UIImage?
     
     let storage = Enum.DB_STORAGE
-    
-    
-    
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         txtTenDangNhap.delegate = self
@@ -63,15 +60,10 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         //Ẩn bàn phím khi nhấn bất cứ đâu ở màn hinh
         let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGes)
-        
-        
+ 
         customGiaoDien()
         getIdLienTuc()
-        
-        //Listen for keyboard events
-        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+
     }
     
     func toggleActivityIndicator(_ show: Bool) {
@@ -81,13 +73,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
               activityIndicator.stopAnimating()
           }
       }
-    
-    
-    //    deinit{
-    //        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification,object: nil)
-    //        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification,object: nil)
-    //        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification,object: nil)
-    //    }
+
     @objc func hideKeyboard(){
         view.endEditing(true)
     }
@@ -141,9 +127,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         getIdLienTuc()
     }
     
-    
-    
-    var checkState = false
+    var checkState = true
     let database = Enum.DB_REALTIME
     
     func getIdLienTuc(){
@@ -173,114 +157,101 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         DispatchQueue.main.asyncAfter(deadline: .now()+1.0){
             
            
-            if let tenDangNhap = self.txtTenDangNhap.text, let tenNguoiDung = self.txtTenNguoiDung.text, let soDienThoai = self.txtSoDienThoai.text, let email = self.txtEmail.text, let matKhau = self.txtMatKhau.text{
+            if let tenDangNhap = self.txtTenDangNhap.text, let tenNguoiDung = self.txtTenNguoiDung.text, let soDienThoai = self.txtSoDienThoai.text, let email = self.txtEmail.text, let matKhau = self.txtMatKhau.text
+//               ,let anh = self.imageAvatar.image
+            {
                 
                 if !tenDangNhap.isEmpty || !tenNguoiDung.isEmpty || !soDienThoai.isEmpty ||
                     !email.isEmpty || !matKhau.isEmpty{
                     
                     if tenDangNhap.count >= 6 || matKhau.count >= 6{
-                        self.db.child(Enum.ACCCOUNT_TABLE).observe(DataEventType.value){
-                            snapshot in
-                            if snapshot.childrenCount > 0{
                         
-                                for child in snapshot.children{
-                                    
-                                    if let object = child as? DataSnapshot{
-                                        
-                                        if let value = object.value as? NSDictionary{
-                                            
-                                            let tenDangNhapFb = value["username"] as? String ?? ""
-                                           
+                      
+                            
+                            self.db.child(Enum.ACCCOUNT_TABLE).observe(DataEventType.value){
+                                snapshot in
+                                
+                                if snapshot.childrenCount > 0{
+                                  
+                                    for child in snapshot.children{
 
-                                            if tenDangNhap == tenDangNhapFb {
-                                                self.checkState = true
+                                        if let object = child as? DataSnapshot{
+
+                                            if let value = object.value as? NSDictionary{
+
+                                                let tenDangNhapFb = value["username"] as? String ?? ""
+                                                if tenDangNhap == tenDangNhapFb {
+                                                    self.checkState = false
+                                                }
                                             }
-                                            
                                         }
                                     }
                                 }
-                                
-                                
                             }
-                            
-                        }
-                        
-                        if self.checkState {
-                            self.account = Account(id: self.idNew, username: self.tenDangNhap, password: self.matKhau)
-                            if let account = self.account{
-                                self.db.child(Enum.ACCCOUNT_TABLE).child("\(self.idNew)").setValue(account.toDictionary()){
-                                    (result,error) in
-                                    guard error != nil else{
-                                        self.thongBao(message: "Tạo tài khoản thất bại!")
-                                        return
-                                    }
-                                   
-                                    if let image = self.imageLayRa {
-                                        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+  
+                        DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
+                            if self.checkState {
+                                self.account = Account(id: self.idNew, username: self.tenDangNhap, password: self.matKhau)
+                                if let account = self.account{
+                                    self.db.child(Enum.ACCCOUNT_TABLE).child("\(self.idNew)").setValue(account.toDictionary()){
+                                        (result,error) in
+                                        guard error != nil else{
+                                            self.thongBao(message: "Tạo tài khoản thất bại!")
                                             return
                                         }
-                                        let imageName = "avatar/account\(self.idNew).jpeg"
-                                        let imageRef = self.storage.child("images/\(imageName)")
-                                        let uploadTask = imageRef.putData(imageData,metadata: nil){
-                                            (metadata, error) in imageRef.downloadURL{
-                                                (url, error) in
-                                                if let dowloadURL = url, let account = self.account{
-                                                    let profile = Profile(idAccount: account.id, avatar: dowloadURL.absoluteString, name: self.tenNguoiDung, phone: self.soDienThoai, email: self.email, fit: self.fit)
+                                       
+                                        if let image = self.imageLayRa {
+                                            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+                                                return
+                                            }
+                                            let imageName = "avatar/account\(self.idNew).jpeg"
+                                            let imageRef = self.storage.child("images/\(imageName)")
+                                            let uploadTask = imageRef.putData(imageData,metadata: nil){
+                                                (metadata, error) in imageRef.downloadURL{
+                                                    (url, error) in
+                                                    if let dowloadURL = url, let account = self.account{
+                                                        let profile = Profile(idAccount: account.id, avatar: dowloadURL.absoluteString, name: self.tenNguoiDung, phone: self.soDienThoai, email: self.email, fit: self.fit)
+                                                        
+                                                        self.db.child(Enum.PROFILE_TABLE).child("\(account.id)").setValue(profile.toDictionary())
+                                                    }
                                                     
-                                                    self.db.child(Enum.PROFILE_TABLE).child("\(account.id)").setValue(profile.toDictionary())
+                                                    else{
+                                                        return
+                                                    }
+                                                    
                                                 }
-                                                
-                                                else{
-                                                    return
-                                                }
-                                                
+                                            }
+                                            uploadTask.observe(.success){
+                                                snap in
                                             }
                                         }
-                                        uploadTask.observe(.success){
-                                            snap in
-                                           
-                                        }
-                          
+                                        self.toggleActivityIndicator(false)
+                                        self.thongBao(message: "Tạo tài khoản thành công!")
+                                        self.txtTenNguoiDung.text! = ""
+                                        self.txtEmail.text! = ""
+                                        self.txtTenDangNhap.text! = ""
+                                        self.txtSoDienThoai.text! = ""
+                                        self.txtMatKhau.text! = ""
                                     }
-                                    self.toggleActivityIndicator(false)
-                                    self.thongBao(message: "Tạo tài khoản thành công!")
-                                    self.txtTenNguoiDung.text! = ""
-                                    self.txtEmail.text! = ""
-                                    self.txtTenDangNhap.text! = ""
-                                    self.txtSoDienThoai.text! = ""
-                                    self.txtMatKhau.text! = ""
                                 }
-                                
-                                
+                            }else{
+                                self.thongBao(message: "Tên đăng nhập đã tồn tại!")
+                                self.toggleActivityIndicator(false)
                             }
-                        }else{
-                            self.thongBao(message: "Tên đăng nhập đã tồn tại!")
-                            self.toggleActivityIndicator(false)
                         }
+                      
                     }else{
                         self.thongBao(message: "Tên đăng nhập và mật tối thiểu 6 ký tự!")
                         self.toggleActivityIndicator(false)
                     }
-                    
-                 
                 }else{
                     self.thongBao(message: "Hãy nhập đủ các thông tin!")
                     self.toggleActivityIndicator(false)
                 }
             }
-            
-            
         }
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //An ban phim
         txtTenDangNhap.resignFirstResponder()
