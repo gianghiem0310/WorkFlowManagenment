@@ -406,6 +406,7 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                 view.deadline = mangProject[indexPath.row]
                 if let gr = group{
                     view.idCaptain = gr.captain
+                    view.titleGroup = gr.title
                 }
                 view.modalPresentationStyle = .fullScreen
                 self.present(view, animated: true, completion: nil)

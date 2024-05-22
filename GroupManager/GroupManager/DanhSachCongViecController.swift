@@ -15,6 +15,7 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
     var nameUser = "Thành viên"
     var deadline:Deadline?
     var idCaptain:Int?
+    var titleGroup:String?
     
     @IBAction func menu(_ sender: UIBarButtonItem) {
         let actionSheet = UIAlertController(title: "Select Option", message: nil, preferredStyle: .actionSheet)
@@ -22,7 +23,17 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
             if idUser == idCaptain{
                 actionSheet.addAction(UIAlertAction(title: "Tạo công việc", style: .default, handler:{
                     action in
-                    self.thongBao(message: "Tạo công việc!")
+                    let storyboard = Enum.STORYBOARD
+                    if let des = storyboard.instantiateViewController(identifier: "taoCongViec") as? TaoCongViecController{
+                        des.modalPresentationStyle =  .fullScreen
+                        des.state = true
+                        if let dealine = self.deadline,let titleGroup = self.titleGroup{
+                            des.idGroup = dealine.idGroup
+                            des.titleGroup = titleGroup
+                            des.titleDeadline = dealine.deadline
+                        }
+                        self.present(des, animated: true, completion: nil)
+                    }
                 }))
             }
         }
@@ -201,7 +212,26 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
         }
         switch idView {
         case 0:
-            break
+            let editAction = UITableViewRowAction(style: .default, title: "Edit"){
+                action,indexPathN in
+                let storyboard = Enum.STORYBOARD
+                if let des = storyboard.instantiateViewController(identifier: "taoCongViec") as? TaoCongViecController{
+                    des.modalPresentationStyle =  .fullScreen
+                    des.state = false
+                    des.job = self.ar[indexPath.row]
+                    if let dealine = self.deadline,let titleGroup = self.titleGroup{
+                        des.idGroup = dealine.idGroup
+                        des.titleGroup = titleGroup
+                        des.titleDeadline = dealine.deadline
+                    }
+                    des.title = "Sửa công việc"
+                    self.present(des, animated: true, completion: nil)
+                }
+            }
+            let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+                
+            }
+            return [editAction,deleteAction]
         case 1:
             break
         case 2:

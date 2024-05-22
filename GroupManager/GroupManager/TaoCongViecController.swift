@@ -8,7 +8,13 @@
 import UIKit
 
 class TaoCongViecController: UIViewController,UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    var state = true
 
+    var job:Job?
+    var idGroup:Int?
+    var idDeadline:Int?
+    var titleDeadline:String?
+    var titleGroup:String?
     @IBOutlet weak var txtTieuDe: UITextField!
        
        @IBOutlet weak var txtSoLuongCan: UITextField!
@@ -29,7 +35,7 @@ class TaoCongViecController: UIViewController,UITextFieldDelegate, UIImagePicker
         txtDiemFit.delegate = self
         txtTieuDe.delegate = self
         txtSoLuongCan.delegate = self
-        
+       
            let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
            view.addGestureRecognizer(tapGes)
            
