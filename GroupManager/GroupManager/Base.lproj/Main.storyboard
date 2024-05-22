@@ -1283,13 +1283,16 @@
                                 <state key="normal" title="Đăng ký">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="btnDangKyTaiKhoan:" destination="859-ld-IsG" eventType="touchUpInside" id="Fo2-Zj-TG2"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0XQ-38-crz">
                                 <rect key="frame" x="10" y="703" width="394" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="Bạn đã có tài khoản ?"/>
                                 <connections>
-                                    <action selector="btnDangKy:" destination="859-ld-IsG" eventType="touchUpInside" id="7CW-2v-i4u"/>
+                                    <action selector="banDaCoTaiKhoan:" destination="859-ld-IsG" eventType="touchUpInside" id="haE-Ym-C3c"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -78,21 +78,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         view.endEditing(true)
     }
     
-    @objc func keyboardWillChange(notification: Notification){
-        
-        
-        guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            return
-        }
-        
-        if notification.name == UIResponder.keyboardWillShowNotification
-            ||
-            notification.name == UIResponder.keyboardWillChangeFrameNotification{
-            view.frame.origin.y = -keyboardRect.height
-        }else{
-            view.frame.origin.y = 0
-        }
-    }
+   
     
     @IBAction func tapGestureAvatar(_ sender: UITapGestureRecognizer) {
         txtTenDangNhap.resignFirstResponder()
@@ -320,7 +306,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         case txtMatKhau:
             matKhau = txtMatKhau.text ?? ""
         case txtTenNguoiDung:
-            tenNguoiDung = txtTenDangNhap.text ?? ""
+            tenNguoiDung = txtTenNguoiDung.text ?? ""
         case txtEmail:
             email = txtEmail.text ?? ""
         case txtSoDienThoai:
