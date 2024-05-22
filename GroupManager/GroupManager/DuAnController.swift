@@ -12,7 +12,6 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
     var idUser = 15
     @IBAction func tool(_ sender: UIBarButtonItem) {
         let actionSheet = UIAlertController(title: "Select Option", message: nil, preferredStyle: .actionSheet)
-        
         if let group = self.group{
             if idUser == group.captain{
                 actionSheet.addAction(UIAlertAction(title: "Thêm thành viên", style: .default, handler:{
@@ -70,8 +69,6 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         let okAction = UIAlertAction(title: "Đồng ý", style: .default, handler: {
             action in
             self.trangThaiKiemTra = true
-            
-            
             if self.trangThaiKiemTra == true {
                 if let alert = alert.textFields {
                     if let textF = alert.first{
@@ -97,18 +94,11 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                                                         self.trangThaiKiemTra = false
                                                         self.thongBao(message: "Gửi lời mời thành công!")
                                                         textF.text = ""
-                                                     
-                                                        
                                                     }
                                                    
                                                 }
-//
-                                             
                                             }
                                         }
-                                        
-                                  
-                                      
                                     }
                                 }else{
                                     self.thongBao(message: "Id không tồn tại!")
@@ -171,8 +161,14 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                 return UITableViewCell()
             }
             let data = mangProject[indexPath.row]
-            cell.quantity.text = String(data.quantity)
+            cell.quantity.text = "\(data.join)/\(data.quantity) Thành viên"
             cell.title.text = data.deadline
+            let database = Enum.DB_REALTIME
+            
+            database.child(Enum.JOB_TABLE).child("\(mangProject[indexPath.row].idGroup)").child("\(mangProject[indexPath.row].id)").observe(DataEventType.value){
+                snapshot in
+                cell.quantityJob.text = "\(snapshot.childrenCount) công việc"
+            }
             return cell
         }
         else{
@@ -303,8 +299,12 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
         
         // Do any additional setup after loading the view.
     }
+    func getDataUser(){
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getDataUser()
         if let group = group{
             if group.image != "NULL"{
                 Enum.setImageFromURL(urlString: group.image, imageView: imageView)

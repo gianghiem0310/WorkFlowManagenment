@@ -25,7 +25,7 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         if mangNhom.count > 0{
             let data = mangNhom[indexPath.row]
             cell.tenNhom.text = data.title
-            cell.soLuong.text = "\(data.quantity) Thành viên"
+            cell.soLuong.text = "\(data.join)/\(data.quantity) Thành viên"
             cell.data = data
             let imageUrlString = data.image
             Enum.setImageFromURL(urlString: imageUrlString, imageView: cell.anhNhom)
@@ -35,39 +35,49 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let editAction = UITableViewRowAction(style: .normal, title: "Edit"){action,indexPath in
-            let storyboard = Enum.STORYBOARD
-            if let des = storyboard.instantiateViewController(identifier: "taoNhom") as? TaoNhomController{
-                let navigation = UINavigationController(rootViewController: des)
-                 navigation.modalPresentationStyle = .fullScreen
-                des.manHinh = false
-                des.nhomEdit = self.mangNhom[indexPath.row]
-                 self.present(navigation, animated: true, completion: nil)
+            if self.idUser == self.mangNhom[indexPath.row].captain{
+                let storyboard = Enum.STORYBOARD
+                if let des = storyboard.instantiateViewController(identifier: "taoNhom") as? TaoNhomController{
+                    let navigation = UINavigationController(rootViewController: des)
+                     navigation.modalPresentationStyle = .fullScreen
+                    des.manHinh = false
+                    des.nhomEdit = self.mangNhom[indexPath.row]
+                     self.present(navigation, animated: true, completion: nil)
+                }
+            }else{
+                self.thongBao(message: "Chức năng chỉ dành cho nhóm trưởng!")
             }
+          
+            
         }
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
-            
-            let alert = UIAlertController(title: "Thông báo", message: "Bạn chắc chắn muốn xoá nhóm này?", preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
-            let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
-                let database = Enum.DB_REALTIME
-                database.child(Enum.GROUP_TABLE).child("\(self.mangNhom[indexPath.row].id)").removeValue(){
-                    (error,_)in
-                    if let error = error{
-                        self.thongBao(message: "Không thể xoá!")
-                    }
-                    else{
-                        
-                        database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(self.mangNhom[indexPath.row].id)").removeValue()
-                        self.mangNhom.remove(at: indexPath.row)
-                        tableView.deleteRows(at: [indexPath], with: .fade)
-                        tableView.reloadData()
-                        self.thongBao(message: "Xoá nhóm thành công!")
+            if self.idUser == self.mangNhom[indexPath.row].captain{
+                let alert = UIAlertController(title: "Thông báo", message: "Bạn chắc chắn muốn xoá nhóm này?", preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
+                let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
+                    let database = Enum.DB_REALTIME
+                    database.child(Enum.GROUP_TABLE).child("\(self.mangNhom[indexPath.row].id)").removeValue(){
+                        (error,_)in
+                        if let error = error{
+                            self.thongBao(message: "Không thể xoá!")
+                        }
+                        else{
+                            
+                            database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(self.mangNhom[indexPath.row].id)").removeValue()
+                            self.mangNhom.remove(at: indexPath.row)
+                            tableView.deleteRows(at: [indexPath], with: .fade)
+                            tableView.reloadData()
+                            self.thongBao(message: "Xoá nhóm thành công!")
+                        }
                     }
                 }
+                alert.addAction(cancel)
+                alert.addAction(confirm)
+                self.present(alert, animated: true, completion: nil)
+                
+            }else{
+                self.thongBao(message: "Hãy rời nhóm!")
             }
-            alert.addAction(cancel)
-            alert.addAction(confirm)
-            self.present(alert, animated: true, completion: nil)
             
         }
         return [deleteAction,editAction]
@@ -107,8 +117,16 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         
         
     }
+    func getDataUser(){
+        UserDefaults.standard.setValue(1, forKey: Enum.ID_USER)
+        UserDefaults.standard.setValue("Nghiêm Nguyễn", forKey: Enum.NAME_USER)
+        UserDefaults.standard.synchronize()
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
+        thongBao(message: "\(idUser)")
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getDataUser()
         self.mangNhom.removeAll()
         tableView.reloadData()
         let database = Enum.DB_REALTIME

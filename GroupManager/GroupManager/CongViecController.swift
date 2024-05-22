@@ -49,7 +49,7 @@ class CongViecController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
-    var idUser = 15
+    var idUser = 1
 
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -61,7 +61,11 @@ class CongViecController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getDataUser()
         getDataForTableView()
+    }
+    func getDataUser(){
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
     }
     func getDataForTableView(){
         let database = Enum.DB_REALTIME

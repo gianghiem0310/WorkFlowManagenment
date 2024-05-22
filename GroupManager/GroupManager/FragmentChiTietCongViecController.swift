@@ -31,6 +31,7 @@ class FragmentChiTietCongViecController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        getDataUser()
        
     }
     func thongBao(message: String){
@@ -38,6 +39,9 @@ class FragmentChiTietCongViecController: UIViewController {
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
+    }
+    func getDataUser(){
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
     }
 
     /*

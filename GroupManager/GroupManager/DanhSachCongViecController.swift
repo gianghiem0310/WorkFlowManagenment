@@ -26,6 +26,14 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                 }))
             }
         }
+        actionSheet.addAction(UIAlertAction(title: "Tham gia dự án", style: .default, handler: {
+            action in
+            var kiemTra = true
+            //kiểm tra đã tham gia hay chưa!
+            if kiemTra,let idCaptain = self.idCaptain,let deadline = self.deadline {
+                Enum.xinVaoDeadline(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, deadline: deadline, closure: self.thongBaoThamGia)
+            }
+        }))
         actionSheet.addAction(UIAlertAction(title: "Rời Project", style: .destructive, handler:{
             action in
             if let idCaptain = self.idCaptain,let deadline = self.deadline{
@@ -220,6 +228,12 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
+    func thongBaoThamGia(){
+        let alert = UIAlertController(title: "Thông báo", message: "Đã gửi yêu cầu cho nhóm trưởng!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
     
     //End Nghiem 2
     func thongBao(message: String){
@@ -310,8 +324,13 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
         
         // Do any additional setup after loading the view.
     }
+    func getDataUser(){
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
+        nameUser = UserDefaults.standard.string(forKey: Enum.NAME_USER) ?? ""
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        getDataUser()
         getDataForTableView()
     }
     func setDataFirst(){

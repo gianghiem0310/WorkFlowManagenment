@@ -867,9 +867,9 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12/20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTI-Xg-Acz">
-                                                    <rect key="frame" x="334" y="65" width="50" height="45"/>
+                                                    <rect key="frame" x="234" y="65" width="150" height="45"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="7fa-5J-0ao"/>
+                                                        <constraint firstAttribute="width" constant="150" id="7fa-5J-0ao"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -890,6 +890,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="quantity" destination="gTI-Xg-Acz" id="jdU-UG-FP5"/>
+                                            <outlet property="quantityJob" destination="Euf-hX-YkW" id="d4K-h7-YBE"/>
                                             <outlet property="title" destination="GeF-vY-vEV" id="MSq-xc-iyK"/>
                                         </connections>
                                     </tableViewCell>
@@ -1422,8 +1423,8 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mời bạn tham gia nhóm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfP-u9-HWv">
-                                                            <rect key="frame" x="0.0" y="44.5" width="178" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mời bạn tham gia nhóm Mời bạn tham gia nhóm  Mời bạn tham gia nhóm Mời bạn tham gia nhóm " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfP-u9-HWv">
+                                                            <rect key="frame" x="0.0" y="44.5" width="257" height="20.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20.5" id="GHI-1x-kPU"/>
                                                             </constraints>

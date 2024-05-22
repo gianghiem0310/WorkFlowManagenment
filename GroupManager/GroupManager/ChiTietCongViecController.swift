@@ -11,7 +11,7 @@ class ChiTietCongViecController: UIViewController {
     var receivedData:CongViec?
     
     var job:Job?
-    var idUser = 15
+    var idUser = 1
     var nameUser = "Nghiêm"
     var idCaptain:Int?
     var idGroup:Int?
@@ -29,6 +29,20 @@ class ChiTietCongViecController: UIViewController {
             self.xoaThanhVienJob()
         }))
         //End
+        actionSheet.addAction(UIAlertAction(title: "Tham gia công việc", style: .default, handler:{
+            action in
+            var kiemTra = true
+            if kiemTra,let idGroup = self.idGroup, let job = self.job, let idCaptain = self.idCaptain{
+                Enum.xinVaoJob(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, idGroup: idGroup, job: job, closure: self.thongBaoThamGia)
+            }
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Hoàn thành", style: .default, handler:{
+            action in
+            var kiemTra = true
+            if kiemTra,let idGroup = self.idGroup, let job = self.job, let idCaptain = self.idCaptain{
+                Enum.yeuCauXacNhanHoanThanhCongViec(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, idGroup: idGroup, job: job, closure: self.thongBaoThamGia)
+            }
+        }))
         actionSheet.addAction(UIAlertAction(title: "Rời Công việc", style: .destructive, handler:{
             action in
             self.roiJob()
@@ -48,6 +62,12 @@ class ChiTietCongViecController: UIViewController {
             thongBao(message: "Bạn không thể sử dụng chức năng này!")
         }
     }
+    func thongBaoThamGia(){
+        let alert = UIAlertController(title: "Thông báo", message: "Đã gửi yêu cầu cho nhóm trưởng!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
     func thongBaoXoa(){
         let alert = UIAlertController(title: "Thông báo", message: "Xoá thành công!", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -60,7 +80,7 @@ class ChiTietCongViecController: UIViewController {
         }
     }
     func thongBaoRoiNhom(){
-        let alert = UIAlertController(title: "Thông báo", message: "Rời nhóm thành công!", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Thông báo", message: "Rời công việc thành công!", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
@@ -148,9 +168,13 @@ class ChiTietCongViecController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
    
-    
+    func getDataUser(){
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
+        nameUser = UserDefaults.standard.string(forKey: Enum.NAME_USER) ?? ""
+    }
    override func viewDidLoad() {
         super.viewDidLoad()
+    getDataUser()
     if let job = job{
         navigation.title = job.title
     }

@@ -11,7 +11,7 @@ import FirebaseDatabase
 
 class ThongBaoController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
-    var idUser = 1
+    var idUser = 15
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -149,7 +149,11 @@ class ThongBaoController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        getDataUser()
         getDataForTableView()
+    }
+    func getDataUser(){
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
     }
     func getDataForTableView() {
         let database = Enum.DB_REALTIME
@@ -189,7 +193,9 @@ class ThongBaoController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
         }
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.thongBao(message: mangThongBao[indexPath.row].content)
+    }
 
     /*
     // MARK: - Navigation

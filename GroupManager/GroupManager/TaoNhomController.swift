@@ -191,6 +191,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getDataUser()
         if manHinh{
             title = "Tạo nhóm"
         }
@@ -203,7 +204,10 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
         getIdLienTuc()
         // Do any additional setup after loading the view.
     }
-    
+    func getDataUser(){
+        idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
+      
+    }
     func setDataEditNhom() {
         if let nhomEdit = nhomEdit{
             inputTen.text = nhomEdit.title

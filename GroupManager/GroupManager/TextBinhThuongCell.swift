@@ -19,6 +19,7 @@ class TextBinhThuongCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         imageNoti.layer.cornerRadius = 10
+        contentNoti.numberOfLines = 2
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
