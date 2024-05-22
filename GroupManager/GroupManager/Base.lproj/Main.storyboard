@@ -783,8 +783,16 @@
                                 <action selector="back:" destination="Ofn-6W-6as" id="7bi-XK-LwP"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Xong" id="eF9-4e-zmx"/>
+                        <barButtonItem key="rightBarButtonItem" title="Xong" id="eF9-4e-zmx">
+                            <connections>
+                                <action selector="Xong:" destination="Ofn-6W-6as" id="eCf-UZ-Y9a"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="date" destination="Ygz-1S-nDs" id="Z4A-fU-2yd"/>
+                        <outlet property="quantity" destination="pfl-Oc-n3P" id="Hmw-4s-DdI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qoG-8R-3zZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -19,6 +19,10 @@ class CaNhanController: UIViewController {
 
     @IBAction func logOut(_ sender: UIButton) {
         UserDefaults.standard.removeObject(forKey: Enum.ISLOGIN)
+        UserDefaults.standard.removeObject(forKey: "idUser")
+        UserDefaults.standard.removeObject(forKey: "nameUser")
+        UserDefaults.standard.removeObject(forKey: "imageUser")
+        UserDefaults.standard.synchronize()
         dismiss(animated: true, completion: nil)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let des = storyboard.instantiateViewController(identifier: "loginView") as? DangNhapController{
