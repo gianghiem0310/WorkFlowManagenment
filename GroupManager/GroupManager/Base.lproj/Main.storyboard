@@ -541,6 +541,10 @@
                                                 <constraint firstItem="24Q-zr-kaU" firstAttribute="leading" secondItem="Rg3-zo-Jpf" secondAttribute="leading" constant="10" id="tEj-DC-L0R"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="joinAndQuantity" destination="5n6-xj-0VQ" id="IuF-Pd-tIR"/>
+                                            <outlet property="titleJob" destination="loQ-xH-2vj" id="Hcv-fO-55O"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="chotCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="chotCell" rowHeight="120" id="luK-zo-q7a" customClass="ChotCell" customModule="GroupManager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="148" width="394" height="120"/>
@@ -611,6 +615,10 @@
                                                 <constraint firstAttribute="bottom" secondItem="MCF-1K-Rfg" secondAttribute="bottom" constant="10" id="fqD-gt-R8z"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="joinAndQuantity" destination="cm9-Qt-Bwy" id="jzJ-RW-OaG"/>
+                                            <outlet property="titleJob" destination="cYT-Dj-HUV" id="HtW-Gx-yL1"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="thanhVienCell" rowHeight="120" id="7eS-EI-pVi" customClass="ThanhVienCell" customModule="GroupManager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="268" width="394" height="120"/>
@@ -622,7 +630,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5LM-1H-hqs">
                                                     <rect key="frame" x="10" y="10" width="374" height="100"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoApp" translatesAutoresizingMaskIntoConstraints="NO" id="HUN-Ja-6H8">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoApp" translatesAutoresizingMaskIntoConstraints="NO" id="HUN-Ja-6H8">
                                                             <rect key="frame" x="0.0" y="10" width="80" height="80"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="HUN-Ja-6H8" secondAttribute="height" multiplier="1:1" id="fvY-Gi-rpT"/>
@@ -681,6 +689,12 @@
                                                 <constraint firstAttribute="trailing" secondItem="5LM-1H-hqs" secondAttribute="trailing" constant="10" id="hb7-5T-LFH"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="avtThanhVien" destination="HUN-Ja-6H8" id="m5V-X4-Hwl"/>
+                                            <outlet property="fit" destination="2te-I3-OhV" id="YGm-4v-e1c"/>
+                                            <outlet property="nameThanhVien" destination="x2c-Aa-mAD" id="rV1-Uo-UNZ"/>
+                                            <outlet property="percent" destination="ims-dl-QFN" id="nz8-JQ-Zoj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -1037,9 +1051,6 @@
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rWk-xD-6Ry">
                                                     <rect key="frame" x="165" y="100" width="82" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="82" id="9qQ-rM-2wD"/>
-                                                    </constraints>
                                                     <state key="normal" title="Xem chi tiết"/>
                                                     <connections>
                                                         <action selector="xemChiTiet:" destination="Su7-RO-bcv" eventType="touchUpInside" id="PE6-v8-Hem"/>
@@ -1052,6 +1063,7 @@
                                                 <constraint firstItem="gEr-Ev-Hny" firstAttribute="top" secondItem="ogA-cT-nCF" secondAttribute="top" constant="10" id="4KD-wI-2J9"/>
                                                 <constraint firstItem="gEr-Ev-Hny" firstAttribute="leading" secondItem="ogA-cT-nCF" secondAttribute="leading" constant="10" id="Cc0-F2-xqy"/>
                                                 <constraint firstAttribute="bottom" secondItem="rWk-xD-6Ry" secondAttribute="bottom" constant="10" id="PhH-h6-rcD"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rWk-xD-6Ry" secondAttribute="trailing" constant="20" symbolic="YES" id="Xmp-np-Zn3"/>
                                                 <constraint firstItem="jAo-2h-7yO" firstAttribute="leading" secondItem="gEr-Ev-Hny" secondAttribute="trailing" constant="15" id="eHH-XT-ddM"/>
                                                 <constraint firstItem="jAo-2h-7yO" firstAttribute="top" secondItem="ogA-cT-nCF" secondAttribute="top" constant="10" id="gUC-5N-LGD"/>
                                                 <constraint firstItem="rWk-xD-6Ry" firstAttribute="leading" secondItem="gEr-Ev-Hny" secondAttribute="trailing" constant="15" id="tp0-G4-qZy"/>
@@ -1380,7 +1392,7 @@
                     <tabBarItem key="tabBarItem" title="Nhóm" image="person.2" catalog="system" id="u9m-kX-wni"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Wq2-GO-NfE">
-                        <rect key="frame" x="0.0" y="44" width="414" height="104.5"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

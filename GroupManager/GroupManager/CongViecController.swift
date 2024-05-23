@@ -24,6 +24,8 @@ class CongViecController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.tenCongViec.text = data.title
         cell.deadline.text = data.deadline
         cell.nhomCongViec.text = data.titleGroup
+        
+        cell.trangThai.text = "\(data.status ? "Hoàn thành" : "Chưa hoàn thành")"
         let imageUrlString = data.image
         Enum.setImageFromURL(urlString: imageUrlString, imageView: cell.anhCongViec)
         return cell

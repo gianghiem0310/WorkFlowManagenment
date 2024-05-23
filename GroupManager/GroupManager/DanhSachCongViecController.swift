@@ -64,7 +64,7 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
     //End Nghiem
     var idView = 0
     var ar = [Job]()
-    var ar2 = [1,2,3,4]
+    var ar2 = [Job]()
     var ar3 = [Profile]()
     
 
@@ -77,7 +77,9 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                 database.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
                     snapshot in
                     if snapshot.childrenCount>0{
+                        self.ar3.removeAll()
                         self.ar.removeAll()
+                        self.ar2.removeAll()
                         for child in snapshot.children{
                             if let childSnap = child as? DataSnapshot{
                                 if let object = childSnap.value as? NSDictionary{
@@ -94,7 +96,10 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                                     let status = object["status"] as? Bool ?? true
                                     let join = object["join"] as? Int ?? -1
                                     let job = Job(id: id, idDeadline: idDeadline, title: title, image: image, quantity: quantity, description: description, deadline: deadline, point: point, titleDeadline: title, titleGroup: titleGroup, status: status, join: join)
-                                    self.ar.append(job)
+                                    if job.join < job.quantity{
+                                        self.ar.append(job)
+                                    }
+                                   
                                     self.tableView.reloadData()
                                 }
                             }
@@ -107,7 +112,9 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                 database.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
                     snapshot in
                     if snapshot.childrenCount>0{
+                        self.ar3.removeAll()
                         self.ar.removeAll()
+                        self.ar2.removeAll()
                         for child in snapshot.children{
                             if let childSnap = child as? DataSnapshot{
                                 if let object = childSnap.value as? NSDictionary{
@@ -124,7 +131,10 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                                     let status = object["status"] as? Bool ?? true
                                     let join = object["join"] as? Int ?? -1
                                     let job = Job(id: id, idDeadline: idDeadline, title: title, image: image, quantity: quantity, description: description, deadline: deadline, point: point, titleDeadline: title, titleGroup: titleGroup, status: status, join: join)
-                                    self.ar.append(job)
+                                    if job.join == job.quantity{
+                                        self.ar2.append(job)
+                                      
+                                    }
                                     self.tableView.reloadData()
                                 }
                             }
@@ -212,7 +222,7 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
         }
         switch idView {
         case 0:
-            let editAction = UITableViewRowAction(style: .default, title: "Edit"){
+            let editAction = UITableViewRowAction(style: .normal, title: "Edit"){
                 action,indexPathN in
                 let storyboard = Enum.STORYBOARD
                 if let des = storyboard.instantiateViewController(identifier: "taoCongViec") as? TaoCongViecController{
@@ -318,24 +328,43 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? DangCanCell else{
             return UITableViewCell()
         }
+            let data = ar[indexPath.row]
+            cell.titleJob.text = data.title
+            cell.joinAndQuantity.text = "\(data.join)/\(data.quantity)"
         return cell
         case 1:
         let identifier = "chotCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? ChotCell else{
             return UITableViewCell()
         }
+            
+                let data = ar2[indexPath.row]
+                cell.titleJob.text = data.title
+                cell.joinAndQuantity.text = "\(data.join)/\(data.quantity)"
         return cell
         case 2:
         let identifier = "thanhVienCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? ThanhVienCell else{
             return UITableViewCell()
         }
+            
+                let data = ar3[indexPath.row]
+            cell.nameThanhVien.text = data.name
+            Enum.setImageFromURL(urlString: data.avatar, imageView: cell.avtThanhVien)
+            if let deadline = deadline{
+                Enum.tinhPhanTramProject(idUser: data.idAccount, deadline: deadline, label: cell.percent, labelFit: cell.fit)
+            }
+       
         return cell
         default:
         let identifier = "dangCanCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier,for: indexPath) as? DangCanCell else{
             return UITableViewCell()
         }
+            
+                let data = ar[indexPath.row]
+                cell.titleJob.text = data.title
+                cell.joinAndQuantity.text = "\(data.join)/\(data.quantity)"
         return cell
         }
       

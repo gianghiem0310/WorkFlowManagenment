@@ -606,5 +606,42 @@ class Enum{
                 workItem.cancel()
         }
     }
-   
+   // MARK: Hàm tính phần trăm của thành viên trong deadline
+    static func tinhPhanTramProject(idUser:Int,deadline:Deadline,label:UILabel,labelFit:UILabel){
+        var sum = 0
+        DB_REALTIME.child(Enum.DEADLINE_JOIN_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
+            snapshot in
+            if snapshot.childrenCount>0{
+                sum = 0
+                for child in snapshot.children{
+                    if let object = child as? DataSnapshot{
+                        if let value = object.value as? NSDictionary{
+                            let fit = value["fit"] as? Int ?? -1
+                            sum += fit
+                        }
+                    }
+                }
+            }
+        }
+      
+        DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
+            DB_REALTIME.child(Enum.DEADLINE_JOIN_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(idUser)").observe(DataEventType.value){
+                snapshot in
+                if snapshot.childrenCount>0{
+                            if let value = snapshot.value as? NSDictionary{
+                                let fitUser = value["fit"] as? Int ?? -1
+                       
+                                if sum != 0 && fitUser != 0{
+                                    var percent = fitUser*100/sum
+                                    label.text = "\(percent)%"
+                                   
+                                }else{
+                                    label.text = "0%"
+                                }
+                                labelFit.text = "\(fitUser) fit"
+                            }
+                }
+            }
+        }
+    }
 }

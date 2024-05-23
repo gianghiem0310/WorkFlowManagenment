@@ -8,6 +8,12 @@
 import UIKit
 
 class DangCanCell: UITableViewCell {
+    //Nguyen Gia Nghiem Edit
+    
+    @IBOutlet weak var titleJob: UILabel!
+    
+    @IBOutlet weak var joinAndQuantity: UILabel!
+    //End
 
     override func awakeFromNib() {
         super.awakeFromNib()
