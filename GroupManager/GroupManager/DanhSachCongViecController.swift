@@ -28,6 +28,7 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                         des.modalPresentationStyle =  .fullScreen
                         des.state = true
                         if let dealine = self.deadline,let titleGroup = self.titleGroup{
+                            des.idDeadline = self.deadline?.id
                             des.idGroup = dealine.idGroup
                             des.titleGroup = titleGroup
                             des.titleDeadline = dealine.deadline
@@ -220,6 +221,7 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                     des.state = false
                     des.job = self.ar[indexPath.row]
                     if let dealine = self.deadline,let titleGroup = self.titleGroup{
+                        des.idDeadline = self.deadline?.id
                         des.idGroup = dealine.idGroup
                         des.titleGroup = titleGroup
                         des.titleDeadline = dealine.deadline

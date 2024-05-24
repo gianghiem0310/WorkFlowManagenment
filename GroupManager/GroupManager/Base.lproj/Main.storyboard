@@ -295,14 +295,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tên Nhóm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AyV-Y8-Y0u">
-                                <rect key="frame" x="10" y="54" width="394" height="30"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9yT-3D-RDi">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="Tạo công việc" id="YvM-X4-WgT">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" image="chevron.left" catalog="system" id="SbR-0N-Zih">
+                                            <connections>
+                                                <action selector="btnBack:" destination="F4Z-Kn-joM" id="KZG-DZ-wOv"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Xong" id="6rg-Lo-78k">
+                                            <connections>
+                                                <action selector="btnXong:" destination="F4Z-Kn-joM" id="Cpy-yO-DkO"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UjS-oW-UGG">
-                                <rect key="frame" x="10" y="94" width="394" height="40"/>
+                                <rect key="frame" x="0.0" y="128" width="414" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="oPr-gS-aDQ">
                                         <rect key="frame" x="0.0" y="1" width="40" height="37.5"/>
@@ -312,7 +323,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ngày 25 thang 4 năm 2024" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZR-SF-diG">
-                                        <rect key="frame" x="48" y="10.5" width="346" height="19.5"/>
+                                        <rect key="frame" x="48" y="10.5" width="366" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -320,101 +331,110 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="n5N-ch-ONR">
-                                <rect key="frame" x="10" y="144" width="394" height="170"/>
+                                <rect key="frame" x="0.0" y="173" width="414" height="170"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="394" id="2xJ-Qk-NbL"/>
-                                    <constraint firstAttribute="height" constant="170" id="R1j-4C-ziA"/>
+                                    <constraint firstAttribute="height" constant="170" id="q85-6e-bH1"/>
                                 </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="8KV-Po-c9d" appends="YES" id="DiE-7h-fgc"/>
                                 </connections>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="xwj-pG-sgW">
-                                <rect key="frame" x="10" y="324" width="394" height="374.5"/>
+                                <rect key="frame" x="5" y="348" width="404" height="374.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tiên đề" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0iE-Oz-hVP">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="404" height="19.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nhập tiêu đề..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uQP-8T-pkZ">
-                                        <rect key="frame" x="0.0" y="28.5" width="394" height="34"/>
+                                        <rect key="frame" x="0.0" y="28.5" width="404" height="34"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ngày hết hạn công việc này" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ywC-fJ-lho">
-                                        <rect key="frame" x="0.0" y="71.5" width="394" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="71.5" width="404" height="19.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <datePicker contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="KjS-3M-WHN">
-                                        <rect key="frame" x="0.0" y="100" width="394" height="60"/>
+                                        <rect key="frame" x="0.0" y="100" width="404" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="8qT-bD-Ckb"/>
                                         </constraints>
                                         <locale key="locale" localeIdentifier="vi_VN"/>
                                     </datePicker>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Số lượng cần" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Edz-9e-ost">
-                                        <rect key="frame" x="0.0" y="169" width="394" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="169" width="404" height="19.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nhập số lượng cần..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zPM-P2-6Od">
-                                        <rect key="frame" x="0.0" y="197.5" width="394" height="34"/>
+                                        <rect key="frame" x="0.0" y="197.5" width="404" height="34"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mô tả" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylf-KU-UoK">
-                                        <rect key="frame" x="0.0" y="240.5" width="394" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="240.5" width="404" height="19.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nhập mô tả..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rki-hO-mwH">
-                                        <rect key="frame" x="0.0" y="269" width="394" height="34"/>
+                                        <rect key="frame" x="0.0" y="269" width="404" height="34"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Điểm fit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95C-hg-ZcF">
-                                        <rect key="frame" x="0.0" y="312" width="394" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="312" width="404" height="19.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nhập điểm..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="awk-Jr-AV7">
-                                        <rect key="frame" x="0.0" y="340.5" width="394" height="34"/>
+                                        <rect key="frame" x="0.0" y="340.5" width="404" height="34"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tên Nhóm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AyV-Y8-Y0u">
+                                <rect key="frame" x="0.0" y="93" width="414" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qJ1-pQ-xKX"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="qJ1-pQ-xKX" firstAttribute="trailing" secondItem="AyV-Y8-Y0u" secondAttribute="trailing" constant="10" id="44w-wf-zKF"/>
-                            <constraint firstItem="xwj-pG-sgW" firstAttribute="top" secondItem="n5N-ch-ONR" secondAttribute="bottom" constant="10" id="71W-VI-NH2"/>
-                            <constraint firstItem="AyV-Y8-Y0u" firstAttribute="leading" secondItem="qJ1-pQ-xKX" secondAttribute="leading" constant="10" id="Ffv-jv-ug3"/>
-                            <constraint firstItem="xwj-pG-sgW" firstAttribute="leading" secondItem="qJ1-pQ-xKX" secondAttribute="leading" constant="10" id="HqL-fJ-yl9"/>
-                            <constraint firstItem="UjS-oW-UGG" firstAttribute="top" secondItem="AyV-Y8-Y0u" secondAttribute="bottom" constant="10" id="QCB-Vi-eo2"/>
-                            <constraint firstItem="qJ1-pQ-xKX" firstAttribute="trailing" secondItem="UjS-oW-UGG" secondAttribute="trailing" constant="10" id="SES-Cl-KVg"/>
-                            <constraint firstItem="qJ1-pQ-xKX" firstAttribute="trailing" secondItem="xwj-pG-sgW" secondAttribute="trailing" constant="10" id="TzY-zZ-2f4"/>
-                            <constraint firstItem="qJ1-pQ-xKX" firstAttribute="trailing" secondItem="n5N-ch-ONR" secondAttribute="trailing" constant="10" id="bZB-qI-YII"/>
-                            <constraint firstItem="AyV-Y8-Y0u" firstAttribute="top" secondItem="qJ1-pQ-xKX" secondAttribute="top" constant="10" id="jbg-gL-wvP"/>
-                            <constraint firstItem="n5N-ch-ONR" firstAttribute="top" secondItem="UjS-oW-UGG" secondAttribute="bottom" constant="10" id="kQn-3r-JUp"/>
-                            <constraint firstItem="n5N-ch-ONR" firstAttribute="leading" secondItem="qJ1-pQ-xKX" secondAttribute="leading" constant="10" id="m2b-sj-KHA"/>
-                            <constraint firstItem="UjS-oW-UGG" firstAttribute="leading" secondItem="qJ1-pQ-xKX" secondAttribute="leading" constant="10" id="xlL-cf-aTm"/>
+                            <constraint firstItem="xwj-pG-sgW" firstAttribute="top" secondItem="n5N-ch-ONR" secondAttribute="bottom" constant="5" id="4J4-QB-xfW"/>
+                            <constraint firstItem="n5N-ch-ONR" firstAttribute="trailing" secondItem="qJ1-pQ-xKX" secondAttribute="trailing" id="6V1-2T-WmY"/>
+                            <constraint firstItem="9yT-3D-RDi" firstAttribute="top" secondItem="qJ1-pQ-xKX" secondAttribute="top" id="6oL-M5-icb"/>
+                            <constraint firstItem="9yT-3D-RDi" firstAttribute="trailing" secondItem="qJ1-pQ-xKX" secondAttribute="trailing" id="Gth-a2-kxz"/>
+                            <constraint firstItem="UjS-oW-UGG" firstAttribute="top" secondItem="AyV-Y8-Y0u" secondAttribute="bottom" constant="5" id="JZd-Ki-vWz"/>
+                            <constraint firstItem="9yT-3D-RDi" firstAttribute="leading" secondItem="qJ1-pQ-xKX" secondAttribute="leading" id="LQk-gX-mar"/>
+                            <constraint firstItem="qJ1-pQ-xKX" firstAttribute="trailing" secondItem="UjS-oW-UGG" secondAttribute="trailing" id="MaO-P9-NcL"/>
+                            <constraint firstItem="UjS-oW-UGG" firstAttribute="leading" secondItem="qJ1-pQ-xKX" secondAttribute="leading" id="NF6-VW-X3A"/>
+                            <constraint firstItem="AyV-Y8-Y0u" firstAttribute="leading" secondItem="qJ1-pQ-xKX" secondAttribute="leading" id="Ra1-hh-pio"/>
+                            <constraint firstItem="n5N-ch-ONR" firstAttribute="top" secondItem="UjS-oW-UGG" secondAttribute="bottom" constant="5" id="Ubj-Ur-htG"/>
+                            <constraint firstItem="n5N-ch-ONR" firstAttribute="leading" secondItem="qJ1-pQ-xKX" secondAttribute="leading" id="abV-u5-XT4"/>
+                            <constraint firstItem="AyV-Y8-Y0u" firstAttribute="top" secondItem="9yT-3D-RDi" secondAttribute="bottom" constant="5" id="i1T-uz-7In"/>
+                            <constraint firstItem="xwj-pG-sgW" firstAttribute="leading" secondItem="qJ1-pQ-xKX" secondAttribute="leading" constant="5" id="ill-sV-RK8"/>
+                            <constraint firstItem="AyV-Y8-Y0u" firstAttribute="trailing" secondItem="qJ1-pQ-xKX" secondAttribute="trailing" id="oe9-Zg-zv9"/>
+                            <constraint firstItem="qJ1-pQ-xKX" firstAttribute="trailing" secondItem="xwj-pG-sgW" secondAttribute="trailing" constant="5" id="xbu-ah-nA5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tạo vông việc" id="o2V-mc-IUv">
+                        <barButtonItem key="leftBarButtonItem" image="chevron.backward" catalog="system" id="dFK-Tt-hCV"/>
                         <barButtonItem key="rightBarButtonItem" title="Xong" id="1yU-cd-yxW">
                             <connections>
                                 <action selector="btnXong:" destination="F4Z-Kn-joM" id="xsn-yb-e0c"/>
@@ -423,7 +443,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="dateHanCongViec" destination="KjS-3M-WHN" id="Hto-IK-GjF"/>
-                        <outlet property="imageNhom" destination="n5N-ch-ONR" id="fbo-wh-OBO"/>
+                        <outlet property="imageJob" destination="n5N-ch-ONR" id="fbo-wh-OBO"/>
+                        <outlet property="nameDeadline" destination="hZR-SF-diG" id="fCh-kO-pdR"/>
+                        <outlet property="nameGroup" destination="AyV-Y8-Y0u" id="1e8-Ow-M5H"/>
+                        <outlet property="navTitle" destination="9yT-3D-RDi" id="cnp-03-4ix"/>
                         <outlet property="txtDiemFit" destination="awk-Jr-AV7" id="xWC-bs-VUS"/>
                         <outlet property="txtMoTa" destination="rki-hO-mwH" id="R5R-vM-NwK"/>
                         <outlet property="txtSoLuongCan" destination="zPM-P2-6Od" id="j1m-Dw-8NP"/>
@@ -437,7 +460,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3307.2463768115945" y="1527.4553571428571"/>
+            <point key="canvasLocation" x="-760.86956521739137" y="1537.5"/>
         </scene>
         <!--Project-->
         <scene sceneID="O17-K2-pvH">
@@ -718,7 +741,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sz8-T6-QjR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3307.2463768115945" y="2254.6875"/>
+            <point key="canvasLocation" x="-2397.1014492753625" y="2254.6875"/>
         </scene>
         <!--Tạo dự án-->
         <scene sceneID="5iK-eD-FR5">
@@ -788,7 +811,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qoG-8R-3zZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1023.1884057971015" y="1452.4553571428571"/>
+            <point key="canvasLocation" x="797.10144927536237" y="1452.4553571428571"/>
         </scene>
         <!--Dự án-->
         <scene sceneID="Xlr-5W-GnB">
@@ -991,7 +1014,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w7m-8O-1jt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1717.3913043478262" y="2236.6071428571427"/>
+            <point key="canvasLocation" x="-807.24637681159425" y="2236.6071428571427"/>
         </scene>
         <!--Nhóm-->
         <scene sceneID="Z6C-U0-OCN">
@@ -1088,7 +1111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D1D-D6-SCM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1150.7246376811595" y="2364.5089285714284"/>
+            <point key="canvasLocation" x="2060.8695652173915" y="2364.5089285714284"/>
         </scene>
         <!--Công việc-->
         <scene sceneID="eos-Cq-Au7">
@@ -1187,7 +1210,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fPI-b2-B2m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2192.753623188406" y="2364.5089285714284"/>
+            <point key="canvasLocation" x="3102.898550724638" y="2364.5089285714284"/>
         </scene>
         <!--Đăng ký-->
         <scene sceneID="chm-3Q-AFM">
@@ -1371,7 +1394,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2E1-11-99b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1979.7101449275365" y="932.8125"/>
+            <point key="canvasLocation" x="3800.0000000000005" y="932.8125"/>
         </scene>
         <!--Nhóm-->
         <scene sceneID="pVB-zF-NaL">
@@ -1390,7 +1413,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tnI-YP-flS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2060.8695652173915" y="1716.9642857142856"/>
+            <point key="canvasLocation" x="4791.304347826087" y="1716.9642857142856"/>
         </scene>
         <!--Thông báo-->
         <scene sceneID="nlU-vt-hpe">
@@ -1554,7 +1577,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="we4-qp-D1J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3526" y="2442"/>
+            <point key="canvasLocation" x="4434.7826086956529" y="2441.5178571428569"/>
         </scene>
         <!--Bản thân-->
         <scene sceneID="E0M-vS-bNA">
@@ -1708,7 +1731,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LyE-Li-VOs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4791.304347826087" y="2466.9642857142858"/>
+            <point key="canvasLocation" x="5700" y="2466.9642857142858"/>
         </scene>
         <!--Cập nhật thông tin-->
         <scene sceneID="cCX-Ox-YNd">
@@ -1808,7 +1831,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="6382.7102803738317" y="2466.7386609071277"/>
+            <point key="canvasLocation" x="7292.753623188406" y="2466.2946428571427"/>
         </scene>
         <!--Công việc-->
         <scene sceneID="R1a-eb-yhL">
@@ -1827,7 +1850,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bhp-6k-qgx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3102.898550724638" y="1716.9642857142856"/>
+            <point key="canvasLocation" x="5833.3333333333339" y="1716.9642857142856"/>
         </scene>
         <!--Thông báo-->
         <scene sceneID="7lD-e0-F5X">
@@ -1846,7 +1869,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pli-9J-Mcs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4436.231884057971" y="1716.9642857142856"/>
+            <point key="canvasLocation" x="7165.217391304348" y="1716.9642857142856"/>
         </scene>
         <!--Bản thân-->
         <scene sceneID="3FK-3h-BSd">
@@ -1865,7 +1888,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aru-RM-Okj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5452.1739130434789" y="1716.9642857142856"/>
+            <point key="canvasLocation" x="8182.6086956521749" y="1716.9642857142856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="b8x-oj-Q7s">
@@ -1901,7 +1924,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NGl-NK-JYv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-246" y="2237"/>
+            <point key="canvasLocation" x="663.768115942029" y="2236.6071428571427"/>
         </scene>
         <!--Fragment Chi Tiet Cong Viec Controller-->
         <scene sceneID="q9b-PF-CW3">
@@ -2250,7 +2273,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fIt-rH-g1L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5592" y="2467"/>
+            <point key="canvasLocation" x="6501.449275362319" y="2466.9642857142858"/>
         </scene>
         <!--Cập nhật tài khoản-->
         <scene sceneID="R9Q-66-Uqz">
@@ -2344,6 +2367,7 @@
         <image name="bag" catalog="system" width="128" height="128"/>
         <image name="bell" catalog="system" width="128" height="124"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="default" width="245.33332824707031" height="138"/>
         <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
