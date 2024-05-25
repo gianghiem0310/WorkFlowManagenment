@@ -105,7 +105,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         present(vc, animated: true, completion: nil)
     }
     
-    let db = Enum.DB_REALTIME
+    
     var idNew = 0
     
     override func viewDidAppear(_ animated: Bool) {
@@ -152,7 +152,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                     
                     if tenDangNhap.count >= 6 || matKhau.count >= 6{
 
-                            self.db.child(Enum.ACCCOUNT_TABLE).observe(DataEventType.value){
+                            self.database.child(Enum.ACCCOUNT_TABLE).observe(DataEventType.value){
                                 snapshot in
                                 
                                 if snapshot.childrenCount > 0{
@@ -179,7 +179,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                             if self.checkState {
                                 self.account = Account(id: self.idNew, username: self.tenDangNhap, password: self.matKhau)
                                 if let account = self.account{
-                                    self.db.child(Enum.ACCCOUNT_TABLE).child("\(self.idNew)").setValue(account.toDictionary()){
+                                    self.database.child(Enum.ACCCOUNT_TABLE).child("\(self.idNew)").setValue(account.toDictionary()){
                                         (result,error) in
                                         guard error != nil else{
                                             self.thongBao(message: "Tạo tài khoản thất bại!")
@@ -198,7 +198,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                                     if let dowloadURL = url, let account = self.account{
                                                         let profile = Profile(idAccount: account.id, avatar: dowloadURL.absoluteString, name: self.tenNguoiDung, phone: self.soDienThoai, email: self.email, fit: self.fit)
                                                         
-                                                        self.db.child(Enum.PROFILE_TABLE).child("\(account.id)").setValue(profile.toDictionary())
+                                                        self.database.child(Enum.PROFILE_TABLE).child("\(account.id)").setValue(profile.toDictionary())
                                                     }
                                                     
                                                     else{
@@ -214,7 +214,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                         }else{
                                             let profile = Profile(idAccount: account.id, avatar: "NULL", name: self.tenNguoiDung, phone: self.soDienThoai, email: self.email, fit: self.fit)
                                             
-                                            self.db.child(Enum.PROFILE_TABLE).child("\(account.id)").setValue(profile.toDictionary())
+                                            self.database.child(Enum.PROFILE_TABLE).child("\(account.id)").setValue(profile.toDictionary())
                                         }
                                         
                                         
