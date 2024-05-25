@@ -446,7 +446,7 @@
                         <outlet property="imageJob" destination="n5N-ch-ONR" id="fbo-wh-OBO"/>
                         <outlet property="nameDeadline" destination="hZR-SF-diG" id="fCh-kO-pdR"/>
                         <outlet property="nameGroup" destination="AyV-Y8-Y0u" id="1e8-Ow-M5H"/>
-                        <outlet property="navTitle" destination="9yT-3D-RDi" id="cnp-03-4ix"/>
+                        <outlet property="navItem" destination="YvM-X4-WgT" id="phE-Fa-bVr"/>
                         <outlet property="txtDiemFit" destination="awk-Jr-AV7" id="xWC-bs-VUS"/>
                         <outlet property="txtMoTa" destination="rki-hO-mwH" id="R5R-vM-NwK"/>
                         <outlet property="txtSoLuongCan" destination="zPM-P2-6Od" id="j1m-Dw-8NP"/>
@@ -1403,7 +1403,7 @@
                     <tabBarItem key="tabBarItem" title="Nhóm" image="person.2" catalog="system" id="u9m-kX-wni"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Wq2-GO-NfE">
-                        <rect key="frame" x="0.0" y="44" width="414" height="104.5"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

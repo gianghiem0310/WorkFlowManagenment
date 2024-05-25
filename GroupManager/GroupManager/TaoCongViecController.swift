@@ -45,7 +45,8 @@ class TaoCongViecController: UIViewController,UITextFieldDelegate, UIImagePicker
     
     @IBOutlet weak var nameDeadline: UILabel!
     
-    @IBOutlet weak var navTitle: UINavigationBar!
+    @IBOutlet weak var navItem: UINavigationItem!
+    
     
     
     override func viewDidLoad() {
@@ -120,9 +121,9 @@ class TaoCongViecController: UIViewController,UITextFieldDelegate, UIImagePicker
     
     func checkCongJob() {
         if state{
-            
+            navItem.title = "Tạo công việc"
         }else{
-            
+            navItem.title = "Sửa công việc"
             setDataEditJob()
             
         }
