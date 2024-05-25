@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import FirebaseDatabase
 class ChiTietCongViecController: UIViewController {
     var receivedData:CongViec?
     
@@ -15,52 +15,96 @@ class ChiTietCongViecController: UIViewController {
     var nameUser = "Nghiêm"
     var idCaptain:Int?
     var idGroup:Int?
+    var deadline:Deadline?
     @IBOutlet weak var navigation: UINavigationItem!
     
     @IBAction func menu(_ sender: UIBarButtonItem) {
+        
         let actionSheet = UIAlertController(title: "Select Option", message: nil, preferredStyle: .actionSheet)
-             actionSheet.addAction(UIAlertAction(title: "Tham gia", style: .default, handler:{
-                    action in
-                    self.thongBao(message: "Tạo công việc!")
-                }))
-        //Add du lieu gia
-        actionSheet.addAction(UIAlertAction(title: "Xoá Thành viên khỏi công việc", style: .destructive, handler:{
-            action in
-            self.xoaThanhVienJob()
-        }))
+       
+        let database = Enum.DB_REALTIME
+        if let deadline = self.deadline,let job = job,let idGroup = self.idGroup{
+            database.child(Enum.JOB_MEMBER_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)")
+                .child("\(job.id)").child("\(idUser)").observe(DataEventType.value){
+                    snapshot in
+                    if snapshot.childrenCount>0{
+                        if let child = snapshot.value as? NSDictionary{
+                            let status = child["status"] as? Bool ?? false
+                            if !status{  actionSheet.addAction(UIAlertAction(title: "Hoàn thành", style: .default, handler:{
+                                    action in
+                                    var kiemTra = true
+                                    if kiemTra,let idGroup = self.idGroup, let job = self.job, let idCaptain = self.idCaptain{
+                                        Enum.yeuCauXacNhanHoanThanhCongViec(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, idGroup: idGroup, job: job, closure: self.thongBaoThamGia)
+                                    }
+                                }))
+                            }
+                        }
+                        actionSheet.addAction(UIAlertAction(title: "Rời Công việc", style: .destructive, handler:{
+                            action in
+                            self.roiJob()
+                        }))
+                        
+                    }else{
+                        actionSheet.addAction(UIAlertAction(title: "Tham gia công việc", style: .default, handler:{
+                            action in
+                           
+                            if let idCaptain = self.idCaptain,self.idUser == idCaptain{
+                                Enum.thamGiaJobCuaNhomtruong(job: job, deadline: deadline, idCaptain: idCaptain,idGroup: idGroup, closureThatBai: self.thongBaoJobDuNguoi, closureThanhCong: self.thongBaoJobThanhCong)
+                            }else{
+                                var kiemTra = true
+                                if kiemTra,let idGroup = self.idGroup, let job = self.job, let idCaptain = self.idCaptain{
+                                    Enum.xinVaoJob(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, idGroup: idGroup, job: job, closure: self.thongBaoThamGia)
+                                }
+                            }
+                            
+                            
+                           
+                        }))
+                    }
+                }
+        }
+
+        
         //End
-        actionSheet.addAction(UIAlertAction(title: "Tham gia công việc", style: .default, handler:{
-            action in
-            var kiemTra = true
-            if kiemTra,let idGroup = self.idGroup, let job = self.job, let idCaptain = self.idCaptain{
-                Enum.xinVaoJob(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, idGroup: idGroup, job: job, closure: self.thongBaoThamGia)
+        DispatchQueue.main.asyncAfter(deadline: .now()+1.0){
+            //Kiểm tra đã tham gia deadline chưa
+            if let deadline = self.deadline{
+                database.child(Enum.DEADLINE_JOIN_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(self.idUser)").observe(DataEventType.value){
+                    snapshot in
+                    if snapshot.childrenCount>0{
+                        
+                             actionSheet.addAction(UIAlertAction(title: "Huỷ", style: .destructive, handler:nil))
+                             self.present(actionSheet, animated: true, completion: nil)
+                    }else{
+                        self.thongBao(message: "Hãy tham gia dự án này trước!")
+                    }
+                }
             }
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Hoàn thành", style: .default, handler:{
-            action in
-            var kiemTra = true
-            if kiemTra,let idGroup = self.idGroup, let job = self.job, let idCaptain = self.idCaptain{
-                Enum.yeuCauXacNhanHoanThanhCongViec(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, idGroup: idGroup, job: job, closure: self.thongBaoThamGia)
-            }
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Rời Công việc", style: .destructive, handler:{
-            action in
-            self.roiJob()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Huỷ", style: .destructive, handler:nil))
-        present(actionSheet, animated: true, completion: nil)
+      
+        }
+       
+        
     }
     @IBAction func back(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-    var profileMember = Profile(idAccount: 1, avatar: "Hello", name: "HOa", phone: "093232323", email: "9jdjf", fit: 10)
-    func xoaThanhVienJob() {
-        if let idGroup = idGroup,let job = job,let idCaptain = idCaptain,idUser == idCaptain{
-            Enum.xoaThanhVienJob(profileMember: profileMember, idGroup: idGroup, job: job, idCaptain: idCaptain, closure: self.thongBaoXoa)
-        }
-        else{
-            thongBao(message: "Bạn không thể sử dụng chức năng này!")
-        }
+   
+   
+    func thongBaoJobThanhCong(){
+ 
+            let alert = UIAlertController(title: "Thông báo", message: "Thêm thành viên vào công việc thành công!", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+        
+    }
+    func thongBaoJobDuNguoi(){
+    
+            let alert = UIAlertController(title: "Thông báo", message: "Công việc đã đủ người", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+           present(alert, animated: true, completion: nil)
+     
     }
     func thongBaoThamGia(){
         let alert = UIAlertController(title: "Thông báo", message: "Đã gửi yêu cầu cho nhóm trưởng!", preferredStyle: .alert)
@@ -102,19 +146,13 @@ class ChiTietCongViecController: UIViewController {
             containerView.addSubview(viewMoi.view)
             viewMoi.didMove(toParent: self)
             if let viewMoi1 = viewMoi as? FragmentChiTietCongViecController,let job = job{
-                
-                    viewMoi1.job = job
-              
+                viewMoi1.job = job
                 viewMoi1.nameJob.text = job.title
                 viewMoi1.quantityJob.text =  "\(job.join)/\(job.quantity)"
                 viewMoi1.deadlineJob.text = job.deadline
                 viewMoi1.fitJob.text = "Điểm tích luỹ: \(job.point) fit"
                 viewMoi1.descriptionJob.text = job.description
                 Enum.setImageFromURL(urlString: job.image, imageView: viewMoi1.imageJob)
-                    
-                
-                
-            
             }
             
         case 1:
@@ -129,6 +167,11 @@ class ChiTietCongViecController: UIViewController {
             viewMoi.view.frame = containerView.bounds
             containerView.addSubview(viewMoi.view)
             viewMoi.didMove(toParent: self)
+            if let viewMoi1 = viewMoi as? FragmentThanhVienCongViecController,let job = job,let deadline = deadline,let idCaptain = idCaptain{
+                viewMoi1.job = job
+                viewMoi1.deadline = deadline
+                viewMoi1.idCaptain = idCaptain
+            }
         default:
             let viewCu = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController2")
             viewCu.willMove(toParent: nil)

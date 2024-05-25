@@ -119,7 +119,7 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
     }
     func getDataUser(){
         idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
-        thongBao(message: "\(idUser)")
+       
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

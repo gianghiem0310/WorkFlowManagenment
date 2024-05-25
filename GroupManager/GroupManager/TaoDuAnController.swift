@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseDatabase
 
-class TaoDuAnController: UIViewController {
+class TaoDuAnController: UIViewController,UITextFieldDelegate {
     var database = Enum.DB_REALTIME
     var group:Group?
     var deadline:Deadline?
@@ -17,6 +17,7 @@ class TaoDuAnController: UIViewController {
     var duAnNew:Deadline?
     
     
+    @IBOutlet weak var nameGroup: UILabel!
     @IBOutlet weak var date: UIDatePicker!
     @IBOutlet weak var quantity: UITextField!
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -27,38 +28,39 @@ class TaoDuAnController: UIViewController {
         let dateFormat = DateFormatter()
         dateFormat.dateFormat = "dd/MM/yyyy"
         let dateDuAnNew = dateFormat.string(from: datePicker)
-        
+      
         var sl = 0
         if let sl1 = quantity.text {
             sl = Int(sl1) ?? -1
         }
         //tao du an moi
-        
-        if let status = status, let group = group,let duAnNew = duAnNew{
+       
+        if let status = status, let group = group{
             if status{
                 getIdLienTuc()
                 DispatchQueue.main.asyncAfter(deadline: .now()+1.5){
-                    self.database.child(Enum.DEADLINE_TABLE).child("\(group.id)").child("\(self.idNew)").setValue(duAnNew.toDictionary()){
-                    (result,error) in
-                    guard error != nil else{
-                        self.thongBao(message: "Tạo thất bại!")
-                        return
+                    self.duAnNew = Deadline(id: self.idNew, idGroup: group.id, deadline: dateDuAnNew, quantity: sl, status: true, join: 0)
+                    if let duAnNew = self.duAnNew{
+                        self.database.child(Enum.DEADLINE_TABLE).child("\(group.id)").child("\(self.idNew)").setValue(duAnNew.toDictionary()){
+                        (result,error) in
+                        guard error != nil else{
+                            self.thongBao(message: "Tạo dự án thất bại!")
+                            return
+                        }
+                        self.thongBao(message: "Tạo dự án thành công!")
+                        }
                     }
-                    self.database.child(Enum.DEADLINE_TABLE).child("\(group.id)").child("\(self.idNew)").child("quantity").setValue(sl)
-                    self.database.child(Enum.DEADLINE_TABLE).child("\(group.id)").child("\(self.idNew)").child("deadline").setValue(dateDuAnNew)
-                    self.database.child(Enum.DEADLINE_TABLE).child("\(group.id)").child("\(self.idNew)").child("id").setValue(self.idNew)
-                        print(duAnNew)
-                    self.thongBao(message: "Tạo thành công!")
-                    }
+                    
                 }
             }
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-            if let status = status{
-                
-            }
+        quantity.delegate = self
+        if let group = group{
+            nameGroup.text = group.title
+        }
         }
     
     func getIdLienTuc(){
@@ -88,6 +90,9 @@ class TaoDuAnController: UIViewController {
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        quantity.resignFirstResponder()
     }
     /*
     // MARK: - Navigation

@@ -22,10 +22,8 @@ class XacNhanThamGiaCell: UITableViewCell {
             switch noti.type {
             case Enum.THAM_GIA_GROUP:
                 Enum.xacNhanVaoGroup(notification: noti, closureDuNguoi: self.thongBaoDuNguoi, closureThanhCong: self.thongBaoThanhCong)
-                
             case Enum.THAM_GIA_DEADLINE:
                 Enum.xacNhanThamGiaDeadline(notification: noti, closureDuNguoi: self.thongBaoDeadlineDuNguoi, closureThanhCong: self.thongBaoDeadlineThanhCong)
-                
             case Enum.THAM_GIA_JOB:
                 Enum.xacNhanThamGiaJob(notification: noti, closureDuNguoi: self.thongBaoJobDuNguoi, closureThanhCong: self.thongBaoJobThanhCong)
             case Enum.XAC_NHAN_COMPLETE:

@@ -190,32 +190,41 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         if choose {
-            let editAction = UITableViewRowAction(style: .normal, title: "Edit"){action,indexPath in
-                if self.choose{
+            if let group = self.group, idUser == group.captain{
+                let editAction = UITableViewRowAction(style: .normal, title: "Edit"){action,indexPath in
+                    if self.choose{
+                        
+                         let storyboard = Enum.STORYBOARD
+                         if let des = storyboard.instantiateViewController(identifier: "taoDuAn") as? TaoDuAnController{
+                             let navigation = UINavigationController(rootViewController: des)
+                              navigation.modalPresentationStyle = .fullScreen
+                            des.title = "Sửa dự án"
+                            des.status = false
+                            des.group = group
+                            des.deadline = self.mangProject[indexPath.row]
+                            self.present(navigation, animated: true, completion: nil)
+                         }
+                    }
+                 
+                  
                     
-                     let storyboard = Enum.STORYBOARD
-                     if let des = storyboard.instantiateViewController(identifier: "taoDuAn") as? TaoDuAnController{
-                         let navigation = UINavigationController(rootViewController: des)
-                          navigation.modalPresentationStyle = .fullScreen
-                        des.title = "Sửa dự án"
-                        des.status = false
-                        des.deadline = self.mangProject[indexPath.row]
-                          self.present(navigation, animated: true, completion: nil)
-                     }
                 }
-             
-              
+                let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+                    if self.choose {
+                        
+                        self.xoaProject(indexPath: indexPath)
+                    }
+                  
+                }
+                return [editAction,deleteAction]
+            }else{
+                let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+                    self.thongBao(message: "Chức năng dành cho nhóm trưởng!")
+                }
+                return [deleteAction]
                 
             }
-            let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
-                if self.choose {
-                    
-                    self.mangProject.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                }
-              
-            }
-            return [editAction,deleteAction]
+            
         }else{
             
             let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
@@ -253,6 +262,40 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
             return [deleteAction]
         }
        
+    }
+    func xoaProject(indexPath:IndexPath){
+        let data = mangProject[indexPath.row]
+        let database = Enum.DB_REALTIME
+        var kiemTra = true
+        database.child(Enum.JOB_TABLE).child("\(data.idGroup)").child("\(data.id)").observe(DataEventType.value){
+            snapshot in
+            if kiemTra{
+                if snapshot.childrenCount>0 || data.join > 0{
+                    self.thongBao(message: "Hãy xoá hết thành viên, dự án trong dự án trước!")
+                }else{
+                    let alert = UIAlertController(title: "Thông báo", message: "Bạn chắc chắn muốn xoá \(data.deadline)?", preferredStyle: .alert)
+                    let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
+                    let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
+                        
+                        database.child(Enum.DEADLINE_TABLE).child("\(data.idGroup)").child("\(data.id)").removeValue()
+                        database.child(Enum.DEADLINE_JOIN_TABLE).child("\(data.idGroup)").child("\(data.id)").removeValue()
+                        self.mangProject.remove(at: indexPath.row)
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                        self.thongBao(message: "Đã xoá \(data.deadline)!")
+                        kiemTra = false
+                        
+                    }
+                    alert.addAction(cancel)
+                    alert.addAction(confirm)
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            
+        }
+       
+          
+        
+        
     }
     func outGroup(){
 //        let database = Enum.DB_REALTIME

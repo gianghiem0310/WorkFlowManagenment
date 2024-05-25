@@ -531,6 +531,7 @@ class Enum{
                             let fit = child["fit"] as? Int ?? -1
                             let dictionary = ["id":notification.idSender,"fit":fit+point,"status":true] as [String : Any]
                             DB_REALTIME.child(Enum.JOB_MEMBER_TABLE).child("\(notification.idGroup)").child("\(notification.idDeadline)").child("\(notification.idJob)").child("\(notification.idSender)").setValue(dictionary)
+                            DB_REALTIME.child(Enum.JOB_NOT_COMPLETE).child("\(notification.idSender)").child("\(notification.idGroup)").child("\(notification.idDeadline)").child("\(notification.idJob)").child("status").setValue(true)
                             kiemTra = false
                             DB_REALTIME.child(Enum.DEADLINE_JOIN_TABLE).child("\(notification.idGroup)").child("\(notification.idDeadline)").child("\(notification.idSender)").observe(DataEventType.value){
                                 snapshot1 in
@@ -644,4 +645,100 @@ class Enum{
             }
         }
     }
+    static func thamGiaDeadlineCuaNhomtruong(deadline:Deadline,idCaptain:Int,closureThatBai: @escaping
+                                                ()->Void,closureThanhCong: @escaping ()->Void){
+        let workItem = DispatchWorkItem{
+            var kiemTra = true
+            DB_REALTIME.child(Enum.DEADLINE_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
+                snap in
+                DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
+                if kiemTra{
+                if snap.childrenCount > 0{
+                    if let value = snap.value as? NSDictionary{
+                        let join = value["join"] as? Int ?? -1
+                        let quantity = value["quantity"] as? Int ?? -1
+                        if quantity != join{
+                            let dictionary = ["id":idCaptain,"fit":0]
+                            DB_REALTIME.child(Enum.DEADLINE_JOIN_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(idCaptain)").setValue(dictionary)
+                            DB_REALTIME.child(Enum.DEADLINE_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("join").setValue(join+1)
+                            closureThanhCong()
+                            kiemTra = false
+                        }
+                        else{
+                            closureThatBai()
+                            kiemTra = false
+                        }
+                       
+                    }
+                }
+            
+                }
+                }
+            }
+        }
+        DispatchQueue.global().async(execute: workItem)
+        DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
+                workItem.cancel()
+        }
+    }
+    static func thamGiaJobCuaNhomtruong(job:Job,deadline:Deadline,idCaptain:Int,idGroup:Int,closureThatBai: @escaping
+                                                ()->Void,closureThanhCong: @escaping ()->Void){
+        let workItem = DispatchWorkItem{
+            var kiemTra = true
+            DB_REALTIME.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(job.id)").observe(DataEventType.value){
+                snap in
+                DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
+                if kiemTra{
+                if snap.childrenCount > 0{
+                    if let value = snap.value as? NSDictionary{
+                        let join = value["join"] as? Int ?? -1
+                        let quantity = value["quantity"] as? Int ?? -1
+                        if quantity != join{
+                            
+                                let dictionary = ["id":idCaptain,"fit":0,"status":false] as [String : Any]
+                            DB_REALTIME.child(Enum.JOB_MEMBER_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(job.id)").child("\(idCaptain)").setValue(dictionary)
+                                DB_REALTIME.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(job.id)").child("join").setValue(join+1)
+                                DB_REALTIME.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(job.id)").observe(DataEventType.value){
+                                    snapshot in
+                                    if snapshot.childrenCount > 0{
+                                        if let childJob = snapshot.value as? NSDictionary{
+                                            let id = childJob["id"] as? Int ?? -1
+                                            let idDeadline = childJob["idDeadline"] as? Int ?? -1
+                                            let title = childJob["title"] as? String ?? ""
+                                            let image = childJob["image"] as? String ?? ""
+                                            let quantity = childJob["quantity"] as? Int ?? -1
+                                            let description = childJob["description"] as? String ?? ""
+                                            let deadlineJ = childJob["deadline"] as? String ?? ""
+                                            let point = childJob["point"] as? Int ?? -1
+                                            let titleGroup = childJob["titleGroup"] as? String ?? ""
+                                            let titleDeadline = childJob["titleDeadline"] as? String ?? ""
+                                            let join = childJob["join"] as? Int ?? -1
+                                            let congViec = Job(id: id, idDeadline: idDeadline, title: title, image: image, quantity: quantity, description: description, deadline: deadlineJ, point: point, titleDeadline: titleDeadline, titleGroup: titleGroup, status: false,join: join)
+                                            DB_REALTIME.child(Enum.JOB_NOT_COMPLETE).child("\(idCaptain)").child("\(idGroup)").child("\(deadline.id)").child("\(job.id)").setValue(congViec.toDictionary())
+                                            
+                                            closureThanhCong()
+                                            kiemTra = false
+                                        }
+                                    }
+                                }
+                           
+                            
+                        }
+                        else{
+                            closureThatBai()
+                            kiemTra = false
+                        }
+                       
+                    }
+                }
+                }
+                }
+            }
+        }
+        DispatchQueue.global().async(execute: workItem)
+        DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
+                workItem.cancel()
+        }
+    }
+    
 }

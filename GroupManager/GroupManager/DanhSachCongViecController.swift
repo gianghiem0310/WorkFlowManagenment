@@ -28,6 +28,7 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                         des.modalPresentationStyle =  .fullScreen
                         des.state = true
                         if let dealine = self.deadline,let titleGroup = self.titleGroup{
+                            des.idDeadline = self.deadline?.id
                             des.idGroup = dealine.idGroup
                             des.titleGroup = titleGroup
                             des.titleDeadline = dealine.deadline
@@ -37,27 +38,59 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                 }))
             }
         }
-        actionSheet.addAction(UIAlertAction(title: "Tham gia dự án", style: .default, handler: {
-            action in
-            var kiemTra = true
-            //kiểm tra đã tham gia hay chưa!
-            if kiemTra,let idCaptain = self.idCaptain,let deadline = self.deadline {
-                Enum.xinVaoDeadline(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, deadline: deadline, closure: self.thongBaoThamGia)
+        
+        if let idCaptain = self.idCaptain,let deadline = self.deadline{
+            database.child(Enum.DEADLINE_JOIN_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(idUser)").observe(DataEventType.value){
+                snapshot in
+                if snapshot.childrenCount>0{
+                    actionSheet.addAction(UIAlertAction(title: "Rời Project", style: .destructive, handler:{
+                        action in
+                        if let idCaptain = self.idCaptain,let deadline = self.deadline{
+                            Enum.roiDeadline(idReceiver: idCaptain, idSender: self.idUser, content: "\(self.nameUser) rời deadline \(deadline.deadline)", idGroup: deadline.idGroup, idDeadline: deadline.id)
+                            self.thongBao(message: "Đã rời khỏi Project này!")
+                        }
+                    }))
+                }else{
+                    actionSheet.addAction(UIAlertAction(title: "Tham gia dự án", style: .default, handler: {
+                        action in
+                        var kiemTra = true
+                        //kiểm tra đã tham gia hay chưa!
+                        if kiemTra,let idCaptain = self.idCaptain,let deadline = self.deadline {
+                            if self.idUser != idCaptain{
+                                Enum.xinVaoDeadline(idCaptain: idCaptain, idSender: self.idUser, nameSender: self.nameUser, deadline: deadline, closure: self.thongBaoThamGia)
+                            }else{
+                                Enum.thamGiaDeadlineCuaNhomtruong(deadline: deadline, idCaptain: self.idUser, closureThatBai: self.thongBaoDeadlineDuNguoi, closureThanhCong: self.thongBaoDeadlineThanhCong)
+                            }
+                           
+                        }
+                    }))
+                }
             }
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Rời Project", style: .destructive, handler:{
-            action in
-            if let idCaptain = self.idCaptain,let deadline = self.deadline{
-                Enum.roiDeadline(idReceiver: idCaptain, idSender: self.idUser, content: "\(self.nameUser) rời deadline \(deadline.deadline)", idGroup: deadline.idGroup, idDeadline: deadline.id)
-                self.thongBao(message: "Đã rời khỏi Project này!")
-            }
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Huỷ", style: .destructive, handler:nil))
-        present(actionSheet, animated: true, completion: nil)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now()+1.0){
+            actionSheet.addAction(UIAlertAction(title: "Huỷ", style: .destructive, handler:nil))
+            self.present(actionSheet, animated: true, completion: nil)
+        }
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+    func thongBaoDeadlineThanhCong(){
+ 
+            let alert = UIAlertController(title: "Thông báo", message: "Thêm thành viên vào dự án thành công!", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+        
+    }
+    func thongBaoDeadlineDuNguoi(){
+    
+            let alert = UIAlertController(title: "Thông báo", message: "Dự án đã đủ người", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+           present(alert, animated: true, completion: nil)
+     
     }
    
     @IBOutlet weak var navigation: UINavigationItem!
@@ -76,10 +109,12 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
             if let deadline = deadline{
                 database.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
                     snapshot in
+                    self.ar3.removeAll()
+                    self.ar.removeAll()
+                    self.ar2.removeAll()
+                    self.tableView.reloadData()
                     if snapshot.childrenCount>0{
-                        self.ar3.removeAll()
-                        self.ar.removeAll()
-                        self.ar2.removeAll()
+                        
                         for child in snapshot.children{
                             if let childSnap = child as? DataSnapshot{
                                 if let object = childSnap.value as? NSDictionary{
@@ -111,10 +146,12 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
             if let deadline = deadline{
                 database.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
                     snapshot in
+                    self.ar3.removeAll()
+                    self.ar.removeAll()
+                    self.ar2.removeAll()
+                    self.tableView.reloadData()
                     if snapshot.childrenCount>0{
-                        self.ar3.removeAll()
-                        self.ar.removeAll()
-                        self.ar2.removeAll()
+                       
                         for child in snapshot.children{
                             if let childSnap = child as? DataSnapshot{
                                 if let object = childSnap.value as? NSDictionary{
@@ -149,6 +186,7 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                     self.ar3.removeAll()
                     self.ar.removeAll()
                     self.ar2.removeAll()
+                    self.tableView.reloadData()
                     if snapshot.childrenCount > 0{
                         self.ar3.removeAll()
                         for child in snapshot.children{
@@ -183,8 +221,12 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                 if let deadline = deadline{
                     database.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").observe(DataEventType.value){
                         snapshot in
+                        self.ar3.removeAll()
+                        self.ar.removeAll()
+                        self.ar2.removeAll()
+                        self.tableView.reloadData()
                         if snapshot.childrenCount>0{
-                            self.ar.removeAll()
+                          
                             for child in snapshot.children{
                                 if let childSnap = child as? DataSnapshot{
                                     if let object = childSnap.value as? NSDictionary{
@@ -217,50 +259,83 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
-            self.thongBao(message: "Ko phải bảng tv!")
-          
+            self.thongBao(message: "Chức năng dành cho nhóm trưởng!")
         }
-        switch idView {
-        case 0:
-            let editAction = UITableViewRowAction(style: .normal, title: "Edit"){
-                action,indexPathN in
-                let storyboard = Enum.STORYBOARD
-                if let des = storyboard.instantiateViewController(identifier: "taoCongViec") as? TaoCongViecController{
-                    des.modalPresentationStyle =  .fullScreen
-                    des.state = false
-                    des.job = self.ar[indexPath.row]
-                    if let dealine = self.deadline,let titleGroup = self.titleGroup{
-                        des.idGroup = dealine.idGroup
-                        des.titleGroup = titleGroup
-                        des.titleDeadline = dealine.deadline
+        if let idCaptain = idCaptain,self.idUser == idCaptain{
+            switch idView {
+            case 0:
+                let editAction = UITableViewRowAction(style: .normal, title: "Edit"){
+                    action,indexPathN in
+                    let storyboard = Enum.STORYBOARD
+                    if let des = storyboard.instantiateViewController(identifier: "taoCongViec") as? TaoCongViecController{
+                        des.modalPresentationStyle =  .fullScreen
+                        des.state = false
+                        des.job = self.ar[indexPath.row]
+                        if let dealine = self.deadline,let titleGroup = self.titleGroup{
+                            des.idDeadline = self.deadline?.id
+                            des.idGroup = dealine.idGroup
+                            des.titleGroup = titleGroup
+                            des.titleDeadline = dealine.deadline
+                        }
+                        des.title = "Sửa công việc"
+                        self.present(des, animated: true, completion: nil)
                     }
-                    des.title = "Sửa công việc"
-                    self.present(des, animated: true, completion: nil)
                 }
-            }
-            let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
-                
-            }
-            return [editAction,deleteAction]
-        case 1:
-            break
-        case 2:
-            let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
-                if self.idView == 2,let deadline = self.deadline,let idCaptain = self.idCaptain {
-                    let profileMemmber = self.ar3[indexPath.row]
-                    Enum.xoaThanhVienDeadline(profileMember: profileMemmber, deadline: deadline, idCaptain: idCaptain, closure: self.thongBaoXoa)
-                    self.ar3.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                   
-                    
+                let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+                    self.xoaJob(indexPath: indexPath)
                 }
-              
+                return [editAction,deleteAction]
+            case 1:
+                break
+            case 2:
+                let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
+                    if self.idView == 2,let deadline = self.deadline,let idCaptain = self.idCaptain {
+                        let profileMemmber = self.ar3[indexPath.row]
+                        Enum.xoaThanhVienDeadline(profileMember: profileMemmber, deadline: deadline, idCaptain: idCaptain, closure: self.thongBaoXoa)
+                        self.ar3.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                       
+                        
+                    }
+                  
+                }
+                return [deleteAction]
+            default:
+                break
             }
-            return [deleteAction]
-        default:
-            break
         }
         return [deleteAction]
+    }
+    func xoaJob(indexPath:IndexPath){
+        let dataJob = ar[indexPath.row]
+        var kiemTra = true
+        if let deadline = deadline{
+            database.child(Enum.JOB_MEMBER_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(dataJob.id)").observe(DataEventType.value){
+                snapshot in
+                if kiemTra {
+                    if snapshot.childrenCount>0{
+                        self.thongBao(message: "Hãy xoá hết thành viên trong công việc này trước!")
+                    }else{
+                        let alert = UIAlertController(title: "Thông báo", message: "Bạn chắc chắn muốn xoá \(dataJob.title)?", preferredStyle: .alert)
+                        let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
+                        let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
+                            
+                            self.database.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(dataJob.id)").removeValue()
+                            self.ar.remove(at: indexPath.row)
+                            self.tableView.deleteRows(at: [indexPath], with: .fade)
+                            self.thongBao(message: "Đã xoá \(dataJob.title)!")
+                            kiemTra = false
+                            
+                        }
+                        alert.addAction(cancel)
+                        alert.addAction(confirm)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+               
+            }
+        }
+        
     }
     func thongBaoXoa(){
         let alert = UIAlertController(title: "Thông báo", message: "Xoá thành công!", preferredStyle: .alert)
@@ -407,6 +482,7 @@ class DanhSachCongViecController: UIViewController,UITableViewDelegate,UITableVi
                     view.idCaptain = idCaptain
                     view.job = ar[indexPath.row]
                     view.idGroup = deadline.idGroup
+                    view.deadline = deadline
                     view.modalPresentationStyle = .fullScreen
                     present(view, animated: true, completion: nil)
                 }
