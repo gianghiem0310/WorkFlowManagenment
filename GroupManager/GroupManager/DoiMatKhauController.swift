@@ -12,6 +12,8 @@ class DoiMatKhauController: UIViewController ,UITextFieldDelegate{
     
     var idUser = 1
     let database = Enum.DB_REALTIME
+    
+    @IBOutlet weak var logoApp: UIImageView!
     @IBOutlet weak var txtMatKhau: UITextField!
     @IBOutlet weak var txtXacNhanMatKhau: UITextField!
     @IBAction func btnXong(_ sender: UIBarButtonItem) {
@@ -39,6 +41,7 @@ class DoiMatKhauController: UIViewController ,UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        logoApp.layer.cornerRadius = logoApp.frame.width/2
         txtMatKhau.delegate = self
         txtXacNhanMatKhau.delegate = self
         customGiaoDien()

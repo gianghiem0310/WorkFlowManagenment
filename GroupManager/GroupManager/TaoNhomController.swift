@@ -17,6 +17,8 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
         
         if manHinh {
             if let quantity = Int(soLuong){
+                if quantity == 0{
+                
                 if !tenNhom.isEmpty && !soLuong.isEmpty
                     {
                           
@@ -86,12 +88,20 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                     }else{
                         self.thongBao(message: "Thông tin còn thiếu!")
                     }
+                }else{
+                    self.thongBao(message: "Số lượng thành viên phải lớn hơn 0!")
+                }
             }
             else{
                 self.thongBao(message: "Số lượng phải là kí tự số!")
             }
         }else{
-            if let quantity = Int(soLuong){
+            if let quantity = Int(soLuong),let grEdit = self.nhomEdit{
+                
+                if quantity<grEdit.join && quantity == 0{
+                    self.thongBao(message: "Số lượng tham gia phải lớn hơn hoặc bằng số thành viên hiện tại!")
+                }else{
+                
                 if !tenNhom.isEmpty && !soLuong.isEmpty
                     {
                     let storage = Enum.DB_STORAGE
@@ -151,9 +161,11 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                        
                         
                     }
-                    }else{
+                    }
+                    else{
                         self.thongBao(message: "Thông tin còn thiếu!")
                     }
+                }
             }
             else{
                 self.thongBao(message: "Số lượng phải là kí tự số!")
@@ -243,7 +255,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
                 if let child = lastE.value as? NSDictionary{
                     self.idNhom = child["id"] as? Int ?? -1
                     self.idNhom += 1
-                    self.thongBao(message: "Thay doi!")
+     
                 }
             }
         }

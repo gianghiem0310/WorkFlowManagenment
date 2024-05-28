@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 extension Group{
     func toDictionary()->[String:Any]{
         return ["id":id,"title":title,"image":image,"quantity":quantity,"captain":captain,"status":status,"join":join]
@@ -37,3 +38,4 @@ extension Profile{
         return ["idAccount":idAccount, "avatar":avatar, "name":name, "phone":phone, "email":email, "fit":fit]
     }
 }
+

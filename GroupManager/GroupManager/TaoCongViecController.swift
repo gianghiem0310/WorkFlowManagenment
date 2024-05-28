@@ -51,8 +51,10 @@ class TaoCongViecController: UIViewController,UITextFieldDelegate, UIImagePicker
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+        original = view.frame.origin.y
+        banDau = view.frame
+        NotificationCenter.default.addObserver(self, selector: #selector(banPhimXuatHien), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(banPhimBienMat), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         txtMoTa.delegate = self
         txtDiemFit.delegate = self
@@ -109,6 +111,7 @@ class TaoCongViecController: UIViewController,UITextFieldDelegate, UIImagePicker
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getIdLienTuc()
+        
     }
     
     func toggleActivityIndicator(_ show: Bool) {
@@ -254,135 +257,159 @@ class TaoCongViecController: UIViewController,UITextFieldDelegate, UIImagePicker
         
         let comparisonResult = Calendar.current.compare(currentDate, to: datePicker, toGranularity: .day)
         
-        if let tieuDe = self.txtTieuDe, let soLuongCan = self.txtSoLuongCan, let moTa = self.txtMoTa, let fit = self.txtDiemFit, let idDeadline = self.idDeadline, let idGroup = self.idGroup, let titleDeadline = self.titleDeadline, let titleGroup = self.titleGroup{
-            if let tieuDe = tieuDe.text,let soLuongCan = soLuongCan.text, let moTa = moTa.text, let fit = fit.text{
-                if comparisonResult == .orderedAscending {
-                    if let image = self.imageLayRa{
-                        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-                            return
-                        }
-                        let imageName = "job\(self.idNew).jpeg"
-                        let imageRef = self.storage.child("images/\(imageName)")
-                        let uploadTask = imageRef.putData(imageData,metadata: nil){
-                            (metadata,error) in
-                            imageRef.downloadURL{(url,eror)in
-                                guard let downloadURL = url else{
+        var kiemTra = true
+        if let jobNow = job, let slCan = self.txtSoLuongCan,let quanityNeed = slCan.text{
+            if !quanityNeed.isEmpty, let quantityUnwrap = Int(quanityNeed){
+           
+            
+            if quantityUnwrap>=jobNow.join && kiemTra && quantityUnwrap != 0{
+                if let tieuDe = self.txtTieuDe, let soLuongCan = self.txtSoLuongCan, let moTa = self.txtMoTa, let fit = self.txtDiemFit, let idDeadline = self.idDeadline, let idGroup = self.idGroup, let titleDeadline = self.titleDeadline, let titleGroup = self.titleGroup{
+                    if let tieuDe = tieuDe.text,let soLuongCan = soLuongCan.text, let moTa = moTa.text, let fit = fit.text{
+                        if comparisonResult == .orderedAscending {
+                            if let image = self.imageLayRa{
+                                guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                                     return
                                 }
+                                let imageName = "job\(self.idNew).jpeg"
+                                let imageRef = self.storage.child("images/\(imageName)")
+                                let uploadTask = imageRef.putData(imageData,metadata: nil){
+                                    (metadata,error) in
+                                    imageRef.downloadURL{(url,eror)in
+                                        guard let downloadURL = url else{
+                                            return
+                                        }
+                                        
+                                        if let job = self.job{
+                                            self.image = downloadURL.absoluteString
+                                            
+                                            let job = Job(id: job.id, idDeadline: idDeadline, title: tieuDe, image: self.image, quantity: Int(soLuongCan) ?? -1, description: moTa, deadline: ngayHetHanDeadline, point:Int (fit) ?? -1, titleDeadline: titleDeadline, titleGroup: titleGroup, status: job.status, join: job.join)
+                                            
+                                            self.database.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(idDeadline)").child("\(job.id)").setValue(job.toDictionary()){
+                                                (result,error) in
+                                                guard error != nil else{
+                                                    self.thongBao(message: "Chỉnh sửa thất bại!")
+                                                    kiemTra = false
+                                                    return
+                                                }
+                                                
+                                                self.thongBao(message: "Chỉnh sửa thành công!")
+                                                self.toggleActivityIndicator(false)
+                                                kiemTra = false
+                                            }
+                                        }
+                                        
+                                    }
+                                }
                                 
-                                if let job = self.job{
-                                    self.image = downloadURL.absoluteString
+                                uploadTask.observe(.success){
+                                    snap in
                                     
-                                    let job = Job(id: job.id, idDeadline: idDeadline, title: tieuDe, image: self.image, quantity: Int(soLuongCan) ?? -1, description: moTa, deadline: ngayHetHanDeadline, point:Int (fit) ?? -1, titleDeadline: titleDeadline, titleGroup: titleGroup, status: job.status, join: job.join)
+                                }
+                            }
+                            else{
+                                if let job = self.job{
+                                    let job = Job(id: job.id, idDeadline: idDeadline, title: tieuDe, image: job.image, quantity: Int(soLuongCan) ?? -1 , description: moTa, deadline: ngayHetHanDeadline, point:Int (fit) ?? -1, titleDeadline: titleDeadline, titleGroup: titleGroup, status: job.status, join: job.join)
                                     
                                     self.database.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(idDeadline)").child("\(job.id)").setValue(job.toDictionary()){
                                         (result,error) in
                                         guard error != nil else{
                                             self.thongBao(message: "Chỉnh sửa thất bại!")
+                                            kiemTra = false
                                             return
                                         }
                                         
                                         self.thongBao(message: "Chỉnh sửa thành công!")
                                         self.toggleActivityIndicator(false)
+                                        kiemTra = false
                                     }
                                 }
                                 
                             }
-                        }
-                        
-                        uploadTask.observe(.success){
-                            snap in
                             
                         }
-                    }
-                    else{
-                        if let job = self.job{
-                            let job = Job(id: job.id, idDeadline: idDeadline, title: tieuDe, image: job.image, quantity: Int(soLuongCan) ?? -1 , description: moTa, deadline: ngayHetHanDeadline, point:Int (fit) ?? -1, titleDeadline: titleDeadline, titleGroup: titleGroup, status: job.status, join: job.join)
+                        else if comparisonResult == .orderedDescending {
+                            self.thongBao(message: "Ngày hết hạn Deadline không hợp lệ!")
+                            self.toggleActivityIndicator(false)
+                        }else{
                             
-                            self.database.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(idDeadline)").child("\(job.id)").setValue(job.toDictionary()){
-                                (result,error) in
-                                guard error != nil else{
-                                    self.thongBao(message: "Chỉnh sửa thất bại!")
+                            
+                            if let image = self.imageLayRa{
+                                guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                                     return
                                 }
-                                
-                                self.thongBao(message: "Chỉnh sửa thành công!")
-                                self.toggleActivityIndicator(false)
-                            }
-                        }
-                        
-                    }
-                    
-                }
-                else if comparisonResult == .orderedDescending {
-                    self.thongBao(message: "Ngày hết hạn Deadline không hợp lệ!")
-                    self.toggleActivityIndicator(false)
-                }else{
-                    
-                    
-                    if let image = self.imageLayRa{
-                        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-                            return
-                        }
-                        let imageName = "job\(self.idNew).jpeg"
-                        let imageRef = self.storage.child("images/\(imageName)")
-                        let uploadTask = imageRef.putData(imageData,metadata: nil){
-                            (metadata,error) in
-                            imageRef.downloadURL{(url,eror)in
-                                guard let downloadURL = url else{
-                                    return
+                                let imageName = "job\(self.idNew).jpeg"
+                                let imageRef = self.storage.child("images/\(imageName)")
+                                let uploadTask = imageRef.putData(imageData,metadata: nil){
+                                    (metadata,error) in
+                                    imageRef.downloadURL{(url,eror)in
+                                        guard let downloadURL = url else{
+                                            return
+                                        }
+                                        
+                                        if let job = self.job{
+                                            self.image = downloadURL.absoluteString
+                                            
+                                            let job = Job(id: job.id, idDeadline: idDeadline, title: tieuDe, image: self.image, quantity: Int(soLuongCan) ?? -1, description: moTa, deadline: ngayHetHanDeadline, point:Int (fit) ?? -1, titleDeadline: titleDeadline, titleGroup: titleGroup, status: job.status, join: job.join)
+                                            
+                                            self.database.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(idDeadline)").child("\(job.id)").setValue(job.toDictionary()){
+                                                (result,error) in
+                                                guard error != nil else{
+                                                    self.thongBao(message: "Chỉnh sửa thất bại!")
+                                                    kiemTra = false
+                                                    return
+                                                }
+                                                
+                                                self.thongBao(message: "Chỉnh sửa thành công!")
+                                                self.toggleActivityIndicator(false)
+                                                kiemTra = false
+                                            }
+                                        }
+                                        
+                                    }
                                 }
                                 
-                                if let job = self.job{
-                                    self.image = downloadURL.absoluteString
+                                uploadTask.observe(.success){
+                                    snap in
                                     
-                                    let job = Job(id: job.id, idDeadline: idDeadline, title: tieuDe, image: self.image, quantity: Int(soLuongCan) ?? -1, description: moTa, deadline: ngayHetHanDeadline, point:Int (fit) ?? -1, titleDeadline: titleDeadline, titleGroup: titleGroup, status: job.status, join: job.join)
+                                }
+                                
+                                
+                            }
+                            else{
+                                if let job = self.job{
+                                    let job = Job(id: job.id, idDeadline: idDeadline, title: tieuDe, image: job.image, quantity: Int(soLuongCan) ?? -1, description: moTa, deadline: ngayHetHanDeadline, point:Int (fit) ?? -1 , titleDeadline: titleDeadline, titleGroup: titleGroup, status: job.status, join: job.join)
                                     
                                     self.database.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(idDeadline)").child("\(job.id)").setValue(job.toDictionary()){
                                         (result,error) in
                                         guard error != nil else{
                                             self.thongBao(message: "Chỉnh sửa thất bại!")
+                                            kiemTra = false
                                             return
                                         }
                                         
                                         self.thongBao(message: "Chỉnh sửa thành công!")
                                         self.toggleActivityIndicator(false)
+                                        kiemTra = false
                                     }
                                 }
                                 
                             }
-                        }
-                        
-                        uploadTask.observe(.success){
-                            snap in
                             
                         }
                         
                         
                     }
-                    else{
-                        if let job = self.job{
-                            let job = Job(id: job.id, idDeadline: idDeadline, title: tieuDe, image: job.image, quantity: Int(soLuongCan) ?? -1, description: moTa, deadline: ngayHetHanDeadline, point:Int (fit) ?? -1 , titleDeadline: titleDeadline, titleGroup: titleGroup, status: job.status, join: job.join)
-                            
-                            self.database.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(idDeadline)").child("\(job.id)").setValue(job.toDictionary()){
-                                (result,error) in
-                                guard error != nil else{
-                                    self.thongBao(message: "Chỉnh sửa thất bại!")
-                                    return
-                                }
-                                
-                                self.thongBao(message: "Chỉnh sửa thành công!")
-                                self.toggleActivityIndicator(false)
-                            }
-                        }
-                        
-                    }
-                    
                 }
-                
-                
+            }else{
+                self.thongBao(message: "Số lượng cần phải lớn hơn hoặc bằng số thành viên hiện tại!")
+                kiemTra = false
             }
+            }
+
         }
+
+        
+        
     }
     
     
@@ -499,6 +526,7 @@ class TaoCongViecController: UIViewController,UITextFieldDelegate, UIImagePicker
         dateHanCongViec.layer.borderWidth = 2
         dateHanCongViec.layer.cornerRadius = 10
         
+        
     }
     
     func thongBao(message: String){
@@ -508,4 +536,32 @@ class TaoCongViecController: UIViewController,UITextFieldDelegate, UIImagePicker
         self.present(alert, animated: true, completion: nil)
     }
     
+    
+    @objc func banPhimXuatHien(notification:NSNotification){
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            let bottomSpace = view.frame.height - (CGFloat(800))
+            view.frame.origin.y -= (keyboardHeight - bottomSpace)
+            print(keyboardHeight)
+            
+        }
+    }
+    @objc func banPhimBienMat(notification:NSNotification){
+        view.frame.origin.y = original
+        
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    var original:CGFloat = 0
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        view.frame.origin.y = original
+    }
+    var banDau:CGRect?
+    @IBAction func cuonView(_ sender: UIButton) {
+        if let banDau = banDau{
+            view.frame = banDau
+        }
+    }
 }

@@ -24,24 +24,15 @@ class CongViecController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.tenCongViec.text = data.title
         cell.deadline.text = data.deadline
         cell.nhomCongViec.text = data.titleGroup
-        
-        cell.trangThai.text = "\(data.status ? "Hoàn thành" : "Chưa hoàn thành")"
+        cell.trangThai.text = "\(data.status ? "  Hoàn thành  " : "  Chưa hoàn thành  " )"
+        cell.trangThai.backgroundColor = data.status ? .systemBlue : .systemOrange
         let imageUrlString = data.image
         Enum.setImageFromURL(urlString: imageUrlString, imageView: cell.anhCongViec)
         return cell
     }
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let editAction = UITableViewRowAction(style: .normal, title: "Edit"){action,indexPath in
-
-        }
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
-            self.mang.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-        return [editAction,deleteAction]
-    }
+   
     func thongBao(message: String){
-        let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Thông tin chi tiết", message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
@@ -49,7 +40,8 @@ class CongViecController: UIViewController,UITableViewDelegate,UITableViewDataSo
     // Override to support conditional editing of the table view.
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let congViec = self.mang[indexPath.row]
+        self.thongBao(message: "Nhóm: \(congViec.titleGroup)\nDự án: \(congViec.titleDeadline)\nCông việc: \(congViec.title)\nVào nhóm để xem chi tiết công việc!")
     }
     var idUser = 1
 
@@ -112,7 +104,7 @@ class CongViecController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
             }
             else{
-                self.thongBao(message: "Không có dữ liệu!")
+               
             }
            
         }

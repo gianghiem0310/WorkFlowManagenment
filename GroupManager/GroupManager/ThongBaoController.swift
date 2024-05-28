@@ -145,6 +145,8 @@ class ThongBaoController: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        getDataUser()
+        getDataForTableView()
         // Do any additional setup after loading the view.
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -165,8 +167,6 @@ class ThongBaoController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 for child in snapshot.children{
                     if let childV2 = child as? DataSnapshot {
                         if childV2.childrenCount > 0{
-                            self.mangThongBao.removeAll()
-                            self.tableView.reloadData()
                             for item in childV2.children {
                                 if let value = item as? DataSnapshot {
                                     if let object = value.value as? NSDictionary{

@@ -45,6 +45,10 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(banPhimXuatHien), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(banPhimBienMat), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         txtTenDangNhap.delegate = self
         txtMatKhau.delegate = self
         txtTenNguoiDung.delegate = self
@@ -196,7 +200,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                                 (metadata, error) in imageRef.downloadURL{
                                                     (url, error) in
                                                     if let dowloadURL = url, let account = self.account{
-                                                        let profile = Profile(idAccount: account.id, avatar: dowloadURL.absoluteString, name: self.tenNguoiDung, phone: self.soDienThoai, email: self.email, fit: self.fit)
+                                                        let profile = Profile(idAccount: account.id, avatar: dowloadURL.absoluteString, name: self.tenNguoiDung, phone: self.soDienThoai, email: email, fit: self.fit)
                                                         
                                                         self.database.child(Enum.PROFILE_TABLE).child("\(account.id)").setValue(profile.toDictionary())
                                                     }
@@ -212,7 +216,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                             }
                                         
                                         }else{
-                                            let profile = Profile(idAccount: account.id, avatar: "NULL", name: self.tenNguoiDung, phone: self.soDienThoai, email: self.email, fit: self.fit)
+                                            let profile = Profile(idAccount: account.id, avatar: "NULL", name: self.tenNguoiDung, phone: self.soDienThoai, email: email, fit: self.fit)
                                             
                                             self.database.child(Enum.PROFILE_TABLE).child("\(account.id)").setValue(profile.toDictionary())
                                         }
@@ -300,6 +304,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
     
     func textFieldDidEndEditing(_ textField: UITextField) {
 
+        view.frame.origin.y = 0
         switch textField {
         case txtTenDangNhap:
             tenDangNhap = txtTenDangNhap.text ?? ""
@@ -316,7 +321,34 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         }
     }
     
+    @objc func banPhimXuatHien(notification:NSNotification){
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            
+            let bottomSpace = view.frame.height - (mauBtnDangKy.frame.origin.y + mauBtnDangKy.frame.height)
+            
+            view.frame.origin.y -= (keyboardHeight - bottomSpace)
+        }
+    }
+    @objc func banPhimBienMat(notification:NSNotification){
+        view.frame.origin.y = 0
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let keyboardHeight:CGFloat = 300
+        let bottomSpace = view.frame.height - (textField.frame.origin.y + textField.frame.height)
+        if bottomSpace<keyboardHeight{
+            view.frame.origin.y = -(keyboardHeight - bottomSpace)
+        }
+    }
+    
+    
     
     
     
 }
+

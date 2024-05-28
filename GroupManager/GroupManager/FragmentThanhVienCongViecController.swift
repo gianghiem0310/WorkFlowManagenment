@@ -36,20 +36,22 @@ class FragmentThanhVienCongViecController: UIViewController, UITableViewDataSour
         let child = array[indexPath.row]
         Enum.setImageFromURL(urlString: child.avatar, imageView: cell.imageAvatar)
         cell.name.text = child.name
+        
         if let deadline = deadline,let job = job{
             database.child(Enum.JOB_MEMBER_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(job.id)").child("\(child.idAccount)").observe(DataEventType.value){
                 snapshot in
                 if snapshot.childrenCount>0{
                     if let object = snapshot.value as? NSDictionary{
                         let status = object["status"] as? Bool ?? false
-                        if status{
-                            cell.trangThai.text = "Hoàn thành"
-                        }else{
-                            cell.trangThai.text = "Chưa hoàn thành"
-                        }
+                        cell.trangThai.text = "\(status ? "  Hoàn thành  " : "  Chưa hoàn thành  " )"
+                        cell.trangThai.backgroundColor = status ? .systemBlue : .systemOrange
                     }
                 }
             }
+            cell.idCaptain = self.idCaptain
+            cell.titleJob = job.title
+            cell.profile = child
+            cell.view = self
         }
        
      

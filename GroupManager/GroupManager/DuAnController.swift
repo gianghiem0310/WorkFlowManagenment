@@ -10,6 +10,7 @@ import FirebaseDatabase
 class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate {
     
     var idUser = 15
+    var nameUser = ""
     @IBAction func tool(_ sender: UIBarButtonItem) {
         let actionSheet = UIAlertController(title: "Select Option", message: nil, preferredStyle: .actionSheet)
         if let group = self.group{
@@ -45,7 +46,7 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                     let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
                         
 //                        self.outGroup(idGroup: group.id)
-                        Enum.roiGroup(idReceiver: group.captain, idSender: self.idUser, content: "1 đã rời nhóm", idGroup: group.id,closure: self.outGroup)
+                        Enum.roiGroup(idReceiver: group.captain, idSender: self.idUser, content: "\(self.nameUser) đã rời nhóm", idGroup: group.id,closure: self.outGroup)
                         
                         
                     }
@@ -182,7 +183,28 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
             let data = mangMember[indexPath.row]
             Enum.setImageFromURL(urlString: data.avatar, imageView: cell.avtThanhVien)
             cell.tenThanhVien.text = data.name
-            cell.diemFit.text = "\(data.fit) fit"
+            if let group = self.group,group.captain == data.idAccount{
+                cell.tenThanhVien.textColor = .systemBlue
+                
+            }
+            if let group = self.group{
+                let database = Enum.DB_REALTIME
+                database.child(Enum.MEMBER_TABLE).child("\(group.id)").child("\(data.idAccount)").observe(DataEventType.value){
+                    snapshot in
+                    if snapshot.childrenCount>0{
+                        if let child = snapshot.value as? NSDictionary{
+                            let value = child["fit"] as? Int ?? 0
+                            cell.diemFit.text = "\(value) fit"
+                        }
+                    }else{
+                        
+                        cell.diemFit.text = "\(0) fit"
+                    }
+                }
+                
+            }
+           
+            
             return cell
         }
        
@@ -349,6 +371,7 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
     }
     func getDataUser(){
         idUser = UserDefaults.standard.integer(forKey: Enum.ID_USER)
+        nameUser = UserDefaults.standard.string(forKey: Enum.NAME_USER) ?? "Thanh viên!"
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

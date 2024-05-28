@@ -52,28 +52,61 @@ class NhomController: UIViewController,UITableViewDataSource,UITableViewDelegate
         }
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete"){action,indexPathN in
             if self.idUser == self.mangNhom[indexPath.row].captain{
-                let alert = UIAlertController(title: "Thông báo", message: "Bạn chắc chắn muốn xoá nhóm này?", preferredStyle: .alert)
-                let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
-                let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
-                    let database = Enum.DB_REALTIME
-                    database.child(Enum.GROUP_TABLE).child("\(self.mangNhom[indexPath.row].id)").removeValue(){
-                        (error,_)in
-                        if let error = error{
-                            self.thongBao(message: "Không thể xoá!")
-                        }
-                        else{
-                            
-                            database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(self.mangNhom[indexPath.row].id)").removeValue()
-                            self.mangNhom.remove(at: indexPath.row)
-                            tableView.deleteRows(at: [indexPath], with: .fade)
-                            tableView.reloadData()
-                            self.thongBao(message: "Xoá nhóm thành công!")
+                let data = self.mangNhom[indexPath.row]
+                let database = Enum.DB_REALTIME
+                var kiemTra = true
+                database.child(Enum.DEADLINE_TABLE).child("\(data.id)").observe(DataEventType.value){
+                    snapshot in
+                    if kiemTra{
+                        if snapshot.childrenCount>0{
+                            self.thongBao(message: "Hãy xoá hết project có trong nhóm!")
+                            kiemTra = false
+                        }else{
+                            if data.join > 1{
+                                self.thongBao(message: "Hãy xoá hết thành viên của nhóm!")
+                                kiemTra = false
+                            }else{
+                                
+                                    let alert = UIAlertController(title: "Thông báo", message: "Bạn chắc chắn muốn xoá nhóm này?", preferredStyle: .alert)
+                                    let cancel = UIAlertAction(title: "Huỷ", style: .cancel, handler: nil)
+                                    let confirm = UIAlertAction(title: "Chắc chắn", style: .destructive){_ in
+                                     
+                                        database.child(Enum.GROUP_TABLE).child("\(data.id)").removeValue(){
+                                            (error,_)in
+                                            if let error = error{
+                                                self.thongBao(message: "Không thể xoá!")
+                                                kiemTra = false
+                                            }
+                                            else{
+                                                
+                                                database.child(Enum.GROUP_JOIN_TABLE).child("\(self.idUser)").child("\(data.id)").removeValue()
+                                                database.child(Enum.MEMBER_TABLE).child("\(data.id)").removeValue()
+                                                database.child(Enum.DEADLINE_TABLE).child("\(data.id)").removeValue()
+                                                database.child(Enum.JOB_TABLE).child("\(data.id)").removeValue()
+                                                database.child(Enum.DEADLINE_JOIN_TABLE).child("\(data.id)").removeValue()
+                                                database.child(Enum.JOB_MEMBER_TABLE).child("\(data.id)").removeValue()
+                                                self.mangNhom.remove(at: indexPath.row)
+                                                tableView.deleteRows(at: [indexPath], with: .fade)
+                                                tableView.reloadData()
+                                                self.thongBao(message: "Xoá nhóm thành công!")
+                                                kiemTra = false
+                                            }
+                                        }
+                                    }
+                                    alert.addAction(cancel)
+                                    alert.addAction(confirm)
+                                    self.present(alert, animated: true, completion: nil)
+                            }
                         }
                     }
+                 
                 }
-                alert.addAction(cancel)
-                alert.addAction(confirm)
-                self.present(alert, animated: true, completion: nil)
+                
+                
+                
+                
+             
+                
                 
             }else{
                 self.thongBao(message: "Hãy rời nhóm!")

@@ -36,6 +36,9 @@ class TaoDuAnController: UIViewController,UITextFieldDelegate {
         //tao du an moi
        
         if let status = status, let group = group{
+            if sl == 0{
+                self.thongBao(message: "Số lượng phải lớn hơn 0!")
+            }else{
             if status{
                 getIdLienTuc()
                 DispatchQueue.main.asyncAfter(deadline: .now()+1.5){
@@ -52,6 +55,33 @@ class TaoDuAnController: UIViewController,UITextFieldDelegate {
                     }
                     
                 }
+            }else{
+                if let deadline = deadline{
+                    if deadline.join>sl{
+                        self.thongBao(message: "Hãy nhập số lượng lớn hơn hoặc bằng số thành viên hiện tại!")
+                    }else{
+                        deadline.quantity = sl
+                        deadline.deadline = dateDuAnNew
+                        var kiemTra = true
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1.5){
+                            if kiemTra {
+                                self.database.child(Enum.DEADLINE_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").setValue(deadline.toDictionary()){
+                                    (result,error) in
+                                    guard error != nil else{
+                                        self.thongBao(message: "Chỉnh sửa dự án thất bại!")
+                                        kiemTra = false
+                                        return
+                                    }
+                                    self.thongBao(message: "Chỉnh sửa dự án thành công!")
+                                    kiemTra = false
+                                    }
+                            }
+                        
+                            
+                        }
+                    }
+                }
+            }
             }
         }
     }
@@ -60,6 +90,17 @@ class TaoDuAnController: UIViewController,UITextFieldDelegate {
         quantity.delegate = self
         if let group = group{
             nameGroup.text = group.title
+        }
+        if let status = status,let duAnEdit = deadline{
+            if !status{
+                quantity.text = String(duAnEdit.quantity)
+                let dateFormat = DateFormatter()
+                dateFormat.dateFormat = "dd/MM/yyyy"
+                if let dateChange = dateFormat.date(from: duAnEdit.deadline){
+                    date.date = dateChange
+                }
+                
+            }
         }
         }
     
