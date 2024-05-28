@@ -1869,7 +1869,7 @@
                     <tabBarItem key="tabBarItem" title="Công việc" image="bag" catalog="system" id="EPi-tG-c4W"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="C1Y-VX-nNx">
-                        <rect key="frame" x="0.0" y="44" width="414" height="104.5"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

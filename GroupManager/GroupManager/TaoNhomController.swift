@@ -17,7 +17,7 @@ class TaoNhomController: UIViewController,UITextFieldDelegate,UIImagePickerContr
         
         if manHinh {
             if let quantity = Int(soLuong){
-                if quantity == 0{
+                if quantity > 0{
                 
                 if !tenNhom.isEmpty && !soLuong.isEmpty
                     {

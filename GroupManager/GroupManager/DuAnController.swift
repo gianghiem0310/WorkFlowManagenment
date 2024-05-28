@@ -477,7 +477,17 @@ class DuAnController: UIViewController,UITableViewDataSource,UITableViewDelegate
                 view.modalPresentationStyle = .fullScreen
                 self.present(view, animated: true, completion: nil)
             }
+        }else{
+            let data = mangMember[indexPath.row]
+            let str = "Tên: \(data.name)\nSố điện thoại: \(data.phone)\nEmail: \(data.email)"
+            thongTin(message: str)
         }
+    }
+    func thongTin(message: String){
+        let alert = UIAlertController(title: "Thông tin thành viên", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
