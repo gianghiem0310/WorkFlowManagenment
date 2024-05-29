@@ -64,17 +64,18 @@ class ChiTietCongViecController: UIViewController {
                 }
         }
 
-        
+        var kiemTra = true
         //End
         DispatchQueue.main.asyncAfter(deadline: .now()+1.0){
             //Kiểm tra đã tham gia deadline chưa
             if let deadline = self.deadline{
                 database.child(Enum.DEADLINE_JOIN_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(self.idUser)").observe(DataEventType.value){
                     snapshot in
-                    if snapshot.childrenCount>0{
+                    if snapshot.childrenCount>0 && kiemTra{
                         
                              actionSheet.addAction(UIAlertAction(title: "Huỷ", style: .destructive, handler:nil))
                              self.present(actionSheet, animated: true, completion: nil)
+                            kiemTra = false
                     }else{
                         self.thongBao(message: "Hãy tham gia dự án này trước!")
                     }
