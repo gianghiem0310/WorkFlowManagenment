@@ -141,47 +141,51 @@ class Enum{
         
     }
     static func xoaThanhVienJob(profileMember:Profile,idGroup:Int,job:Job,idCaptain:Int,closure: @escaping ()->Void){
-        var trangThaiKiemTra = true
-        var check = true
-        if trangThaiKiemTra {
-            DispatchQueue.main.asyncAfter(deadline: .now()+1.5){
-                if trangThaiKiemTra {
-                    var idNewNoti = 0
-                    DB_REALTIME.child(Enum.NOTIFICATION_TABLE).child("\(profileMember.idAccount)").child("\(idCaptain)").observe(DataEventType.value){
-                        snapshot in
-                        if trangThaiKiemTra == true{
-                            let content = "Bạn bị xoá khỏi Công việc \(job.title)!"
-                            let date = Enum.getCurrentDateDDMMYYYY()
-                            let notification = Notification(id:Int(snapshot.childrenCount),idSender: idCaptain, idReceiver: profileMember.idAccount, content: content, type: Enum.BI_XOA_KHOI_JOB, idGroup: idGroup, idDeadline: job.idDeadline, idJob: job.id, date: date)
-                            DB_REALTIME.child(Enum.NOTIFICATION_TABLE).child("\(notification.idReceiver)").child("\(notification.idSender)").child("\(notification.id)").setValue(notification.toDictionary())
-                            DB_REALTIME.child(Enum.JOB_MEMBER_TABLE).child("\(idGroup)").child("\(job.idDeadline)").child("\(job.id)").child("\(profileMember.idAccount)").removeValue()
-                            DB_REALTIME.child(Enum.JOB_NOT_COMPLETE).child("\(profileMember.idAccount)").child("\(idGroup)").child("\(job.idDeadline)").child("\(job.id)").removeValue()
-                            DB_REALTIME.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(job.idDeadline)").child("\(job.id)").observe(DataEventType.value){
-                                snaphot in
-                                if snaphot.childrenCount > 0,check{
-                                        if let child = snaphot.value as? NSDictionary{
-                                            let join = child["join"] as? Int ?? -1
-                                            DB_REALTIME.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(job.idDeadline)").child("\(job.id)").child("join").setValue(join-1)
-                                            trangThaiKiemTra = false
-                                            check = false
-                                            closure()
-                                        }
+        let workItem = DispatchWorkItem{
+            var trangThaiKiemTra = true
+            var check = true
+            if trangThaiKiemTra {
+                DispatchQueue.main.asyncAfter(deadline: .now()+1){
+                    if trangThaiKiemTra {
+                        DB_REALTIME.child(Enum.JOB_NOT_COMPLETE).child("\(profileMember.idAccount)").child("\(idGroup)").child("\(job.idDeadline)").child("\(job.id)").removeValue()
+                        var idNewNoti = 0
+                        DB_REALTIME.child(Enum.NOTIFICATION_TABLE).child("\(profileMember.idAccount)").child("\(idCaptain)").observe(DataEventType.value){
+                            snapshot in
+                            if trangThaiKiemTra == true{
+                                let content = "Bạn bị xoá khỏi Công việc \(job.title)!"
+                                let date = Enum.getCurrentDateDDMMYYYY()
+                                let notification = Notification(id:Int(snapshot.childrenCount),idSender: idCaptain, idReceiver: profileMember.idAccount, content: content, type: Enum.BI_XOA_KHOI_JOB, idGroup: idGroup, idDeadline: job.idDeadline, idJob: job.id, date: date)
+                                DB_REALTIME.child(Enum.NOTIFICATION_TABLE).child("\(notification.idReceiver)").child("\(notification.idSender)").child("\(notification.id)").setValue(notification.toDictionary())
+                                DB_REALTIME.child(Enum.JOB_MEMBER_TABLE).child("\(idGroup)").child("\(job.idDeadline)").child("\(job.id)").child("\(profileMember.idAccount)").removeValue()
+                               
+                                DB_REALTIME.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(job.idDeadline)").child("\(job.id)").observe(DataEventType.value){
+                                    snaphot in
+                                    if snaphot.childrenCount > 0 && check{
+                                            if let child = snaphot.value as? NSDictionary{
+                                                let join = child["join"] as? Int ?? -1
+                                                DB_REALTIME.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(job.idDeadline)").child("\(job.id)").child("join").setValue(join-1)
+                                                trangThaiKiemTra = false
+                                                check = false
+                                                closure()
+                                            }
+                                    }
                                 }
+                                
+                                
+                                
+                                trangThaiKiemTra = false
                             }
-                            
-                            
-                            
                             trangThaiKiemTra = false
                         }
-                        trangThaiKiemTra = false
                     }
-                    
-                    
-                    
-                    
                 }
             }
         }
+        DispatchQueue.global().async(execute: workItem)
+        DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
+                workItem.cancel()
+        }
+        
     }
     static func xinVaoDeadline(idCaptain:Int,idSender:Int,nameSender:String,deadline:Deadline,closure: @escaping ()->Void){
         
