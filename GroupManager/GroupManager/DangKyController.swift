@@ -28,8 +28,9 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
     
     @IBOutlet weak var mauBtnDangKy: UIButton!
     
+    @IBOutlet weak var btnDangK: UIButton!
     var activityIndicator: UIActivityIndicatorView!
-
+    
     var idAccount = -1
     var avatar = "NULL"
     var fit = 0
@@ -42,7 +43,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
     var imageLayRa:UIImage?
     
     let storage = Enum.DB_STORAGE
- 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         txtTenDangNhap.delegate = self
@@ -52,33 +53,95 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         txtEmail.delegate = self
         
         // Khởi tạo UIActivityIndicatorView
-              activityIndicator = UIActivityIndicatorView(style: .large)
-              activityIndicator.center = view.center
-              activityIndicator.hidesWhenStopped = true
-              view.addSubview(activityIndicator)
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
         
         //Ẩn bàn phím khi nhấn bất cứ đâu ở màn hinh
         let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGes)
- 
+        
         customGiaoDien()
         getIdLienTuc()
-
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+    }
+    
+    @objc func hideKeyboard(){
+           view.endEditing(true)
+       }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    
+    
+//    @objc private func keyboardWillChange(notification: NSNotification){
+//        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+//            return
+//        }
+//
+//        if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification{
+//            self.view.frame.origin.y = -keyboardFrame.height
+//        }else{
+//            self.view.frame.origin.y =  0
+//        }
+//
+//    }
+   
+//    @objc private func keyboardWillShow(notification: NSNotification){
+//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+//            let keyboardHieght = keyboardFrame.cgRectValue.height
+//            let bottomSpace = self.view.frame.height - (btnDangK.frame.origin.y + btnDangK.frame.height)
+//            self.view.frame.origin.y -= keyboardHieght - bottomSpace + 10
+//
+//
+//            print("kH\(keyboardHieght)")
+//            print("bt\(bottomSpace)")
+//        }
+//    }
+    @objc private func keyboardWillShow(notification: NSNotification){
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let currentTextField = UIResponder.currentFisrt() as? UITextField else {
+            return
+        }
+        
+        let keyboardTopY = keyboardFrame.cgRectValue.origin.y
+        let convertedTextFieldFrame = view.convert(currentTextField.frame, from: currentTextField.superview)
+        let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
+        
+        if textFieldBottomY > keyboardTopY{
+            let textBoxY = convertedTextFieldFrame.origin.y
+            let newFrameY = (textBoxY - keyboardTopY / 2) * -1
+            view.frame.origin.y = newFrameY
+        }
+    }
+    
+    
+    @objc private func keyboardWillHide(){
+        self.view.frame.origin.y = 0
     }
     
     func toggleActivityIndicator(_ show: Bool) {
-          if show {
-              activityIndicator.startAnimating()
-          } else {
-              activityIndicator.stopAnimating()
-          }
-      }
-
-    @objc func hideKeyboard(){
-        view.endEditing(true)
+        if show {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
     }
     
-   
+    
+    
     
     @IBAction func tapGestureAvatar(_ sender: UITapGestureRecognizer) {
         txtTenDangNhap.resignFirstResponder()
@@ -129,7 +192,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                 if let child = lastE.value as? NSDictionary{
                     self.idNew = child["id"] as? Int ?? -1
                     self.idNew += 1
-//                    self.thongBao(message: "thay doi \(self.idNew)")
+                    //                    self.thongBao(message: "thay doi \(self.idNew)")
                 }
             }
         }
@@ -142,40 +205,40 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
         self.toggleActivityIndicator(true)
         DispatchQueue.main.asyncAfter(deadline: .now()+1.0){
             
-           
+            
             if let tenDangNhap = self.txtTenDangNhap.text, let tenNguoiDung = self.txtTenNguoiDung.text, let soDienThoai = self.txtSoDienThoai.text, let email = self.txtEmail.text, let matKhau = self.txtMatKhau.text
-//               ,let anh = self.imageAvatar.image
+            //               ,let anh = self.imageAvatar.image
             {
                 
                 if !tenDangNhap.isEmpty || !tenNguoiDung.isEmpty || !soDienThoai.isEmpty ||
                     !email.isEmpty || !matKhau.isEmpty{
                     
                     if tenDangNhap.count >= 6 || matKhau.count >= 6{
-
-                            self.database.child(Enum.ACCCOUNT_TABLE).observe(DataEventType.value){
-                                snapshot in
+                        
+                        self.database.child(Enum.ACCCOUNT_TABLE).observe(DataEventType.value){
+                            snapshot in
+                            
+                            if snapshot.childrenCount > 0{
                                 
-                                if snapshot.childrenCount > 0{
-                                  
-                                    for child in snapshot.children{
-
-                                        if let object = child as? DataSnapshot{
-
-                                            if let value = object.value as? NSDictionary{
-
-                                                let tenDangNhapFb = value["username"] as? String ?? ""
-                                                if tenDangNhap == tenDangNhapFb {
-                                                    self.checkState = false
-                                                  
-                                                }
+                                for child in snapshot.children{
+                                    
+                                    if let object = child as? DataSnapshot{
+                                        
+                                        if let value = object.value as? NSDictionary{
+                                            
+                                            let tenDangNhapFb = value["username"] as? String ?? ""
+                                            if tenDangNhap == tenDangNhapFb {
+                                                self.checkState = false
+                                                
                                             }
                                         }
                                     }
                                 }
                             }
-  
+                        }
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now()+3.0){
-                          
+                            
                             if self.checkState {
                                 self.account = Account(id: self.idNew, username: self.tenDangNhap, password: self.matKhau)
                                 if let account = self.account{
@@ -185,7 +248,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                             self.thongBao(message: "Tạo tài khoản thất bại!")
                                             return
                                         }
-                                       
+                                        
                                         if let image = self.imageLayRa {
                                             guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                                                 return
@@ -210,7 +273,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                             uploadTask.observe(.success){
                                                 snap in
                                             }
-                                        
+                                            
                                         }else{
                                             let profile = Profile(idAccount: account.id, avatar: "NULL", name: self.tenNguoiDung, phone: self.soDienThoai, email: self.email, fit: self.fit)
                                             
@@ -226,15 +289,15 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
                                         self.txtSoDienThoai.text! = ""
                                         self.txtMatKhau.text! = ""
                                         self.checkState = true
-//                                    }
+                                        //                                    }
+                                    }
                                 }
+                            }else{
+                                self.thongBao(message: "Tên đăng nhập đã tồn tại!")
+                                self.toggleActivityIndicator(false)
+                                self.checkState = true
                             }
-                        }else{
-                            self.thongBao(message: "Tên đăng nhập đã tồn tại!")
-                            self.toggleActivityIndicator(false)
-                            self.checkState = true
                         }
-                    }
                     }else{
                         self.thongBao(message: "Tên đăng nhập và mật tối thiểu 6 ký tự!")
                         self.toggleActivityIndicator(false)
@@ -246,7 +309,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
             }
         }
     }
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //An ban phim
         txtTenDangNhap.resignFirstResponder()
@@ -299,7 +362,7 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
     
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-
+        
         switch textField {
         case txtTenDangNhap:
             tenDangNhap = txtTenDangNhap.text ?? ""
@@ -319,4 +382,19 @@ class DangKyController: UIViewController,UITextFieldDelegate,UIImagePickerContro
     
     
     
+}
+extension UIResponder{
+    private struct Static{
+        static weak var responder: UIResponder?
+    }
+    
+    static func currentFisrt()-> UIResponder{
+        Static.responder = nil
+        UIApplication.shared.sendAction(#selector(UIResponder._trap), to: nil, from: nil, for: nil)
+        return Static.responder!
+    }
+    
+    @objc private func _trap(){
+        Static.responder = self
+    }
 }
