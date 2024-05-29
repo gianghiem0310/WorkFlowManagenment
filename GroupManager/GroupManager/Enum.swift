@@ -356,9 +356,9 @@ class Enum{
                         let noti = Notification(id: idNew, idSender: idSender, idReceiver: idReceiver, content: content, type: Enum.TEXT_BINH_THUONG, idGroup: idGroup, idDeadline: idDeadline, idJob: idJob, date: Enum.getCurrentDateDDMMYYYY())
                         DB_REALTIME.child(Enum.NOTIFICATION_TABLE).child("\(idReceiver)").child("\(idSender)").child("\(noti.id)").setValue(noti.toDictionary())
                     }
-                  
                     DB_REALTIME.child(Enum.JOB_MEMBER_TABLE).child("\(idGroup)").child("\(idDeadline)").child("\(idJob)").child("\(idSender)").removeValue()
                     DB_REALTIME.child(Enum.JOB_NOT_COMPLETE).child("\(idSender)").child("\(idGroup)").child("\(idDeadline)").child("\(idJob)").removeValue()
+                    print("idGui: \(idSender) idGroup: \(idGroup) idDeadline: \(idDeadline) idJob: \(idJob)")
                     DB_REALTIME.child(Enum.JOB_TABLE).child("\(idGroup)").child("\(idDeadline)").child("\(idJob)")
                         .observe(DataEventType.value){
                             snapshot1 in
@@ -459,7 +459,7 @@ class Enum{
             snap in
             DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
             if kiemTra{
-            if snap.childrenCount >= 0{
+            if snap.childrenCount >= 0 && kiemTra{
                 if let value = snap.value as? NSDictionary{
                     let join = value["join"] as? Int ?? -1
                     let quantity = value["quantity"] as? Int ?? -1
@@ -473,7 +473,7 @@ class Enum{
                         DB_REALTIME.child(Enum.JOB_TABLE).child("\(notification.idGroup)").child("\(notification.idDeadline)").child("\(notification.idJob)").child("join").setValue(join+1)
                         DB_REALTIME.child(Enum.JOB_TABLE).child("\(notification.idGroup)").child("\(notification.idDeadline)").child("\(notification.idJob)").observe(DataEventType.value){
                             snapshot in
-                            if snapshot.childrenCount > 0{
+                            if snapshot.childrenCount > 0 && kiemTra{
                                 if let childJob = snapshot.value as? NSDictionary{
                                     let id = childJob["id"] as? Int ?? -1
                                     let idDeadline = childJob["idDeadline"] as? Int ?? -1
@@ -661,7 +661,7 @@ class Enum{
                     if let value = snap.value as? NSDictionary{
                         let join = value["join"] as? Int ?? -1
                         let quantity = value["quantity"] as? Int ?? -1
-                        if quantity != join{
+                        if quantity != join && kiemTra{
                             let dictionary = ["id":idCaptain,"fit":0]
                             DB_REALTIME.child(Enum.DEADLINE_JOIN_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(idCaptain)").setValue(dictionary)
                             DB_REALTIME.child(Enum.DEADLINE_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("join").setValue(join+1)
@@ -693,7 +693,7 @@ class Enum{
                 snap in
                 DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
                 if kiemTra{
-                if snap.childrenCount > 0{
+                if snap.childrenCount > 0 && kiemTra{
                     if let value = snap.value as? NSDictionary{
                         let join = value["join"] as? Int ?? -1
                         let quantity = value["quantity"] as? Int ?? -1
@@ -704,7 +704,7 @@ class Enum{
                                 DB_REALTIME.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(job.id)").child("join").setValue(join+1)
                                 DB_REALTIME.child(Enum.JOB_TABLE).child("\(deadline.idGroup)").child("\(deadline.id)").child("\(job.id)").observe(DataEventType.value){
                                     snapshot in
-                                    if snapshot.childrenCount > 0{
+                                    if snapshot.childrenCount > 0 && kiemTra{
                                         if let childJob = snapshot.value as? NSDictionary{
                                             let id = childJob["id"] as? Int ?? -1
                                             let idDeadline = childJob["idDeadline"] as? Int ?? -1
